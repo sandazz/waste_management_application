@@ -11,8 +11,6 @@ class Achievement extends StatefulWidget {
 class _AchievementState extends State<Achievement> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Text("achievement")
-    );
+    return Text("achievement");
   }
 }
