@@ -38,6 +38,7 @@ dependencies:
   awesome_bottom_bar: ^1.2.2
   mobile_scanner: ^3.2.0
   flutter_barcode_scanner: ^2.0.0
+  eva_icons_flutter: ^3.1.0
 
 dev_dependencies:
   flutter_test:
