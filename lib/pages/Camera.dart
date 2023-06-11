@@ -5,6 +5,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter/src/material/icons.dart';
+
 
 
 class Camera extends StatefulWidget {
@@ -69,20 +71,40 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-            appBar: AppBar(title: const Text('Barcode scan')),
             body: Builder(builder: (BuildContext context) {
+              var styleColors;
               return Container(
                   alignment: Alignment.center,
                   child: Flex(
                       direction: Axis.vertical,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton(
+                        ElevatedButton.icon(
                             onPressed: () => scanBarcodeNormal(),
-                            child: Text('Start barcode scan')),
-                        ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 8.0,
+                              primary: Colors.green,// Set the background color for the button
+                              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30), // Set the border radius here
+                              ),
+                            ),
+                            icon: Icon(Icons.barcode_reader),
+                            label: Text('Barcode Scan')),
+                        SizedBox(height: 10.0,),
+                        ElevatedButton.icon(
                             onPressed: () => scanQR(),
-                            child: Text('Start QR scan')),
+                            style: ElevatedButton.styleFrom(
+                              elevation: 8.0,
+                              primary: Colors.green,
+                              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0), // Set the background color for the button
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30), // Set the border radius here
+                              ),
+                            ),
+                            icon: Icon(Icons.qr_code_2_outlined),
+                            label: Text('QR Scan')),
                         SizedBox(height: 10.0,),
                         Text('Scan result : $_scanBarcode\n',
                             style: TextStyle(fontSize: 20))
