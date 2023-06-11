@@ -4,6 +4,7 @@ import 'package:waste_management_app/pages/LeaderBoard.dart';
 import 'package:waste_management_app/pages/Camera.dart';
 import 'package:waste_management_app/pages/Achievement.dart';
 import 'package:waste_management_app/pages/Rewards.dart';
+import 'pages/Account.dart';
 
 
 String name = '' ;
@@ -26,7 +27,7 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
     LeaderBoard(),
     Camera(),
     Achievement(),
-    Rewards()
+    Rewards(),
   ];
 
   void _onItemTapped(int index) {
@@ -39,6 +40,38 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: Padding(
+          padding: EdgeInsets.all(15.0),
+          child: IconButton(
+            icon: Icon(
+              Icons.manage_accounts,
+              color: Colors.black,
+              size: 30.0,
+            ),
+            onPressed: () {// Handle leading icon press
+              Account();
+            },
+          ),
+        ),
+        
+        actions: [
+          Padding(
+            padding: EdgeInsets.all(15.0),
+            child: IconButton(
+              icon: Icon(Icons.notifications,
+                color: Colors.black,
+                size: 30.0,
+              ),
+              onPressed: () {
+                // Handle second action icon press
+              },
+            ),
+          ),
+        ],
+      ),
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
       bottomNavigationBar:BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
