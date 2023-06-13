@@ -72,7 +72,10 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
           ),
         ],
       ),
+
       body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
+
+
       bottomNavigationBar:BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -86,7 +89,6 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
           BottomNavigationBarItem(
             icon: Icon(Icons.camera_alt_outlined, size: 35.0,),
             label: '',
-
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.shield_outlined),
