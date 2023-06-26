@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:waste_management_app/login/login.dart';
+import 'package:waste_management_app/login/register.dart';
 import 'package:waste_management_app/pages/Home.dart';
 import 'package:waste_management_app/pages/LeaderBoard.dart';
 import 'package:waste_management_app/pages/Camera.dart';
@@ -9,9 +13,40 @@ import 'pages/Account.dart';
 
 String name = '' ;
 
-void main() => runApp(MaterialApp(
-  home: BottomNavigationExample(),
-));
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
+  runApp(MaterialApp(
+      home: App(),
+    )
+  );
+}
+
+class App extends StatefulWidget {
+  const App({super.key});
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  @override
+
+
+  Widget build(BuildContext context) {
+    return StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context,snapshot){
+          if(snapshot.hasData){
+            return BottomNavigationExample();
+          }else{
+            return const login();
+          }
+        },
+      );
+  }
+}
+
 
 class BottomNavigationExample extends StatefulWidget {
   @override
@@ -66,7 +101,7 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
                 size: 30.0,
               ),
               onPressed: () {
-                // Handle second action icon press
+                FirebaseAuth.instance.signOut();
               },
             ),
           ),
