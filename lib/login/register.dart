@@ -15,6 +15,8 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
 
+    String selectedOption = 'user' ;
+
     final fnameController = TextEditingController();
     final locationController = TextEditingController();
     final emailController = TextEditingController();
@@ -22,8 +24,6 @@ class _RegisterState extends State<Register> {
     final roleController = TextEditingController();
     final passwordController = TextEditingController();
 
-
-    var selectedOption; //lacal variabel for role
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -174,30 +174,40 @@ class _RegisterState extends State<Register> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Role :'),
-                SizedBox(width: 20.0,),
                 Container(
-                    height: 50.0,
+                    height: 60.0,
                     width: 300.0,
-                    child: DropdownButton<String>(
-                      value: selectedOption,
+                    child: DropdownButtonFormField<String>(
+                      decoration:  InputDecoration(
+                          labelText: 'role',
+                          labelStyle: TextStyle(
+                            color: Colors.green[700], // Set the desired text color
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.green, width: 0.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                          ),
+                          border: OutlineInputBorder()
+                      ),
                       onChanged: (value) {
-                        setState(() {
-                          selectedOption = value; // Update the selectedOption value
-                          roleController.text = selectedOption; // Update the roleController value
-                        });
+                          selectedOption = value!;
                       },
                       items: [
                         DropdownMenuItem(
-                          value: 'User',
+                          value: 'user',
                           child: Text('User'),
                         ),
                         DropdownMenuItem(
-                          value: 'Collector',
+                          value: 'collector',
                           child: Text('Collector'),
                         ),
                       ],
-                    )
+                    ),
                 )
               ],
             ),
@@ -238,6 +248,7 @@ class _RegisterState extends State<Register> {
                     password: passwordController.text.trim(),
                 );
 
+                roleController.text = selectedOption;
                 //firebase firestore data adding
                 Map<String, String> dataToSave = {
                   "fname" : fnameController.text.trim(),
@@ -247,7 +258,9 @@ class _RegisterState extends State<Register> {
                   "role" : roleController.text.trim(),
                   "password" : passwordController.text.trim(),
                 };
-                FirebaseFirestore.instance.collection('users').add(dataToSave);
+
+                FirebaseFirestore.instance.collection('users').add(dataToSave).then((documentSnapshot) => print("Added User with ID: ${documentSnapshot.id}"));
+                FirebaseAuth.instance.signOut();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => login()), // Replace SecondPage with your desired destination page
