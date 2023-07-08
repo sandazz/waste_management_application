@@ -25,7 +25,7 @@ void main() async{
 }
 
 class App extends StatefulWidget {
-  const App({super.key});
+  const App({Key? key}) : super(key: key);
 
   @override
   State<App> createState() => _AppState();
@@ -37,22 +37,24 @@ class _AppState extends State<App> {
 
   Widget build(BuildContext context) {
 
-    final LoginDetails = Provider.of<LoginData>(context, listen: false);  // use provider to save role when login and used here
+    final loginDetails = Provider.of<LoginData>(context, listen: false);  // use provider to save role when login and used here
 
     return StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context,snapshot){
-          if(snapshot.hasData){
-            role = LoginDetails.getRole;
-            if(role == "collector"){            // when user is collector
-              return Collector();
-            }else if (role == "user"){          // when user is enduser
-              return BottomNavigationExample();
-            }else{                              // when not unauthorized user
-              return login();
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            role = loginDetails.getRole;
+            if (role == "collector") {
+              return LayoutCollector(); // when user is a collector
+            } else if (role == "user") {
+              return BottomNavigationExample(); // when user is an end user
+            } else {
+              // return LayoutCollector();
+              return login(); // when unauthorized user
             }
-          }else{
-            return const login();
+          } else {
+            // return LayoutCollector();
+            return const login(); // when user is signed out
           }
         },
       );
