@@ -77,49 +77,48 @@ class _RegisterState extends State<Register> {
     final passwordController = TextEditingController();
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          leading: Padding(
-            padding: EdgeInsets.all(5.0),
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_outlined,
-                color: Colors.black,
-                size: 25.0,
-              ),
-              onPressed: () {// Handle leading icon press
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => login()), // Replace SecondPage with your desired destination page
-                );
-              },
-            ),
-          ),
-          title: Text(
-            'Sign Up',
-            style: TextStyle(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        leading: Padding(
+          padding: EdgeInsets.all(5.0),
+          child: IconButton(
+            icon: Icon(
+              Icons.arrow_back_outlined,
               color: Colors.black,
-              fontSize: 25.0,
-              fontWeight: FontWeight.bold,
+              size: 25.0,
             ),
+            onPressed: () {// Handle leading icon press
+              Navigator.of(context).pop();
+            },
           ),
-          centerTitle: true,
-
         ),
-        body: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              SizedBox(height: 20.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 50.0,
-                      width: 300.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
+        title: Text(
+          'Sign Up',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
+
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                SizedBox(height: 20.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+
+                        width: 300.0,
+                        child: TextFormField(
+                          decoration: InputDecoration(
                             labelText: 'First Name',
                             labelStyle: TextStyle(
                               color: Colors.green[700], // Set the desired text color
@@ -134,106 +133,105 @@ class _RegisterState extends State<Register> {
                               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
                             ),
                             border: OutlineInputBorder(),
-                        ),
-                        validator: _validateFname,
-                        controller: fnameController,
-                      )
-                  )
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      height: 50.0,
-                      width: 300.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'Location',
-                            labelStyle: TextStyle(
-                              color: Colors.green[700], // Set the desired text color
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide:
-                              BorderSide(color: Colors.green, width: 0.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                            ),
-                            border: OutlineInputBorder()),
-                        validator: _validateLocation,
-                        controller: locationController,
-                      )
-                  )
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      height: 50.0,
-                      width: 300.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'Email',
-                            labelStyle: TextStyle(
-                              color: Colors.green[700], // Set the desired text color
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide:
-                              BorderSide(color: Colors.green, width: 0.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                            ),
-                            border: OutlineInputBorder()),
-                        validator: _validateEmail,
-                        controller: emailController,
-                      )
-                  )
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      height: 50.0,
-                      width: 300.0,
-                      child: TextFormField(
-                        decoration:  InputDecoration(
-                            labelText: 'Mobile',
-                            labelStyle: TextStyle(
-                              color: Colors.green[700], // Set the desired text color
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide:
-                              BorderSide(color: Colors.green, width: 0.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                            ),
-                            border: OutlineInputBorder()),
-                        validator: _validateMobile,
-                        controller: mobileController,
-                      )
-                  )
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      height: 60.0,
+                          ),
+                          validator: _validateFname,
+                          controller: fnameController,
+                        )
+                    )
+                  ],
+                ),
+                SizedBox(height: 20.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+
+                        width: 300.0,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Location',
+                              labelStyle: TextStyle(
+                                color: Colors.green[700], // Set the desired text color
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderSide:
+                                BorderSide(color: Colors.green, width: 0.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                              ),
+                              border: OutlineInputBorder()),
+                          validator: _validateLocation,
+                          controller: locationController,
+                        )
+                    )
+                  ],
+                ),
+                SizedBox(height: 20.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+
+                        width: 300.0,
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Email',
+                              labelStyle: TextStyle(
+                                color: Colors.green[700], // Set the desired text color
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderSide:
+                                BorderSide(color: Colors.green, width: 0.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                              ),
+                              border: OutlineInputBorder()),
+                          validator: _validateEmail,
+                          controller: emailController,
+                        )
+                    )
+                  ],
+                ),
+                SizedBox(height: 20.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+
+                        width: 300.0,
+                        child: TextFormField(
+                          decoration:  InputDecoration(
+                              labelText: 'Mobile',
+                              labelStyle: TextStyle(
+                                color: Colors.green[700], // Set the desired text color
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderSide:
+                                BorderSide(color: Colors.green, width: 0.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                              ),
+                              border: OutlineInputBorder()),
+                          validator: _validateMobile,
+                          controller: mobileController,
+                        )
+                    )
+                  ],
+                ),
+                SizedBox(height: 20.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
                       width: 300.0,
                       child: DropdownButtonFormField<String>(
                         decoration:  InputDecoration(
@@ -254,7 +252,7 @@ class _RegisterState extends State<Register> {
                         ),
                         validator: _validateRole,
                         onChanged: (value) {
-                            selectedOption = value!;
+                          selectedOption = value!;
                         },
                         items: [
                           DropdownMenuItem(
@@ -267,82 +265,80 @@ class _RegisterState extends State<Register> {
                           ),
                         ],
                       ),
-                  )
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      height: 50.0,
-                      width: 300.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                            labelText: 'Password',
-                            labelStyle: TextStyle(
-                              color: Colors.green[700], // Set the desired text color
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide:
-                              BorderSide(color: Colors.green, width: 0.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                            ),
-                            border: OutlineInputBorder()),
-                        validator: _validatePassword,
-                        controller: passwordController,
-                      )
-                  )
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    //firebase auth data adding
-                    FirebaseAuth.instance.createUserWithEmailAndPassword(
-                      email: emailController.text.trim(),
-                      password: passwordController.text.trim(),
-                    );
-
-                    roleController.text = selectedOption;
-                    //firebase firestore data adding
-                    Map<String, String> dataToSave = {
-                      "fname": fnameController.text.trim(),
-                      "lccation": locationController.text.trim(),
-                      "email": emailController.text.trim(),
-                      "mobile": mobileController.text.trim(),
-                      "role": roleController.text.trim(),
-                      "password": passwordController.text.trim(),
-                    };
-
-                    FirebaseFirestore.instance.collection('users').add(
-                        dataToSave).then((documentSnapshot) =>
-                        print("Added User with ID: ${documentSnapshot.id}"));
-                    FirebaseAuth.instance.signOut();
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>
-                          login()), // Replace SecondPage with your desired destination page
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(100.0, 40.0),
-                  primary: Colors.green[700], // Set the desired button color
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
-                  ),
+                    )
+                  ],
                 ),
-                child: Text('Sign up'),
-              ),
-            ],
+                SizedBox(height: 20.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+
+                        width: 300.0,
+                        child: TextFormField(
+                          obscureText: true,
+                          decoration: InputDecoration(
+
+                              labelText: 'Password',
+                              labelStyle: TextStyle(
+                                color: Colors.green[700], // Set the desired text color
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderSide:
+                                BorderSide(color: Colors.green, width: 0.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                              ),
+                              border: OutlineInputBorder()),
+                          validator: _validatePassword,
+                          controller: passwordController,
+                        )
+                    )
+                  ],
+                ),
+                SizedBox(height: 20.0,),
+                ElevatedButton(
+                  onPressed: () async {
+                    if (_formKey.currentState!.validate()) {
+                      //firebase auth data adding
+                      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                        email: emailController.text.trim(),
+                        password: passwordController.text.trim(),
+                      );
+
+                      roleController.text = selectedOption;
+                      //firebase firestore data adding
+                      Map<String, String> dataToSave = {
+                        "fname": fnameController.text.trim(),
+                        "lccation": locationController.text.trim(),
+                        "email": emailController.text.trim(),
+                        "mobile": mobileController.text.trim(),
+                        "role": roleController.text.trim(),
+                        "password": passwordController.text.trim(),
+                      };
+
+                      FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set(dataToSave);
+                      FirebaseAuth.instance.signOut();
+                      Navigator.of(context).pop();
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(100.0, 40.0),
+                    primary: Colors.green[700], // Set the desired button color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
+                    ),
+                  ),
+                  child: Text('Sign up'),
+                ),
+              ],
+            ),
           ),
         ),
+      ),
     );
   }
 }

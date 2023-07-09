@@ -8,18 +8,16 @@ import 'package:waste_management_app/pages/enduser/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:waste_management_app/providers/loginProvider.dart';
 
-String name = '' ;
-
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => LoginData())
     ],
     child: MaterialApp(
-        home: App(),
-      ),
+      home: App(),
+    ),
   )
   );
 }
@@ -32,32 +30,54 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  @override
-  var role ;
 
   Widget build(BuildContext context) {
 
     final loginDetails = Provider.of<LoginData>(context, listen: false);  // use provider to save role when login and used here
 
     return StreamBuilder<User?>(
-        stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            role = loginDetails.getRole;
-            if (role == "collector") {
-              return LayoutCollector(); // when user is a collector
-            } else if (role == "user") {
-              return BottomNavigationExample(); // when user is an end user
-            } else {
-              // return LayoutCollector();
-              return login(); // when unauthorized user
-            }
-          } else {
-            // return LayoutCollector();
-            return const login(); // when user is signed out
-          }
-        },
-      );
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final User currentUser = FirebaseAuth.instance.currentUser!;
+          print("----------- user : ${currentUser.uid}");
+
+          return StreamBuilder<DocumentSnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection("users")
+                  .doc(currentUser.uid)
+                  .snapshots(),
+              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  print("------------ConnectionState.waiting");
+                  return login();
+                }
+                if (snapshot.hasError) {
+                  print("----------snapshot.hasError");
+                  return login();
+                }
+
+                if (snapshot.hasData && snapshot.data!.data() == null) {
+                  print("-----snapshot.data!.data() == null");
+                  return login();
+                } else if (snapshot.hasData && snapshot.data!.data() != null && snapshot.data!.get("role") == "collector") {
+                  print("---------role = collector");
+                  return LayoutCollector();
+                } else if (snapshot.hasData && snapshot.data!.data() != null && snapshot.data!.get("role") == "user") {
+                  print("--------role = user");
+                  return BottomNavigationExample();
+                }
+                print("-----------return login()");
+                return login();
+              });
+
+        } else {
+          // return LayoutCollector();
+          print("-----------No user");
+          return const login(); // when user is signed out
+        }
+      },
+    );
   }
 }
 
