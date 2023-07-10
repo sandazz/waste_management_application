@@ -75,35 +75,26 @@ class _loginState extends State<login> with WidgetsBindingObserver {
 
     return Scaffold(
       backgroundColor: Colors.green[900],
-      body: Stack(
-        children: [
-          Positioned(
-            top: 100,
-            left: 25,
-            child: Container(
-              child: Text(
-                "Hello.... \nWelcome Back",
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Hello.... \nWelcome Back",
               style: TextStyle(
-                fontSize: 39,
-                fontWeight: FontWeight.w700,
-                color: Colors.white
+                  fontSize: 39,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white
               ),
-            )
             ),
-          ),
-          Positioned(
-            top: 550,
-            left: 25,
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 100), // Adjust the duration as desired
-              transform: Matrix4.translationValues(0.0, translateY, 0.0),
+            Center(
               child: Container(
-                  margin: EdgeInsets.only(top: containerPosition),
+                  margin: EdgeInsets.only(top: containerPosition, bottom: 20),
                   width: MediaQuery.of(context).size.width - 50, // Set the width of the container
-                  height: MediaQuery.of(context).size.height - 575, // Set the height of the container
+                  height: MediaQuery.of(context).size.height*0.34, // Set the height of the container
                   decoration: BoxDecoration(
                     color: Colors.white, // Set the background color of the container
-                    borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                    borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black54.withOpacity(0.5),
@@ -115,144 +106,129 @@ class _loginState extends State<login> with WidgetsBindingObserver {
                   ),
                   child: Form(
                     key: _formKey,
-                    child: Stack(
+                    child: Column(
                       children: [
-                        Positioned(
-                          top: 20.0,
-                          left: 10.0,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 70,
-                            height: 50.0,
-                            child: TextFormField(
-                              controller: emailController,
-                              decoration: const InputDecoration(
-                                labelText: 'Email',
+                        Container(
+                          width: MediaQuery.of(context).size.width - 70,
+                          // height: 50.0,
+                          margin: EdgeInsets.only(top: 20, bottom: 20),
+                          child: TextFormField(
+                            controller: emailController,
+                            decoration: const InputDecoration(
+                              contentPadding: const EdgeInsets.all(20.0),
+                              labelText: 'Email',
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                                borderSide:
+                                BorderSide(color: Colors.red, width: 2.0),
+                              ),
+                              border: OutlineInputBorder(),
+                            ),
+                            validator: _validateEmail,
+                            onChanged: (value) {
+                              // Handle the input value change
+                            },
+                          ),
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width - 70,
+                          // height: 50.0,
+                          child: TextFormField(
+                            controller: passwordController,
+                            decoration: const InputDecoration(
+                                labelText: 'Password',
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                  borderSide: BorderSide(color: Colors.grey, width: 0.0),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                  borderSide:
+                                  BorderSide(color: Colors.grey, width: 0.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                                   borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
                                 ),
                                 errorBorder: OutlineInputBorder(
                                   borderRadius:
-                                  BorderRadius.all(Radius.circular(20.0)),
+                                  BorderRadius.all(Radius.circular(10.0)),
                                   borderSide:
                                   BorderSide(color: Colors.red, width: 2.0),
                                 ),
-                                border: OutlineInputBorder(),
-                              ),
-                              validator: _validateEmail,
-                              onChanged: (value) {
-                                // Handle the input value change
-                              },
-                            ),
+                                border: OutlineInputBorder()),
+                            obscureText: true,
+                            validator: _validatePassword,
+                            onChanged: (value) {
+                              // Handle the input value change
+                            },
                           ),
                         ),
-                        Positioned(
-                          top: 90.0,
-                          left: 10.0,
-                          child: Container(
-                            width: MediaQuery.of(context).size.width - 70,
-                            height: 50.0,
-                            child: TextFormField(
-                              controller: passwordController,
-                              decoration: const InputDecoration(
-                                  labelText: 'Password',
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                    borderSide:
-                                    BorderSide(color: Colors.grey, width: 0.0),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                    borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(20.0)),
-                                    borderSide:
-                                    BorderSide(color: Colors.red, width: 2.0),
-                                  ),
-                                  border: OutlineInputBorder()),
-                              obscureText: true,
-                              validator: _validatePassword,
-                              onChanged: (value) {
-                                // Handle the input value change
-                              },
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 175,
-                          left: MediaQuery.of(context).size.width/2 - 75,
-                          child: Column(
-                            children: [
-                                ElevatedButton(
-                                  onPressed: () async  {
-                                    if (_formKey.currentState!.validate()) {
-                                      try {
-                                        final querySnapshot = await FirebaseFirestore.instance
-                                            .collection("users")
-                                            .where("email", isEqualTo: emailController.text)
-                                            .get();
+                        SizedBox(height: 20.0,),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () async  {
+                                if (_formKey.currentState!.validate()) {
+                                  try {
 
-                                        print("Successfully completed");
-
-                                        for (var docSnapshot in querySnapshot.docs) {
-                                          LoginDetails.setRole = docSnapshot.data()["role"];
-                                          LoginDetails.setUserEmail = docSnapshot.data()["email"];
-                                        }
-
-                                        await FirebaseAuth.instance.signInWithEmailAndPassword(
-                                          email: emailController.text.trim(),
-                                          password: passwordController.text.trim(),
-                                        );
-
-                                        // Sign-in successful, handle the result here
-                                        CustomSnackBar.showSuccess(context, 'Success!');
-                                      } catch (error) {
-                                        // Handle any errors that occur during sign-in
-                                        CustomSnackBar.showError(context, 'Incorrect Email and Password');
-                                      }
-                                    }
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(100.0, 40.0),
-                                    primary: Colors.green[700], // Set the desired button color
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
-                                    ),
-                                  ),
-                                  child: Text('Sign In'),
-                                ),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => Register()), // Replace SecondPage with your desired destination page
+                                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                                      email: emailController.text.trim(),
+                                      password: passwordController.text.trim(),
                                     );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    minimumSize: Size(100.0, 40.0),
-                                    primary: Colors.green[700], // Set the desired button color
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
-                                    ),
-                                  ),
-                                  child: Text('Sign up'),
+                                    print("Successfully completed");
+
+                                    // Sign-in successful, handle the result here
+                                    CustomSnackBar.showSuccess(context, 'Success!');
+                                  } on FirebaseAuthException catch (error) {
+                                    // Handle any errors that occur during sign-in
+                                    if (error.code == 'user-not-found') {
+                                      CustomSnackBar.showError(context, 'User Not Found!');
+                                    } else if (error.code == 'wrong-password') {
+                                      CustomSnackBar.showError(context, 'Wrong Password!');
+                                    }
+                                  }
+                                }
+                              },
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(100.0, 40.0),
+                                primary: Colors.green[700], // Set the desired button color
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
                                 ),
-                            ],
-                          ),
+                              ),
+                              child: Text('Sign In'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => Register()), // Replace SecondPage with your desired destination page
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: Size(100.0, 40.0),
+                                primary: Colors.green[700], // Set the desired button color
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
+                                ),
+                              ),
+                              child: Text('Sign up'),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   )
               ),
-            ),
-          ),
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

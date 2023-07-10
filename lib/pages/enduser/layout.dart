@@ -55,7 +55,7 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: IconButton(
-                icon: Icon(Icons.notifications,
+                icon: Icon(Icons.logout_outlined,
                   color: Colors.black,
                   size: 30.0,
                 ),

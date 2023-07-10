@@ -47,9 +47,9 @@ class _LayoutCollectorState extends State<LayoutCollector> {
             Padding(
               padding: EdgeInsets.all(15.0),
               child: IconButton(
-                icon: Icon(Icons.notifications,
+                icon: Icon(Icons.logout_outlined,
                   color: Colors.black,
-                  size: 35.0,
+                  size: 30.0,
                 ),
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
