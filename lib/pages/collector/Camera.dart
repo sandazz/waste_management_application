@@ -155,7 +155,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     .collection('users')
                     .where('mobile', isEqualTo: mobile)
                     .get()
-                    .then((querySnapshot) {
+                    .then((querySnapshot) async {
                   if (querySnapshot.docs.isNotEmpty) {
                     // Retrieve user document
                     var userDoc = querySnapshot.docs.first;
@@ -201,9 +201,31 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                       "plasticAmount": amount,
                     };
 
+                    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+                        .collection("recycledWasteCollector")
+                        .doc(currentUser.uid)
+                        .get();
 
-                    FirebaseFirestore.instance.collection('recycledWasteCollector').doc(currentUser.uid).set(collectorPoints);
-
+                    if (documentSnapshot.exists) {
+                      Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
+                      setState(() {
+                        int point = int.parse(userData['plasticAmount']);
+                        int updateAmount = point +int.parse(amount) ;
+                        Map<String, String> collectorPoints = {
+                          "plasticAmount": amount,
+                        };
+                        FirebaseFirestore.instance
+                                .collection('recycledWasteCollector')
+                                .doc(currentUser.uid)
+                                .update({'plasticAmount': updateAmount.toString()})
+                                .then((_) {
+                                  print("Updated existing record with ID: $currentUser.uid");
+                                  }
+                                );
+                        });
+                    } else {
+                      FirebaseFirestore.instance.collection('recycledWasteCollector').doc(currentUser.uid).set(collectorPoints);
+                    }
                   }
                 });
 

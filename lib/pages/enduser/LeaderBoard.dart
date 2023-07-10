@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 
@@ -11,16 +12,53 @@ class LeaderBoard extends StatefulWidget {
 class _LeaderBoardState extends State<LeaderBoard> {
   @override
 
+  Future<void> getRecycleUsers() async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('recycledWasteEndUser')
+          .orderBy('plasticAmount', descending: true)
+          .get();
+
+      if (querySnapshot.size > 0) {
+        // Documents exist in the collection
+        for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
+          // Access each document's data
+          Object? data = documentSnapshot.data();
+          String uid = documentSnapshot.id;
+          DocumentSnapshot documentSnapshot1 = await FirebaseFirestore.instance
+              .collection("users")
+              .doc(uid)
+              .get();
+
+          if (documentSnapshot.exists) {
+            Map<String, dynamic> data1 = documentSnapshot1.data() as Map<String, dynamic>;
+            setState(() {
+              String firstName = data1['fname'];
+              texts.add(firstName);
+            });
+          } else {
+            print("User not found");
+          }
+        }
+      } else {
+        // Collection is empty
+        print('No documents found in the collection.');
+      }
+    } catch (e) {
+      // Handle any errors that occurred during the process
+      print('Error retrieving documents: $e');
+    }
+  }
+
   List<String> texts = [
-    'S. A. S. Gimhana',
-    'L. H. Sanjana',
-    'G. N. Krishanthi',
-    'S. A. Thilak',
-    'S. A. H. Eranditha',
-    'L. J. Kumara',
-    'S. D. Renuka',
-    'L. P. Chiranthana'
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    getRecycleUsers();
+  }
+
 
 
   Widget build(BuildContext context) {
@@ -72,7 +110,6 @@ class _LeaderBoardState extends State<LeaderBoard> {
                   ),
                   child: Row(
                     children: [
-
                       Text(
                         '$indexWithLeadingZero',
                         style: TextStyle(
