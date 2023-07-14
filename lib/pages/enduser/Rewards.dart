@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+
 class Rewards extends StatefulWidget {
   const Rewards({Key? key}) : super(key: key);
 
@@ -9,6 +11,7 @@ class Rewards extends StatefulWidget {
 }
 
 class _RewardsState extends State<Rewards> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,126 +152,132 @@ class _RewardsState extends State<Rewards> {
               ),
             ],
           ),
+
+
           SizedBox(height: 100.0,),
           //spinning wheeler
-          Stack(
-            children: [
-              //background rectangle
-              Positioned(
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533 ,
-                  child: Center(
-                    child: Container(
-                      width: 300.0,
-                      height: 300.0,
-                      color: Colors.green[50],
-                    ),
-                  ),
-                ),
-              ),
-              //first rectangle
-              Positioned(
-                top: 0,
-                left: 157,
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533, // Convert 90 degrees to radians
-                  child: Container(
-                    width: 75.0,
-                    height: 75.0,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ),
-              //next two rectangles
-              Positioned(
-                top: 55.0,
-                left: 102,
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533, // Convert 90 degrees to radians
-                  child: Container(
-                    width: 75.0,
-                    height: 75.0,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 55.0,
-                right: 106,
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533, // Convert 90 degrees to radians
-                  child: Container(
-                    width: 75.0,
-                    height: 75.0,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ),
-              //middle two rectangles
-              Positioned(
-                top: 110.0,
-                left: 47,
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533, // Convert 90 degrees to radians
-                  child: Container(
-                    width: 75.0,
-                    height: 75.0,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 110.0,
-                right: 51,
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533, // Convert 90 degrees to radians
-                  child: Container(
-                    width: 75.0,
-                    height: 75.0,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ),
-              //last two rectangles
-              Positioned(
-                top: 165.0,
-                left: 102,
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533, // Convert 90 degrees to radians
-                  child: Container(
-                    width: 75.0,
-                    height: 75.0,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 165.0,
-                right: 106,
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533, // Convert 90 degrees to radians
-                  child: Container(
-                    width: 75.0,
-                    height: 75.0,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ),
-              //last rectangle
-              Positioned(
-                top: 165.0 + 55.0,
-                left: 157,
-                child: Transform.rotate(
-                  angle: 45 * 0.0174533, // Convert 90 degrees to radians
-                  child: Container(
-                    width: 75.0,
-                    height: 75.0,
-                    color: Colors.green[200],
-                  ),
-                ),
-              ),
-            ],
-          ),
+          // Stack(
+          //   children: [
+          //     //background rectangle
+          //     Positioned(
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533 ,
+          //         child: Center(
+          //           child: Container(
+          //             width: 300.0,
+          //             height: 300.0,
+          //             color: Colors.green[50],
+          //           ),
+          //         ),
+          //       ),
+          //     ),
+          //     //first rectangle
+          //     Positioned(
+          //       top: 0,
+          //       left: 157,
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
+          //         child: Container(
+          //           width: 75.0,
+          //           height: 75.0,
+          //           color: Colors.green[200],
+          //         ),
+          //       ),
+          //     ),
+          //     //next two rectangles
+          //     Positioned(
+          //       top: 55.0,
+          //       left: 102,
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
+          //         child: Container(
+          //           width: 75.0,
+          //           height: 75.0,
+          //           color: Colors.green[200],
+          //         ),
+          //       ),
+          //     ),
+          //     Positioned(
+          //       top: 55.0,
+          //       right: 106,
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
+          //         child: Container(
+          //           width: 75.0,
+          //           height: 75.0,
+          //           color: Colors.green[200],
+          //         ),
+          //       ),
+          //     ),
+          //     //middle two rectangles
+          //     Positioned(
+          //       top: 110.0,
+          //       left: 47,
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
+          //         child: Container(
+          //           width: 75.0,
+          //           height: 75.0,
+          //           color: Colors.green[200],
+          //         ),
+          //       ),
+          //     ),
+          //     Positioned(
+          //       top: 110.0,
+          //       right: 51,
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
+          //         child: Container(
+          //           width: 75.0,
+          //           height: 75.0,
+          //           color: Colors.green[200],
+          //         ),
+          //       ),
+          //     ),
+          //     //last two rectangles
+          //     Positioned(
+          //       top: 165.0,
+          //       left: 102,
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
+          //         child: Container(
+          //           width: 75.0,
+          //           height: 75.0,
+          //           color: Colors.green[200],
+          //         ),
+          //       ),
+          //     ),
+          //     Positioned(
+          //       top: 165.0,
+          //       right: 106,
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
+          //         child: Container(
+          //           width: 75.0,
+          //           height: 75.0,
+          //           color: Colors.green[200],
+          //         ),
+          //       ),
+          //     ),
+          //     //last rectangle
+          //     Positioned(
+          //       top: 165.0 + 55.0,
+          //       left: 157,
+          //       child: Transform.rotate(
+          //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
+          //         child: Container(
+          //           width: 75.0,
+          //           height: 75.0,
+          //           color: Colors.green[200],
+          //         ),
+          //       ),
+          //     ),
+          //   ],
+          // ),
+
+
+
+
           SizedBox(height: 80,),
           //spinning button at last
           Center(
