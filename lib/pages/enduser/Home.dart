@@ -14,9 +14,12 @@ class _HomeState extends State<Home> {
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
-  String plasticAmount = "";
-  double points = 0;
+  String plasticAmount = "0";
+  String caneAmount = "0";
+  String glassAmount = "0";
+  String binAmount = "0";
 
+  double points = 0;
 
   Future<void> getPoints() async {
 
@@ -31,8 +34,10 @@ class _HomeState extends State<Home> {
        Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
        setState(() {
          plasticAmount = userData['plasticAmount'];
-         int point = int.parse(userData['plasticAmount']);
-         points = point*0.005;
+         caneAmount = userData['caneAmount'];
+         glassAmount = userData['glassAmount'];
+         binAmount = userData['binAmount'];
+         points = double.parse(userData['points']);
        });
      } else {
        print("User not found");
@@ -105,53 +110,52 @@ class _HomeState extends State<Home> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Container(
-                        //   width: 110.0, // Set the width of the container
-                        //   height: 110.0, // Set the height of the container
-                        //   padding: EdgeInsets.all(16.0), // Set the padding within the container
-                        //   margin: EdgeInsets.all(8.0), // Set the margin around the container
-                        //   decoration: BoxDecoration(
-                        //     color: Colors.green[300], // Set the background color of the container
-                        //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                        //     boxShadow: [
-                        //       BoxShadow(
-                        //         color: Colors.grey.withOpacity(0.5),
-                        //         spreadRadius: 2.0,
-                        //         blurRadius: 5.0,
-                        //         offset: Offset(0, 3), // Adjust the shadow position as needed
-                        //       ),
-                        //     ],
-                        //   ),
-                        //   child: Center(
-                        //     child: Column(
-                        //       children: [
-                        //         Text(
-                        //           'Cane',
-                        //           textAlign: TextAlign.center,
-                        //           style: TextStyle(
-                        //             fontSize: 20.0,
-                        //           ),
-                        //         ),
-                        //         SizedBox(height: 5.0),
-                        //         Icon(
-                        //           Icons.home,
-                        //           size: 30.0,
-                        //         ),
-                        //         SizedBox(height: 5.0),
-                        //         Text(
-                        //           '0',
-                        //           textAlign: TextAlign.center,
-                        //           style: TextStyle(
-                        //             fontSize: 20.0,
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                         Container(
-                          width: 120.0, // Set the width of the container
-                          height: 120.0, // Set the height of the container
+                          width: 100.0, // Set the width of the container
+                          padding: EdgeInsets.all(16.0), // Set the padding within the container
+                          margin: EdgeInsets.all(8.0), // Set the margin around the container
+                          decoration: BoxDecoration(
+                            color: Colors.green[300], // Set the background color of the container
+                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2.0,
+                                blurRadius: 5.0,
+                                offset: Offset(0, 3), // Adjust the shadow position as needed
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Cane',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                                Icon(
+                                  Icons.ad_units_outlined,
+                                  size: 30.0,
+                                ),
+                                SizedBox(height: 5.0),
+                                Text(
+                                  caneAmount,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 100.0, // Set the width of the container
                           padding: EdgeInsets.all(16.0), // Set the padding within the container
                           margin: EdgeInsets.all(8.0), // Set the margin around the container
                           decoration: BoxDecoration(
@@ -194,97 +198,97 @@ class _HomeState extends State<Home> {
                             ),
                           ),
                         ),
-                        // Container(
-                        //   width: 110.0, // Set the width of the container
-                        //   height: 110.0, // Set the height of the container
-                        //   padding: EdgeInsets.all(16.0), // Set the padding within the container
-                        //   margin: EdgeInsets.all(8.0), // Set the margin around the container
-                        //   decoration: BoxDecoration(
-                        //     color: Colors.green[300], // Set the background color of the container
-                        //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                        //     boxShadow: [
-                        //       BoxShadow(
-                        //         color: Colors.grey.withOpacity(0.5),
-                        //         spreadRadius: 2.0,
-                        //         blurRadius: 5.0,
-                        //         offset: Offset(0, 3), // Adjust the shadow position as needed
-                        //       ),
-                        //     ],
-                        //   ),
-                        //   child: Center(
-                        //     child: Column(
-                        //       children: [
-                        //         Text(
-                        //           'Glass',
-                        //           textAlign: TextAlign.center,
-                        //           style: TextStyle(
-                        //             fontSize: 20.0,
-                        //           ),
-                        //         ),
-                        //         SizedBox(height: 5.0),
-                        //         Icon(
-                        //           Icons.wine_bar_outlined,
-                        //           size: 30.0,
-                        //         ),
-                        //         SizedBox(height: 5.0),
-                        //         Text(
-                        //           '0',
-                        //           textAlign: TextAlign.center,
-                        //           style: TextStyle(
-                        //             fontSize: 20.0,
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // )
+                        Container(
+                          width: 100.0, // Set the width of the container
+                          padding: EdgeInsets.all(16.0), // Set the padding within the container
+                          margin: EdgeInsets.all(8.0), // Set the margin around the container
+                          decoration: BoxDecoration(
+                            color: Colors.green[300], // Set the background color of the container
+                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2.0,
+                                blurRadius: 5.0,
+                                offset: Offset(0, 3), // Adjust the shadow position as needed
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Glass',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                                Icon(
+                                  Icons.ad_units_outlined,
+                                  size: 30.0,
+                                ),
+                                SizedBox(height: 5.0),
+                                Text(
+                                  glassAmount,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
                       ],
                     ),
-                    // Container(
-                    //   width: 110.0, // Set the width of the container
-                    //   height: 110.0, // Set the height of the container
-                    //   padding: EdgeInsets.all(16.0), // Set the padding within the container
-                    //   margin: EdgeInsets.all(8.0), // Set the margin around the container
-                    //   decoration: BoxDecoration(
-                    //     color: Colors.green[100], // Set the background color of the container
-                    //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                    //     boxShadow: [
-                    //       BoxShadow(
-                    //         color: Colors.grey.withOpacity(0.5),
-                    //         spreadRadius: 2.0,
-                    //         blurRadius: 5.0,
-                    //         offset: Offset(0, 3), // Adjust the shadow position as needed
-                    //       ),
-                    //     ],
-                    //   ),
-                    //   child: Center(
-                    //     child: Column(
-                    //       children: [
-                    //         Text(
-                    //           'Bins',
-                    //           textAlign: TextAlign.center,
-                    //           style: TextStyle(
-                    //             fontSize: 20.0,
-                    //           ),
-                    //         ),
-                    //         SizedBox(height: 5.0),
-                    //         Icon(
-                    //           Icons.delete_outline,
-                    //           size: 30.0,
-                    //         ),
-                    //         SizedBox(height: 5.0),
-                    //         Text(
-                    //           '0',
-                    //           textAlign: TextAlign.center,
-                    //           style: TextStyle(
-                    //             fontSize: 20.0,
-                    //           ),
-                    //         ),
-                    //       ],
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: 60.0,)
+                    Container(
+                      width: 100.0, // Set the width of the container
+                      padding: EdgeInsets.all(16.0), // Set the padding within the container
+                      margin: EdgeInsets.all(8.0), // Set the margin around the container
+                      decoration: BoxDecoration(
+                        color: Colors.green[100], // Set the background color of the container
+                        borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2.0,
+                            blurRadius: 5.0,
+                            offset: Offset(0, 3), // Adjust the shadow position as needed
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Bins',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Icon(
+                              Icons.delete_outline,
+                              size: 30.0,
+                            ),
+                            SizedBox(height: 5.0),
+                            Text(
+                              binAmount,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20.0,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 60.0,)
                   ],
                 ),
               ),

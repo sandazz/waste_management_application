@@ -14,7 +14,9 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final mobileController = TextEditingController();
-  final amountController = TextEditingController();
+  final plasticAmountController = TextEditingController();
+  final caneAmountController = TextEditingController();
+  final glassAmountController = TextEditingController();
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -82,73 +84,78 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                         ),
                         border: OutlineInputBorder(),
                       ),
-                      controller: amountController,
+                      controller: plasticAmountController,
                     )
                 )
               ],
             ),
             SizedBox(height: 20.0,),
-            //other rows not developed funtions for the canes and the glass
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Container(
-            //         width: 300.0,
-            //         child: TextFormField(
-            //           decoration: InputDecoration(
-            //             labelText: 'Cane Amount',
-            //             labelStyle: TextStyle(
-            //               color: Colors.green[700], // Set the desired text color
-            //             ),
-            //             enabledBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            //               borderSide:
-            //               BorderSide(color: Colors.green, width: 0.0),
-            //             ),
-            //             focusedBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            //               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-            //             ),
-            //             border: OutlineInputBorder(),
-            //           ),
-            //           controller: amountController,
-            //         )
-            //     )
-            //   ],
-            // ),
-            // SizedBox(height: 20.0,),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Container(
-            //         width: 300.0,
-            //         child: TextFormField(
-            //           decoration: InputDecoration(
-            //             labelText: 'Glass Amount',
-            //             labelStyle: TextStyle(
-            //               color: Colors.green[700], // Set the desired text color
-            //             ),
-            //             enabledBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            //               borderSide:
-            //               BorderSide(color: Colors.green, width: 0.0),
-            //             ),
-            //             focusedBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            //               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-            //             ),
-            //             border: OutlineInputBorder(),
-            //           ),
-            //           controller: amountController,
-            //         )
-            //     )
-            //   ],
-            // ),
-            // SizedBox(height: 20.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 300.0,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Cane Amount',
+                        labelStyle: TextStyle(
+                          color: Colors.green[700], // Set the desired text color
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide:
+                          BorderSide(color: Colors.green, width: 0.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: caneAmountController,
+                    )
+                )
+              ],
+            ),
+            SizedBox(height: 20.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 300.0,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Glass Amount',
+                        labelStyle: TextStyle(
+                          color: Colors.green[700], // Set the desired text color
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide:
+                          BorderSide(color: Colors.green, width: 0.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                      controller: glassAmountController,
+                    )
+                )
+              ],
+            ),
+            SizedBox(height: 20.0,),
             ElevatedButton(
               onPressed: () {
                 String mobile = mobileController.text.trim();
-                String amount = amountController.text.trim();
+                String plasticAmount = plasticAmountController.text.trim();
+                String caneAmount = caneAmountController.text.trim();
+                String glassAmount = glassAmountController.text.trim();
+                String binAmount = "0";
+                double points = (double.parse(plasticAmount)+double.parse(caneAmount)+double.parse(glassAmount))*0.05;
+                double spinnablePoints = points;
+
 
                 // Retrieve user ID from "users" collection
                 FirebaseFirestore.instance
@@ -166,7 +173,12 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     // Update "dataToSave" map with
                     Map<String, String> dataToSave = {
                       "mobile": mobile,
-                      "plasticAmount": amount,
+                      "plasticAmount": plasticAmount,
+                      "caneAmount": caneAmount,
+                      "glassAmount": glassAmount,
+                      "points" : points.toString(),
+                      "spinnablePoints" : spinnablePoints.toString(),
+                      "binAmount" : binAmount, //bin in not initailzed up to now
                     };
 
                     //  Check if a record with the same mobile number exists
@@ -179,15 +191,35 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                         // Retrieve the existing record document
                         var existingDoc = querySnapshot.docs.first;
                         String existingDocId = existingDoc.id;
-                        int existingAmount = int.parse(existingDoc.data()['plasticAmount']);
-                        int newAmount = int.parse(amount);
-                        int updatedAmount = existingAmount + newAmount;
+
+                        //plastic amount increase
+                        int existingPlasticAmount = int.parse(existingDoc.data()['plasticAmount']);
+                        int newPlasticAmount = int.parse(plasticAmount);
+                        int updatedPlasticAmount = existingPlasticAmount + newPlasticAmount;
+
+                        //cane amount increase
+                        int existingCaneAmount = int.parse(existingDoc.data()['caneAmount']);
+                        int newCaneAmount = int.parse(caneAmount);
+                        int updatedCaneAmount = existingCaneAmount + newCaneAmount;
+
+                        //glass amount increase
+                        int existingGlassAmount = int.parse(existingDoc.data()['glassAmount']);
+                        int newGlassAmount = int.parse(glassAmount);
+                        int updatedGlassAmount = existingGlassAmount + newGlassAmount;
+
+                        double existingPoints = double.parse(existingDoc.data()['points']);
+                        double newPoints = points;
+                        double updatedPoints = existingPoints + newPoints;
+
+                        double existingSpinnablePoints = double.parse(existingDoc.data()['spinnablePoints']);
+                        double newSpinnablePoints = spinnablePoints;
+                        double updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
 
                         // Update the existing record with the new amount value
                         FirebaseFirestore.instance
                             .collection('recycledWasteEndUser')
                             .doc(existingDocId)
-                            .update({'plasticAmount': updatedAmount.toString()})
+                            .update({'plasticAmount': updatedPlasticAmount.toString(), 'caneAmount': updatedCaneAmount.toString(),'glassAmount': updatedGlassAmount.toString(),'points': updatedPoints.toString(),'spinnablePoints': updatedspinnablePoints.toString()})
                             .then((_) {
                           print("Updated existing record with ID: $existingDocId");
                         });
@@ -198,7 +230,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     });
 
                     Map<String, String> collectorPoints = {
-                      "plasticAmount": amount,
+                      "plasticAmount": plasticAmount,
                     };
 
                     DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
@@ -210,9 +242,9 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
                       setState(() {
                         int point = int.parse(userData['plasticAmount']);
-                        int updateAmount = point +int.parse(amount) ;
+                        int updateAmount = point +int.parse(plasticAmount) ;
                         Map<String, String> collectorPoints = {
-                          "plasticAmount": amount,
+                          "plasticAmount": plasticAmount,
                         };
                         FirebaseFirestore.instance
                                 .collection('recycledWasteCollector')
@@ -231,7 +263,10 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
                 // Clear text form fields and reset data
                 mobileController.clear();
-                amountController.clear();
+                plasticAmountController.clear();
+                caneAmountController.clear();
+                glassAmountController.clear();
+
               },
 
 
