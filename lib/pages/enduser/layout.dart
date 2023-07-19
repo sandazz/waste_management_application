@@ -46,7 +46,10 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
                 size: 30.0,
               ),
               onPressed: () {// Handle leading icon press
-                Account();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Account()), // Replace SecondPage with your desired destination page
+                );
               },
             ),
           ),
