@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:waste_management_app/login/login.dart';
 import 'package:waste_management_app/pages/collector/Collector.dart';
+import 'package:waste_management_app/pages/collector/NotVerified.dart';
 import 'package:waste_management_app/pages/enduser/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:waste_management_app/providers/loginProvider.dart';
@@ -34,8 +35,6 @@ class _AppState extends State<App> {
 
   Widget build(BuildContext context) {
 
-    final loginDetails = Provider.of<LoginData>(context, listen: false);  // use provider to save role when login and used here
-
     return StreamBuilder<User?>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
@@ -63,7 +62,12 @@ class _AppState extends State<App> {
                   return login();
                 } else if (snapshot.hasData && snapshot.data!.data() != null && snapshot.data!.get("role") == "collector") {
                   print("---------role = collector");
-                  return LayoutCollector();
+                  if(snapshot.data!.get("verified") == "true"){
+                    return LayoutCollector();
+                  }else{
+                    return NotVerified();
+                  }
+
                 } else if (snapshot.hasData && snapshot.data!.data() != null && snapshot.data!.get("role") == "user") {
                   print("--------role = user");
                   return BottomNavigationExample();

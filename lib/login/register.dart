@@ -63,17 +63,24 @@ class _RegisterState extends State<Register> {
     }
     return null;
   }
+  String? _validateNIC(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Role is required';
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    String selectedOption = '' ;
+    String? selectedOption = "collector";
 
     final fnameController = TextEditingController();
     final locationController = TextEditingController();
     final emailController = TextEditingController();
     final mobileController = TextEditingController();
     final roleController = TextEditingController();
+    final nicController = TextEditingController();
     final passwordController = TextEditingController();
 
     return Scaffold(
@@ -252,7 +259,7 @@ class _RegisterState extends State<Register> {
                         ),
                         validator: _validateRole,
                         onChanged: (value) {
-                          selectedOption = value!;
+                            selectedOption = value!;
                         },
                         items: [
                           DropdownMenuItem(
@@ -268,6 +275,39 @@ class _RegisterState extends State<Register> {
                     )
                   ],
                 ),
+                SizedBox(height: 20.0,),
+                Visibility(
+                  visible: selectedOption == 'collector',
+                    child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+
+                          width: 300.0,
+                          child: TextFormField(
+                            decoration:  InputDecoration(
+                                labelText: 'NIC No',
+                                labelStyle: TextStyle(
+                                  color: Colors.green[700], // Set the desired text color
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                  borderSide:
+                                  BorderSide(color: Colors.green, width: 0.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                  borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                                ),
+                                border: OutlineInputBorder()),
+                            validator: _validateNIC,
+                            controller: nicController,
+                          )
+                      )
+                    ],
+                ),
+                  ),
+                if (selectedOption == 'collector')
                 SizedBox(height: 20.0,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -309,20 +349,56 @@ class _RegisterState extends State<Register> {
                         password: passwordController.text.trim(),
                       );
 
-                      roleController.text = selectedOption;
-                      //firebase firestore data adding
-                      Map<String, String> dataToSave = {
-                        "fname": fnameController.text.trim(),
-                        "lccation": locationController.text.trim(),
-                        "email": emailController.text.trim(),
-                        "mobile": mobileController.text.trim(),
-                        "role": roleController.text.trim(),
-                        "password": passwordController.text.trim(),
-                      };
+                      roleController.text = selectedOption!;
+                      if(roleController.text == 'user'){
+                        //firebase firestore data adding
+                        Map<String, String> dataToSave = {
+                          "fname": fnameController.text.trim(),
+                          "lccation": locationController.text.trim(),
+                          "email": emailController.text.trim(),
+                          "mobile": mobileController.text.trim(),
+                          "role": roleController.text.trim(),
+                          "password": passwordController.text.trim(),
+                        };
 
-                      FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set(dataToSave);
-                      FirebaseAuth.instance.signOut();
-                      Navigator.of(context).pop();
+                        try {
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(userCredential.user!.uid)
+                              .set(dataToSave);
+                        } catch (e) {
+                          print('An error occurred while saving data to Firestore: $e');
+                        }
+                        FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pop();
+
+                      }else if(roleController.text == 'collector'){
+                        //firebase firestore data adding
+                        Map<String, String> dataToSave = {
+                          "fname": fnameController.text.trim(),
+                          "lccation": locationController.text.trim(),
+                          "email": emailController.text.trim(),
+                          "mobile": mobileController.text.trim(),
+                          "role": roleController.text.trim(),
+                          "password": passwordController.text.trim(),
+                          "nic" : nicController.text.trim(),
+                          "google_map_location": '',
+                          "verified" : 'false',
+                        };
+
+                        try {
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(userCredential.user!.uid)
+                              .set(dataToSave);
+                        } catch (e) {
+                          print('An error occurred while saving data to Firestore: $e');
+                        }
+                        FirebaseAuth.instance.signOut();
+                        Navigator.of(context).pop();
+
+                      }
+
                     }
                   },
                   style: ElevatedButton.styleFrom(
