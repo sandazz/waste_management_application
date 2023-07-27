@@ -284,96 +284,96 @@ class _AchievementState extends State<Achievement> {
                           ),
                         ),
                       ),
-                      Container(
-                        width: 85.0, // Set the width of the container
-                        padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Set the background color of the container
-                          borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2.0,
-                              blurRadius: 5.0,
-                              offset: Offset(0, 3), // Adjust the shadow position as needed
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                'Media',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              SizedBox(height: 2.0),
-                              Container(
-                                child: Image.asset(
-                                  achievementMediaURL, // Replace "image.jpg" with the actual filename and extension of your image
-                                  fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                                ),
-                              ),
-                              SizedBox(height: 2.0),
-                              Text(
-                                achievementMediaBadge,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 85.0, // Set the width of the container
-                        padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                        margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Set the background color of the container
-                          borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2.0,
-                              blurRadius: 5.0,
-                              offset: Offset(0, 3), // Adjust the shadow position as needed
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                'Social',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                ),
-                              ),
-                              SizedBox(height: 2.0),
-                              Container(
-                                child: Image.asset(
-                                  achievementSocialURL, // Replace "image.jpg" with the actual filename and extension of your image
-                                  fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                                ),
-                              ),
-                              SizedBox(height: 2.0),
-                              Text(
-                                achievementSocialBadge,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   width: 85.0, // Set the width of the container
+                      //   padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
+                      //   margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white, // Set the background color of the container
+                      //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                      //     boxShadow: [
+                      //       BoxShadow(
+                      //         color: Colors.grey.withOpacity(0.5),
+                      //         spreadRadius: 2.0,
+                      //         blurRadius: 5.0,
+                      //         offset: Offset(0, 3), // Adjust the shadow position as needed
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   child: Center(
+                      //     child: Column(
+                      //       children: [
+                      //         Text(
+                      //           'Media',
+                      //           textAlign: TextAlign.center,
+                      //           style: TextStyle(
+                      //             fontSize: 18.0,
+                      //           ),
+                      //         ),
+                      //         SizedBox(height: 2.0),
+                      //         Container(
+                      //           child: Image.asset(
+                      //             achievementMediaURL, // Replace "image.jpg" with the actual filename and extension of your image
+                      //             fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                      //           ),
+                      //         ),
+                      //         SizedBox(height: 2.0),
+                      //         Text(
+                      //           achievementMediaBadge,
+                      //           textAlign: TextAlign.center,
+                      //           style: TextStyle(
+                      //             fontSize: 15.0,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      // Container(
+                      //   width: 85.0, // Set the width of the container
+                      //   padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
+                      //   margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white, // Set the background color of the container
+                      //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                      //     boxShadow: [
+                      //       BoxShadow(
+                      //         color: Colors.grey.withOpacity(0.5),
+                      //         spreadRadius: 2.0,
+                      //         blurRadius: 5.0,
+                      //         offset: Offset(0, 3), // Adjust the shadow position as needed
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   child: Center(
+                      //     child: Column(
+                      //       children: [
+                      //         Text(
+                      //           'Social',
+                      //           textAlign: TextAlign.center,
+                      //           style: TextStyle(
+                      //             fontSize: 18.0,
+                      //           ),
+                      //         ),
+                      //         SizedBox(height: 2.0),
+                      //         Container(
+                      //           child: Image.asset(
+                      //             achievementSocialURL, // Replace "image.jpg" with the actual filename and extension of your image
+                      //             fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                      //           ),
+                      //         ),
+                      //         SizedBox(height: 2.0),
+                      //         Text(
+                      //           achievementSocialBadge,
+                      //           textAlign: TextAlign.center,
+                      //           style: TextStyle(
+                      //             fontSize: 15.0,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
 
                     ],
                   ),
@@ -840,310 +840,310 @@ class _AchievementState extends State<Achievement> {
                             ],
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(16.0), // Set the padding within the container
-                          margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container
-                          decoration: BoxDecoration(
-                            color: Colors.green, // Set the background color of the container
-                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2.0,
-                                blurRadius: 5.0,
-                                offset: Offset(0, 3), // Adjust the shadow position as needed
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${MediaAmount >= 1 ? '1' : MediaAmount}/1",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Do You Know',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/13.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${MediaAmount >= 10 ? '10' : MediaAmount}/10",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Influencer',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/14.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${MediaAmount >= 100 ? '100' : MediaAmount}/100",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Social Media Star',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/15.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(16.0), // Set the padding within the container
-                          margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container
-                          decoration: BoxDecoration(
-                            color: Colors.green, // Set the background color of the container
-                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2.0,
-                                blurRadius: 5.0,
-                                offset: Offset(0, 3), // Adjust the shadow position as needed
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${socialAmount >= 1 ? '1' : socialAmount}/1",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Friend',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/16.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${socialAmount >= 10 ? '10' : socialAmount}/10",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Best Friend',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/17.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${socialAmount >= 100 ? '100' : socialAmount}/100",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Friend in Need',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/18.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.all(16.0), // Set the padding within the container
+                        //   margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.green, // Set the background color of the container
+                        //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                        //     boxShadow: [
+                        //       BoxShadow(
+                        //         color: Colors.grey.withOpacity(0.5),
+                        //         spreadRadius: 2.0,
+                        //         blurRadius: 5.0,
+                        //         offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   child: Column(
+                        //     children: [
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${MediaAmount >= 1 ? '1' : MediaAmount}/1",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Do You Know',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/13.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${MediaAmount >= 10 ? '10' : MediaAmount}/10",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Influencer',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/14.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${MediaAmount >= 100 ? '100' : MediaAmount}/100",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Social Media Star',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/15.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+                        // Container(
+                        //   padding: EdgeInsets.all(16.0), // Set the padding within the container
+                        //   margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.green, // Set the background color of the container
+                        //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                        //     boxShadow: [
+                        //       BoxShadow(
+                        //         color: Colors.grey.withOpacity(0.5),
+                        //         spreadRadius: 2.0,
+                        //         blurRadius: 5.0,
+                        //         offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   child: Column(
+                        //     children: [
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${socialAmount >= 1 ? '1' : socialAmount}/1",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Friend',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/16.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${socialAmount >= 10 ? '10' : socialAmount}/10",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Best Friend',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/17.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${socialAmount >= 100 ? '100' : socialAmount}/100",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Friend in Need',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/18.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],

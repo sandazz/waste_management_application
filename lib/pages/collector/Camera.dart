@@ -229,8 +229,10 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                       }
                     });
 
-                    Map<String, String> collectorPoints = {
+                    Map<String, String> collectorAmounts = {
                       "plasticAmount": plasticAmount,
+                      "caneAmount": caneAmount,
+                      "glassAmount": glassAmount,
                     };
 
                     DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
@@ -241,22 +243,27 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     if (documentSnapshot.exists) {
                       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
                       setState(() {
-                        int point = int.parse(userData['plasticAmount']);
-                        int updateAmount = point +int.parse(plasticAmount) ;
-                        Map<String, String> collectorPoints = {
-                          "plasticAmount": plasticAmount,
-                        };
+
+                        int existingPlasticAmountCollector = int.parse(userData['plasticAmount']);
+                        int updatePlasticAmountCollector = existingPlasticAmountCollector +int.parse(plasticAmount);
+
+                        int existingCaneAmountCollector = int.parse(userData['caneAmount']);
+                        int updateCaneAmountCollector = existingCaneAmountCollector +int.parse(caneAmount);
+
+                        int existingGlassAmountCollector = int.parse(userData['glassAmount']);
+                        int updateGlassAmountCollector = existingGlassAmountCollector +int.parse(glassAmount);
+
                         FirebaseFirestore.instance
                                 .collection('recycledWasteCollector')
                                 .doc(currentUser.uid)
-                                .update({'plasticAmount': updateAmount.toString()})
+                                .update({'plasticAmount': updatePlasticAmountCollector.toString(),'caneAmount': updateCaneAmountCollector.toString(), 'glassAmount': updateGlassAmountCollector.toString()})
                                 .then((_) {
                                   print("Updated existing record with ID: $currentUser.uid");
                                   }
                                 );
                         });
                     } else {
-                      FirebaseFirestore.instance.collection('recycledWasteCollector').doc(currentUser.uid).set(collectorPoints);
+                      FirebaseFirestore.instance.collection('recycledWasteCollector').doc(currentUser.uid).set(collectorAmounts);
                     }
                   }
                 });

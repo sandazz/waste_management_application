@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:waste_management_app/pages/collector/Account.dart';
 import 'package:waste_management_app/pages/collector/Camera.dart';
 import 'package:waste_management_app/pages/collector/Home.dart';
 
@@ -39,6 +40,10 @@ class _LayoutCollectorState extends State<LayoutCollector> {
                 size: 30.0,
               ),
               onPressed: () {// Handle leading icon press
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Account()), // Replace SecondPage with your desired destination page
+                );
               },
             ),
           ),
