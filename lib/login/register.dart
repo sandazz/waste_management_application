@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:waste_management_app/components/snackbar.dart';
 import 'package:waste_management_app/login/login.dart';
 
 class Register extends StatefulWidget {
@@ -18,10 +19,22 @@ class _RegisterState extends State<Register> {
     if (value == null || value.isEmpty) {
       return 'Email is required';
     }
+
+    // Check length of email
+    if (value.length > 50) {
+      return 'Email cannot exceed 50 characters';
+    }
+
+    // Check if the email has specific domain (like gmail.com)
+    if (!value.endsWith('@gmail.com')) {
+      return 'Only gmail.com email addresses are allowed';
+    }
+
     final emailRegExp = RegExp(r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
     if (!emailRegExp.hasMatch(value)) {
       return 'Enter a valid email address';
     }
+
     return null;
   }
 
@@ -32,14 +45,47 @@ class _RegisterState extends State<Register> {
     if (value.length < 8) {
       return 'Password must be at least 8 characters long';
     }
-    // You can add more password validation rules here
+
+    // Check for at least one lowercase letter in the password
+    if (!RegExp(r'[a-z]').hasMatch(value)) {
+      return 'Password must contain at least one lowercase letter';
+    }
+
+    // Check for at least one uppercase letter in the password
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return 'Password must contain at least one uppercase letter';
+    }
+
+    // Check for at least one digit in the password
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return 'Password must contain at least one number';
+    }
+
+    // Check for at least one special character in the password
+    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+      return 'Password must contain at least one special character';
+    }
+
     return null;
   }
 
+
   String? _validateFname(String? value) {
+    // Check if the input is empty
     if (value == null || value.isEmpty) {
-      return 'First Name is required';
+      return 'Name is required';
     }
+
+    // Check if the input only contains alphabets and spaces
+    if (!RegExp(r'^[a-zA-Z\s]*$').hasMatch(value)) {
+      return 'Name can only contain alphabets and spaces';
+    }
+
+    // Check if the input contains at least a first name and a last name
+    if (!value.trim().contains(' ')) {
+      return 'Please enter both first and last name';
+    }
+
     return null;
   }
 
@@ -54,6 +100,24 @@ class _RegisterState extends State<Register> {
     if (value == null || value.isEmpty) {
       return 'Mobile is required';
     }
+
+    // Check for non-numeric characters
+    if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+      return 'Mobile number can only contain digits';
+    }
+
+    // Check for the correct number of digits for a mobile number
+    // (Assuming a mobile number should have 10 digits - modify this as necessary)
+    if (value.length != 10) {
+      return 'Mobile number must contain exactly 10 digits';
+    }
+
+    // Check for specific starting digits
+    // (Assuming a mobile number should start with '07' - modify this as necessary)
+    if (!value.startsWith('07')) {
+      return 'Mobile number must start with 07';
+    }
+
     return null;
   }
 
@@ -63,12 +127,25 @@ class _RegisterState extends State<Register> {
     }
     return null;
   }
+
   String? _validateNIC(String? value) {
     if (value == null || value.isEmpty) {
-      return 'Role is required';
+      return 'NIC is required';
     }
+
+    // Check for non-numeric characters (allowing for a letter at the end)
+    if (!RegExp(r'^[0-9]{9}[vVxX]?$').hasMatch(value)) {
+      return 'NIC number should be 9 digits followed by an optional letter';
+    }
+
+    // Check for the correct number of digits/characters in the NIC
+    if (value.length != 10 && value.length != 12) {
+      return 'NIC number must contain exactly 10 or 12 characters';
+    }
+
     return null;
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -366,8 +443,11 @@ class _RegisterState extends State<Register> {
                               .collection('users')
                               .doc(userCredential.user!.uid)
                               .set(dataToSave);
+
+                          CustomSnackBar.showSuccess(context, 'Data saved successfully...');
                         } catch (e) {
                           print('An error occurred while saving data to Firestore: $e');
+                          CustomSnackBar.showError(context, 'An error occurred while saving data. Please try again.');
                         }
                         FirebaseAuth.instance.signOut();
                         Navigator.of(context).pop();
@@ -385,20 +465,26 @@ class _RegisterState extends State<Register> {
                           "google_map_location": '',
                           "verified" : 'false',
                         };
-
                         try {
                           await FirebaseFirestore.instance
                               .collection('users')
                               .doc(userCredential.user!.uid)
                               .set(dataToSave);
+
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Data saved successfully...'),
+                              backgroundColor: Colors.green,),
+                          );
                         } catch (e) {
                           print('An error occurred while saving data to Firestore: $e');
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('An error occurred while saving data. Please try again.'),
+                              backgroundColor: Colors.red,),
+                          );
                         }
                         FirebaseAuth.instance.signOut();
                         Navigator.of(context).pop();
-
                       }
-
                     }
                   },
                   style: ElevatedButton.styleFrom(
