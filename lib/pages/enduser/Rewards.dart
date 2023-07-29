@@ -36,7 +36,6 @@ class _RewardsState extends State<Rewards> {
       setState(() {
         spinnablePoints = double.parse(userData['spinnablePoints']);
         totalSpinnableCount = (spinnablePoints/ costPerSpinning).toInt();
-        print(spinnablePoints);
       });
     } else {
       print("User not found");

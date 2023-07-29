@@ -184,7 +184,7 @@ class _loginState extends State<login> with WidgetsBindingObserver {
                                     print("Successfully completed");
 
                                     // Sign-in successful, handle the result here
-                                    CustomSnackBar.showSuccess(context, 'Success!');
+                                    CustomSnackBar.showSuccess(context, 'Login Success...');
                                   } on FirebaseAuthException catch (error) {
                                     // Handle any errors that occur during sign-in
                                     if (error.code == 'user-not-found') {

@@ -18,6 +18,14 @@ class _AchievementState extends State<Achievement> {
   String achievementPlasticURL = "assets/achievements/no.png";
   String achievementPlasticBadge = "No Badges";
 
+  int caneAmount = 0 ;
+  String achievementCaneURL = "assets/achievements/no.png";
+  String achievementCaneBadge = "No Badges";
+
+  int glassAmount = 0 ;
+  String achievementGlassURL = "assets/achievements/no.png";
+  String achievementGlassBadge = "No Badges";
+
   int usageAmount = 0 ;
   String achievementUsageURL = "assets/achievements/no.png";
   String achievementUsageBadge = "No Badges";
@@ -47,6 +55,8 @@ class _AchievementState extends State<Achievement> {
       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
       setState(() {
         plasticAmount = int.parse(userData['plasticAmount']);
+        caneAmount = int.parse(userData['caneAmount']);
+        glassAmount = int.parse(userData['glassAmount']);
         binAmount = int.parse(userData['binAmount']);
         // usageAmount = 4;
         // MediaAmount = 5;
@@ -67,6 +77,30 @@ class _AchievementState extends State<Achievement> {
     } else if(plasticAmount >= 1){
       achievementPlasticURL = "assets/achievements/1.png";
       achievementPlasticBadge = "Baby Step";
+    }
+
+    //cane badges
+    if(caneAmount>=100){
+      achievementCaneURL = "assets/achievements/3.png";
+      achievementCaneBadge = "Eco-Warrior";
+    }else if(caneAmount>=10){
+      achievementCaneURL = "assets/achievements/2.png";
+      achievementCaneBadge = "Getting Started";
+    } else if(caneAmount >= 1){
+      achievementCaneURL = "assets/achievements/1.png";
+      achievementCaneBadge = "Baby Step";
+    }
+
+    //plastic badges
+    if(glassAmount>=100){
+      achievementGlassURL = "assets/achievements/3.png";
+      achievementGlassBadge = "Eco-Warrior";
+    }else if(glassAmount>=10){
+      achievementGlassURL = "assets/achievements/2.png";
+      achievementGlassBadge = "Getting Started";
+    } else if(glassAmount >= 1){
+      achievementGlassURL = "assets/achievements/1.png";
+      achievementGlassBadge = "Baby Step";
     }
 
     //bin Badges
@@ -214,7 +248,7 @@ class _AchievementState extends State<Achievement> {
                           child: Column(
                             children: [
                               Text(
-                                'Bin',
+                                'Cane',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 18.0,
@@ -223,13 +257,13 @@ class _AchievementState extends State<Achievement> {
                               SizedBox(height: 2.0),
                               Container(
                                 child: Image.asset(
-                                  achievementBinURL, // Replace "image.jpg" with the actual filename and extension of your image
+                                  achievementCaneURL, // Replace "image.jpg" with the actual filename and extension of your image
                                   fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
                                 ),
                               ),
                               SizedBox(height: 2.0),
                               Text(
-                                achievementBinBadge,
+                                achievementCaneBadge,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 15.0,
@@ -259,7 +293,7 @@ class _AchievementState extends State<Achievement> {
                           child: Column(
                             children: [
                               Text(
-                                'Usage',
+                                'Glass',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 18.0,
@@ -268,13 +302,13 @@ class _AchievementState extends State<Achievement> {
                               SizedBox(height: 2.0),
                               Container(
                                 child: Image.asset(
-                                  achievementUsageURL, // Replace "image.jpg" with the actual filename and extension of your image
+                                  achievementGlassURL, // Replace "image.jpg" with the actual filename and extension of your image
                                   fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
                                 ),
                               ),
                               SizedBox(height: 2.0),
                               Text(
-                                achievementUsageBadge,
+                                achievementGlassBadge,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 15.0,
@@ -284,6 +318,96 @@ class _AchievementState extends State<Achievement> {
                           ),
                         ),
                       ),
+                      Container(
+                        width: 85.0, // Set the width of the container
+                        padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Set the background color of the container
+                          borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2.0,
+                              blurRadius: 5.0,
+                              offset: Offset(0, 3), // Adjust the shadow position as needed
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Bin',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              SizedBox(height: 2.0),
+                              Container(
+                                child: Image.asset(
+                                  achievementBinURL, // Replace "image.jpg" with the actual filename and extension of your image
+                                  fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                                ),
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                achievementBinBadge,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Container(
+                      //   width: 85.0, // Set the width of the container
+                      //   padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
+                      //   margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                      //   decoration: BoxDecoration(
+                      //     color: Colors.white, // Set the background color of the container
+                      //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                      //     boxShadow: [
+                      //       BoxShadow(
+                      //         color: Colors.grey.withOpacity(0.5),
+                      //         spreadRadius: 2.0,
+                      //         blurRadius: 5.0,
+                      //         offset: Offset(0, 3), // Adjust the shadow position as needed
+                      //       ),
+                      //     ],
+                      //   ),
+                      //   child: Center(
+                      //     child: Column(
+                      //       children: [
+                      //         Text(
+                      //           'Usage',
+                      //           textAlign: TextAlign.center,
+                      //           style: TextStyle(
+                      //             fontSize: 18.0,
+                      //           ),
+                      //         ),
+                      //         SizedBox(height: 2.0),
+                      //         Container(
+                      //           child: Image.asset(
+                      //             achievementUsageURL, // Replace "image.jpg" with the actual filename and extension of your image
+                      //             fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                      //           ),
+                      //         ),
+                      //         SizedBox(height: 2.0),
+                      //         Text(
+                      //           achievementUsageBadge,
+                      //           textAlign: TextAlign.center,
+                      //           style: TextStyle(
+                      //             fontSize: 15.0,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                       // Container(
                       //   width: 85.0, // Set the width of the container
                       //   padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
@@ -575,6 +699,310 @@ class _AchievementState extends State<Achievement> {
                                     Padding(
                                       padding: EdgeInsets.only(left: 20.0),
                                       child: Text(
+                                        "${caneAmount >= 1 ? '1' : caneAmount}/1",
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          'Baby step',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20.0),
+                                      child: Image.asset(
+                                        'assets/achievements/1.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 500.0, // Set the width of the container
+                                height: 40.0,// Set the height of the container
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Set the background color of the container
+                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1.0,
+                                      blurRadius: 2.0,
+                                      offset: Offset(0, 3), // Adjust the shadow position as needed
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20.0),
+                                      child: Text(
+                                        "${caneAmount >= 10 ? '10' : caneAmount}/10",
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          'Getting Started',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20.0),
+                                      child: Image.asset(
+                                        'assets/achievements/2.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 500.0, // Set the width of the container
+                                height: 40.0,// Set the height of the container
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Set the background color of the container
+                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1.0,
+                                      blurRadius: 2.0,
+                                      offset: Offset(0, 3), // Adjust the shadow position as needed
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20.0),
+                                      child: Text(
+                                        "${caneAmount >= 100 ? '100' : caneAmount}/100",
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          'Eco-Warrior',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20.0),
+                                      child: Image.asset(
+                                        'assets/achievements/3.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(16.0), // Set the padding within the container
+                          margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container
+                          decoration: BoxDecoration(
+                            color: Colors.green, // Set the background color of the container
+                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2.0,
+                                blurRadius: 5.0,
+                                offset: Offset(0, 3), // Adjust the shadow position as needed
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 500.0, // Set the width of the container
+                                height: 40.0,// Set the height of the container
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Set the background color of the container
+                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1.0,
+                                      blurRadius: 2.0,
+                                      offset: Offset(0, 3), // Adjust the shadow position as needed
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20.0),
+                                      child: Text(
+                                        "${glassAmount >= 1 ? '1' : glassAmount}/1",
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          'Baby step',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20.0),
+                                      child: Image.asset(
+                                        'assets/achievements/1.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 500.0, // Set the width of the container
+                                height: 40.0,// Set the height of the container
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Set the background color of the container
+                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1.0,
+                                      blurRadius: 2.0,
+                                      offset: Offset(0, 3), // Adjust the shadow position as needed
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20.0),
+                                      child: Text(
+                                        "${glassAmount >= 10 ? '10' : glassAmount}/10",
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          'Getting Started',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20.0),
+                                      child: Image.asset(
+                                        'assets/achievements/2.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                width: 500.0, // Set the width of the container
+                                height: 40.0,// Set the height of the container
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Set the background color of the container
+                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1.0,
+                                      blurRadius: 2.0,
+                                      offset: Offset(0, 3), // Adjust the shadow position as needed
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20.0),
+                                      child: Text(
+                                        "${glassAmount >= 100 ? '100' : glassAmount}/100",
+                                        textAlign: TextAlign.left,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: Text(
+                                          'Eco-Warrior',
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.only(right: 20.0),
+                                      child: Image.asset(
+                                        'assets/achievements/3.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: EdgeInsets.all(16.0), // Set the padding within the container
+                          margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container
+                          decoration: BoxDecoration(
+                            color: Colors.green, // Set the background color of the container
+                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2.0,
+                                blurRadius: 5.0,
+                                offset: Offset(0, 3), // Adjust the shadow position as needed
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 500.0, // Set the width of the container
+                                height: 40.0,// Set the height of the container
+                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white, // Set the background color of the container
+                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      spreadRadius: 1.0,
+                                      blurRadius: 2.0,
+                                      offset: Offset(0, 3), // Adjust the shadow position as needed
+                                    ),
+                                  ],
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(left: 20.0),
+                                      child: Text(
                                         "${binAmount >= 1 ? '1' : binAmount}/1",
                                         textAlign: TextAlign.left,
                                       ),
@@ -688,158 +1116,158 @@ class _AchievementState extends State<Achievement> {
                             ],
                           ),
                         ),
-                        Container(
-                          padding: EdgeInsets.all(16.0), // Set the padding within the container
-                          margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container
-                          decoration: BoxDecoration(
-                            color: Colors.green, // Set the background color of the container
-                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2.0,
-                                blurRadius: 5.0,
-                                offset: Offset(0, 3), // Adjust the shadow position as needed
-                              ),
-                            ],
-                          ),
-                          child: Column(
-                            children: [
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${usageAmount >= 1 ? '1' : usageAmount}/1",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Day 01',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/7.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${usageAmount >= 10 ? '10' : usageAmount}/10",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Behaviour',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/8.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                width: 500.0, // Set the width of the container
-                                height: 40.0,// Set the height of the container
-                                margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.white, // Set the background color of the container
-                                  borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.5),
-                                      spreadRadius: 1.0,
-                                      blurRadius: 2.0,
-                                      offset: Offset(0, 3), // Adjust the shadow position as needed
-                                    ),
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 20.0),
-                                      child: Text(
-                                        "${usageAmount >= 100 ? '100' : usageAmount}/100",
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: Text(
-                                          'Habit',
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      padding: EdgeInsets.only(right: 20.0),
-                                      child: Image.asset(
-                                        'assets/achievements/9.png',
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   padding: EdgeInsets.all(16.0), // Set the padding within the container
+                        //   margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.green, // Set the background color of the container
+                        //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                        //     boxShadow: [
+                        //       BoxShadow(
+                        //         color: Colors.grey.withOpacity(0.5),
+                        //         spreadRadius: 2.0,
+                        //         blurRadius: 5.0,
+                        //         offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //       ),
+                        //     ],
+                        //   ),
+                        //   child: Column(
+                        //     children: [
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${usageAmount >= 1 ? '1' : usageAmount}/1",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Day 01',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/7.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${usageAmount >= 10 ? '10' : usageAmount}/10",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Behaviour',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/8.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //       Container(
+                        //         width: 500.0, // Set the width of the container
+                        //         height: 40.0,// Set the height of the container
+                        //         margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                        //         decoration: BoxDecoration(
+                        //           color: Colors.white, // Set the background color of the container
+                        //           borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                        //           boxShadow: [
+                        //             BoxShadow(
+                        //               color: Colors.grey.withOpacity(0.5),
+                        //               spreadRadius: 1.0,
+                        //               blurRadius: 2.0,
+                        //               offset: Offset(0, 3), // Adjust the shadow position as needed
+                        //             ),
+                        //           ],
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                        //           children: [
+                        //             Padding(
+                        //               padding: EdgeInsets.only(left: 20.0),
+                        //               child: Text(
+                        //                 "${usageAmount >= 100 ? '100' : usageAmount}/100",
+                        //                 textAlign: TextAlign.left,
+                        //               ),
+                        //             ),
+                        //             Expanded(
+                        //               child: Center(
+                        //                 child: Text(
+                        //                   'Habit',
+                        //                   textAlign: TextAlign.center,
+                        //                 ),
+                        //               ),
+                        //             ),
+                        //             Container(
+                        //               padding: EdgeInsets.only(right: 20.0),
+                        //               child: Image.asset(
+                        //                 'assets/achievements/9.png',
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
                         // Container(
                         //   padding: EdgeInsets.all(16.0), // Set the padding within the container
                         //   margin: EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 10.0), // Set the margin around the container

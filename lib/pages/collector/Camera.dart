@@ -33,6 +33,17 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
         key: _formKey,
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              child: Text(
+                'Recycle',
+                style: TextStyle(
+                    fontSize: 40.0,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0
+                ),
+              ),
+            ),
             SizedBox(height: 20.0,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -154,8 +165,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                 String glassAmount = glassAmountController.text.trim();
                 String binAmount = "0";
                 double points = (double.parse(plasticAmount)+double.parse(caneAmount)+double.parse(glassAmount))*0.05;
+                points = double.parse(points.toStringAsFixed(2));
                 double spinnablePoints = points;
-
 
                 // Retrieve user ID from "users" collection
                 FirebaseFirestore.instance
@@ -169,6 +180,9 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
                     // Extract user ID
                     String userId = userDoc.id;
+                    binAmount = ((int.parse(plasticAmount) + int.parse(caneAmount) + int.parse(glassAmount))*(1/10000)).floor().toString();
+                    print("Bin amount :  $binAmount");
+
 
                     // Update "dataToSave" map with
                     Map<String, String> dataToSave = {
@@ -207,10 +221,16 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                         int newGlassAmount = int.parse(glassAmount);
                         int updatedGlassAmount = existingGlassAmount + newGlassAmount;
 
+                        //new bin amount
+                        int updatedBinAmount = ((updatedPlasticAmount + updatedCaneAmount + updatedGlassAmount)*(1/10000)).floor();
+                        print("update Bin amount :  $updatedBinAmount");
+
+                        //update point
                         double existingPoints = double.parse(existingDoc.data()['points']);
                         double newPoints = points;
                         double updatedPoints = existingPoints + newPoints;
 
+                        //update spinnablepoints
                         double existingSpinnablePoints = double.parse(existingDoc.data()['spinnablePoints']);
                         double newSpinnablePoints = spinnablePoints;
                         double updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
@@ -219,7 +239,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                         FirebaseFirestore.instance
                             .collection('recycledWasteEndUser')
                             .doc(existingDocId)
-                            .update({'plasticAmount': updatedPlasticAmount.toString(), 'caneAmount': updatedCaneAmount.toString(),'glassAmount': updatedGlassAmount.toString(),'points': updatedPoints.toString(),'spinnablePoints': updatedspinnablePoints.toString()})
+                            .update({'plasticAmount': updatedPlasticAmount.toString(), 'caneAmount': updatedCaneAmount.toString(),'glassAmount': updatedGlassAmount.toString(),'binAmount': updatedBinAmount.toString(),'points': updatedPoints.toString(),'spinnablePoints': updatedspinnablePoints.toString()})
                             .then((_) {
                           print("Updated existing record with ID: $existingDocId");
                         });

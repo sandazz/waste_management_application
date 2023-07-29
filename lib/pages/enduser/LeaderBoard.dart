@@ -16,7 +16,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('recycledWasteEndUser')
-          .orderBy('plasticAmount', descending: true)
+          .orderBy('points', descending: true)
           .get();
 
       if (querySnapshot.size > 0) {
