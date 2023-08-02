@@ -100,127 +100,130 @@ class _RewardsState extends State<Rewards> {
                 ),
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 110.0, // Set the width of the container
-                  // height: 110.0, // Set the height of the container
-                  padding: EdgeInsets.all(16.0),
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Set the background color of the container
-                    borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2.0,
-                        blurRadius: 5.0,
-                        offset: Offset(0, 3), // Adjust the shadow position as needed
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Spinnable Points',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        SizedBox(height: 15.0),
-                        Text(
-                          "$spinnablePoints",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 25.0,
-                          ),
+            AspectRatio(
+              aspectRatio: 7/2,
+                child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 110.0, // Set the width of the container
+                    // height: 110.0, // Set the height of the container
+                    padding: EdgeInsets.all(16.0),
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Set the background color of the container
+                      borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2.0,
+                          blurRadius: 5.0,
+                          offset: Offset(0, 3), // Adjust the shadow position as needed
                         ),
                       ],
                     ),
-                  ),
-                ),
-                Container(
-                  width: 110.0, // Set the width of the container
-                  // height: 110.0, // Set the height of the container
-                  padding: EdgeInsets.all(16.0),
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Set the background color of the container
-                    borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2.0,
-                        blurRadius: 5.0,
-                        offset: Offset(0, 3), // Adjust the shadow position as needed
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Spinnable Points',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          SizedBox(height: 15.0),
+                          Text(
+                            "$spinnablePoints",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25.0,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Cost Per Spinnig',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        SizedBox(height: 15.0),
-                        Text(
-                          '$costPerSpinning',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 25.0,
-                          ),
+                  Container(
+                    width: 110.0, // Set the width of the container
+                    // height: 110.0, // Set the height of the container
+                    padding: EdgeInsets.all(16.0),
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Set the background color of the container
+                      borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2.0,
+                          blurRadius: 5.0,
+                          offset: Offset(0, 3), // Adjust the shadow position as needed
                         ),
                       ],
                     ),
-                  ),
-                ),
-                Container(
-                  width: 110.0, // Set the width of the container
-                  // height: 110.0, // Set the height of the container
-                  padding: EdgeInsets.all(16.0),
-                  margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Set the background color of the container
-                    borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2.0,
-                        blurRadius: 5.0,
-                        offset: Offset(0, 3), // Adjust the shadow position as needed
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Cost Per Spinnig',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          SizedBox(height: 15.0),
+                          Text(
+                            '$costPerSpinning',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25.0,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          'Total Spinning Count',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15.0,
-                          ),
-                        ),
-                        SizedBox(height: 15.0),
-                        Text(
-                          '$totalSpinnableCount',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 25.0,
-                          ),
+                  Container(
+                    width: 110.0, // Set the width of the container
+                    // height: 110.0, // Set the height of the container
+                    padding: EdgeInsets.all(16.0),
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                    decoration: BoxDecoration(
+                      color: Colors.white, // Set the background color of the container
+                      borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2.0,
+                          blurRadius: 5.0,
+                          offset: Offset(0, 3), // Adjust the shadow position as needed
                         ),
                       ],
                     ),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          Text(
+                            'Total Spinning Count',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 15.0,
+                            ),
+                          ),
+                          SizedBox(height: 15.0),
+                          Text(
+                            '$totalSpinnableCount',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 25.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
 
             SizedBox(height: 80.0,),

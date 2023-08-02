@@ -50,6 +50,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
     }
   }
 
+
   List<String> texts = [
   ];
 
@@ -91,42 +92,45 @@ class _LeaderBoardState extends State<LeaderBoard> {
               }else{
                 colorIntensity =50;
               }
-              return Container(
-                  width: 500.0, // Set the width of the container
-                  height: 50.0, // Set the height of the container
-                  padding: EdgeInsets.all(16.0), // Set the padding within the container
-                  margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 3.0), // Set the margin around the container
-                  decoration: BoxDecoration(
-                    color: Colors.green[colorIntensity], // Set the background color of the container
-                    borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2.0,
-                        blurRadius: 5.0,
-                        offset: Offset(0, 3), // Adjust the shadow position as needed
+              return AspectRatio(
+                aspectRatio: 12/2,
+                  child: Container(
+                      width: 500.0, // Set the width of the container
+                      height: 50.0, // Set the height of the container
+                      padding: EdgeInsets.all(16.0), // Set the padding within the container
+                      margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 3.0), // Set the margin around the container
+                      decoration: BoxDecoration(
+                        color: Colors.green[colorIntensity], // Set the background color of the container
+                        borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2.0,
+                            blurRadius: 5.0,
+                            offset: Offset(0, 3), // Adjust the shadow position as needed
+                          ),
+                        ],
                       ),
-                    ],
+                      child: Row(
+                        children: [
+                          Text(
+                            '$indexWithLeadingZero',
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              // fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(width: 30.0,),
+                          Text(
+                            text,
+                            style: TextStyle(
+                              fontSize: 20.0,
+                              // fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      )
                   ),
-                  child: Row(
-                    children: [
-                      Text(
-                        '$indexWithLeadingZero',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          // fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(width: 30.0,),
-                      Text(
-                        text,
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          // fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )
               );
             }).toList(),
           ),

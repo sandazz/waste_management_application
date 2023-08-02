@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -99,8 +100,8 @@ class _HomeState extends State<Home> {
                         ),
                         SizedBox(height: 5.0),
                         Icon(
-                          Icons.ad_units_outlined,
-                          size: 30.0,
+                          LineIcons.wineBottle,
+                          size: 35.0,
                         ),
                         SizedBox(height: 5.0),
                         Text(
@@ -181,7 +182,7 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: [
                             Text(
-                              'Plastic',
+                              'Glass',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 22.0,
@@ -190,7 +191,7 @@ class _HomeState extends State<Home> {
                             ),
                             SizedBox(height: 5.0),
                             Icon(
-                              Icons.ad_units_outlined,
+                              LineIcons.martiniGlass,
                               size: 30.0,
                             ),
                             SizedBox(height: 5.0),
