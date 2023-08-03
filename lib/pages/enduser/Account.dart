@@ -13,11 +13,6 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
-  String name = "";
-  String email = "";
-  String mobile = "";
-  String address = "";
-  String password = "";
 
   final fnameController = TextEditingController();
   final locationController = TextEditingController();
@@ -246,7 +241,6 @@ class _AccountState extends State<Account> {
                   enabled: false,
                 ),
               ),
-              Text("$password"),
             ],
           ),
         ),

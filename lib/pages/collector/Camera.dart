@@ -207,6 +207,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     double points = (double.parse(plasticAmount)+double.parse(caneAmount)+double.parse(glassAmount))*0.05;
                     points = double.parse(points.toStringAsFixed(2));
                     double spinnablePoints = points;
+                    double rewardPoints = 0.0;
 
                     // Retrieve user ID from "users" collection
                     FirebaseFirestore.instance
@@ -232,7 +233,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                           "glassAmount": glassAmount,
                           "points" : points.toString(),
                           "spinnablePoints" : spinnablePoints.toString(),
-                          "binAmount" : binAmount, //bin in not initailzed up to now
+                          "binAmount" : binAmount,
+                          "rewardPoints" : rewardPoints.toString(),
                         };
 
                         //  Check if a record with the same mobile number exists
@@ -415,9 +417,6 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
                   }
                 },
-
-
-
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(100.0, 40.0),
                 primary: Colors.green[700], // Set the desired button color

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
+import 'package:waste_management_app/pages/enduser/RewardGiveAway.dart';
 
 
 
@@ -21,6 +22,7 @@ class _RewardsState extends State<Rewards> {
   int totalSpinnableCount = 0;
   double costPerSpinning = 5.0;
   double spinnablePoints = 0;
+  double rewardPoints = 0.0;
 
   Future<void> getPoints() async {
 
@@ -35,6 +37,7 @@ class _RewardsState extends State<Rewards> {
       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
       setState(() {
         spinnablePoints = double.parse(userData['spinnablePoints']);
+        rewardPoints = double.parse(userData['rewardPoints']);
         totalSpinnableCount = (spinnablePoints/ costPerSpinning).toInt();
       });
     } else {
@@ -48,22 +51,21 @@ class _RewardsState extends State<Rewards> {
     totalSpinnableCount--;
 
     FirebaseFirestore.instance.collection("recycledWasteEndUser").doc(uid).update(
-        {"spinnablePoints": spinnablePoints.toString()});
+        {"spinnablePoints": spinnablePoints.toString(),"rewardPoints": rewardPoints.toString()});
   }
 
 
   final items = <String>[
     'TRY AGAIN',
-    'REWARDS',
+    '0.1 POINTS',
     'TRY AGAIN',
-    'REWARDS',
+    '0.2 POINTS',
     'TRY AGAIN',
-    'REWARDS',
+    '0.5 POINTS',
     'TRY AGAIN',
-    'REWARDS',
+    '0.7 POINTS',
     'TRY AGAIN',
-    'REWARDS',
-
+    '1.0 POINTS',
   ];
 
   StreamController<int> selected = StreamController<int>();
@@ -179,6 +181,7 @@ class _RewardsState extends State<Rewards> {
                               fontSize: 25.0,
                             ),
                           ),
+                          SizedBox(height: 10.0),
                         ],
                       ),
                     ),
@@ -226,127 +229,7 @@ class _RewardsState extends State<Rewards> {
               ),
             ),
 
-            SizedBox(height: 80.0,),
-            //spinning wheeler
-            // Stack(
-            //   children: [
-            //     //background rectangle
-            //     Positioned(
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533 ,
-            //         child: Center(
-            //           child: Container(
-            //             width: 300.0,
-            //             height: 300.0,
-            //             color: Colors.green[50],
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //     //first rectangle
-            //     Positioned(
-            //       top: 0,
-            //       left: 157,
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
-            //         child: Container(
-            //           width: 75.0,
-            //           height: 75.0,
-            //           color: Colors.green[200],
-            //         ),
-            //       ),
-            //     ),
-            //     //next two rectangles
-            //     Positioned(
-            //       top: 55.0,
-            //       left: 102,
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
-            //         child: Container(
-            //           width: 75.0,
-            //           height: 75.0,
-            //           color: Colors.green[200],
-            //         ),
-            //       ),
-            //     ),
-            //     Positioned(
-            //       top: 55.0,
-            //       right: 106,
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
-            //         child: Container(
-            //           width: 75.0,
-            //           height: 75.0,
-            //           color: Colors.green[200],
-            //         ),
-            //       ),
-            //     ),
-            //     //middle two rectangles
-            //     Positioned(
-            //       top: 110.0,
-            //       left: 47,
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
-            //         child: Container(
-            //           width: 75.0,
-            //           height: 75.0,
-            //           color: Colors.green[200],
-            //         ),
-            //       ),
-            //     ),
-            //     Positioned(
-            //       top: 110.0,
-            //       right: 51,
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
-            //         child: Container(
-            //           width: 75.0,
-            //           height: 75.0,
-            //           color: Colors.green[200],
-            //         ),
-            //       ),
-            //     ),
-            //     //last two rectangles
-            //     Positioned(
-            //       top: 165.0,
-            //       left: 102,
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
-            //         child: Container(
-            //           width: 75.0,
-            //           height: 75.0,
-            //           color: Colors.green[200],
-            //         ),
-            //       ),
-            //     ),
-            //     Positioned(
-            //       top: 165.0,
-            //       right: 106,
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
-            //         child: Container(
-            //           width: 75.0,
-            //           height: 75.0,
-            //           color: Colors.green[200],
-            //         ),
-            //       ),
-            //     ),
-            //     //last rectangle
-            //     Positioned(
-            //       top: 165.0 + 55.0,
-            //       left: 157,
-            //       child: Transform.rotate(
-            //         angle: 45 * 0.0174533, // Convert 90 degrees to radians
-            //         child: Container(
-            //           width: 75.0,
-            //           height: 75.0,
-            //           color: Colors.green[200],
-            //         ),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-
+            SizedBox(height: 30.0,),
             SizedBox(
               height: 350.0,
               child: FortuneWheel(
@@ -372,29 +255,140 @@ class _RewardsState extends State<Rewards> {
             ),
 
 
-            SizedBox(height: 30,),
+            SizedBox(height: 10,),
             //spinning button at last
             Center(
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(150.0, 40.0),
                   elevation: 4.0, // Set the elevation of the button
-                  backgroundColor: Colors.green[700], // Set the background color of the button
+                  backgroundColor: Colors.green[500], // Set the background color of the button
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0), // Set the border radius of the button
                   ),
                 ),
                 onPressed: totalSpinnableCount >= 1
-                    ?() {
-                      setState(() {
-                        final selectedIndex = Fortune.randomInt(0, items.length);
-                        selected.add(selectedIndex);
-                        print('Selected Item: ${items[selectedIndex]}');
-                        updatePoints();
-                      });
-                    }
+                    ? () async {
+                  final selectedIndex = Fortune.randomInt(0, items.length);
+                  selected.add(selectedIndex);
+                  print('Selected Item: ${items[selectedIndex]}');
+
+                  // Wait for wheel to finish spinning before updating rewardPoints and showing selected item
+                  await Future.delayed(Duration(seconds: 5), () {
+                    setState(() {
+                      if (items[selectedIndex] == 'TRY AGAIN') {
+                        // No changes to rewardPoints
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('TRY AGAIN !'),
+                            backgroundColor: Colors.redAccent, // Change color of SnackBar
+                            behavior: SnackBarBehavior.floating, // Make SnackBar floating
+                            shape: RoundedRectangleBorder( // Change shape of SnackBar
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
+                        );
+                      } else if (items[selectedIndex] == '0.1 POINTS') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('YOU GOT 0.1 POINTS !'),
+                            backgroundColor: Colors.green, // Change color of SnackBar
+                            behavior: SnackBarBehavior.floating, // Make SnackBar floating
+                            shape: RoundedRectangleBorder( // Change shape of SnackBar
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
+                        );
+                        rewardPoints = rewardPoints + 0.1;
+                      } else if (items[selectedIndex] == '0.2 POINTS') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('YOU GOT 0.2 POINTS !'),
+                            backgroundColor: Colors.green, // Change color of SnackBar
+                            behavior: SnackBarBehavior.floating, // Make SnackBar floating
+                            shape: RoundedRectangleBorder( // Change shape of SnackBar
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
+                        );
+                        rewardPoints = rewardPoints + 0.2;
+                      } else if (items[selectedIndex] == '0.5 POINTS') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('YOU GOT 0.5 POINTS !'),
+                            backgroundColor: Colors.green, // Change color of SnackBar
+                            behavior: SnackBarBehavior.floating, // Make SnackBar floating
+                            shape: RoundedRectangleBorder( // Change shape of SnackBar
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
+                        );
+                        rewardPoints = rewardPoints + 0.5;
+                      } else if (items[selectedIndex] == '0.7 POINTS') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('YOU GOT 0.7 POINTS !'),
+                            backgroundColor: Colors.green, // Change color of SnackBar
+                            behavior: SnackBarBehavior.floating, // Make SnackBar floating
+                            shape: RoundedRectangleBorder( // Change shape of SnackBar
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
+                        );
+                        rewardPoints = rewardPoints + 0.7;
+                      } else if (items[selectedIndex] == '1.0 POINTS') {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('YOU GOT 1.0 POINTS !'),
+                            backgroundColor: Colors.green, // Change color of SnackBar
+                            behavior: SnackBarBehavior.floating, // Make SnackBar floating
+                            shape: RoundedRectangleBorder( // Change shape of SnackBar
+                              borderRadius: BorderRadius.circular(24),
+                            ),
+                          ),
+                        );
+                        rewardPoints = rewardPoints + 1.0;
+                      }
+
+                      updatePoints();
+                    });
+                  });
+                }
                     : null,
+
                 child: Text('Spinning'),
+              ),
+            ),
+            SizedBox(height: 20,),
+            Center(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(200.0, 60.0),
+                  elevation: 4.0, // Set the elevation of the button
+                  backgroundColor: rewardPoints >= 50 ? Colors.green[800] : Colors.grey, // Set the background color of the button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0), // Set the border radius of the button
+                  ),
+                ),
+                onPressed: () {
+                  if (rewardPoints >= 50) {
+                    // Your code to get rewards
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => RewardGiveAway()), // Replace SecondPage with your desired destination page
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Reward point need 50 or more to activate this button')),
+                    );
+                  }
+                },
+                child: Text(rewardPoints >= 50 ? 'Get Reward' : 'Reward Points \n$rewardPoints',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20, // Adjust the font size as needed
+                  ),
+                ),
               ),
             ),
           ],
