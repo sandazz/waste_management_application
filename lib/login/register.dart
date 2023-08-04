@@ -1,8 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:waste_management_app/components/snackbar.dart';
-import 'package:waste_management_app/login/login.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -46,26 +47,10 @@ class _RegisterState extends State<Register> {
       return 'Password must be at least 8 characters long';
     }
 
-    // Check for at least one lowercase letter in the password
-    if (!RegExp(r'[a-z]').hasMatch(value)) {
-      return 'Password must contain at least one lowercase letter';
-    }
-
-    // Check for at least one uppercase letter in the password
-    if (!RegExp(r'[A-Z]').hasMatch(value)) {
-      return 'Password must contain at least one uppercase letter';
-    }
-
     // Check for at least one digit in the password
     if (!RegExp(r'[0-9]').hasMatch(value)) {
       return 'Password must contain at least one number';
     }
-
-    // Check for at least one special character in the password
-    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return 'Password must contain at least one special character';
-    }
-
     return null;
   }
 
@@ -133,18 +118,25 @@ class _RegisterState extends State<Register> {
       return 'NIC is required';
     }
 
-    // Check for non-numeric characters (allowing for a letter at the end)
-    if (!RegExp(r'^[0-9]{9}[vVxX]?$').hasMatch(value)) {
-      return 'NIC number should be 9 digits followed by an optional letter';
-    }
-
     // Check for the correct number of digits/characters in the NIC
     if (value.length != 10 && value.length != 12) {
       return 'NIC number must contain exactly 10 or 12 characters';
     }
 
+    // Check for non-numeric characters (allowing for a letter at the end)
+    // Only check for V/X if the NIC has 10 characters
+    if (value.length == 10 && !RegExp(r'^[0-9]{9}[vVxX]?$').hasMatch(value)) {
+      return 'NIC number should be 9 digits followed by an optional letter';
+    }
+
+    // If the NIC has 12 characters, it should contain only digits
+    if (value.length == 12 && !RegExp(r'^[0-9]{12}$').hasMatch(value)) {
+      return 'NIC number should only contain digits';
+    }
+
     return null;
   }
+
 
 
   @override
@@ -159,6 +151,59 @@ class _RegisterState extends State<Register> {
     final roleController = TextEditingController();
     final nicController = TextEditingController();
     final passwordController = TextEditingController();
+
+    Future<String?> _showNicDialog() {
+      final _dialogFormKey = GlobalKey<FormState>();
+      final completer = Completer<String?>();
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('NIC number is required to sign up as COLLECTOR'),
+            content: Form(
+              key: _dialogFormKey,
+              child: TextFormField(
+                decoration:  InputDecoration(
+                  labelText: 'NIC No',
+                  labelStyle: TextStyle(
+                    color: Colors.green[700],
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderSide: BorderSide(color: Colors.green, width: 0.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                    borderSide: BorderSide(color: Colors.green, width: 2.0),
+                  ),
+                  border: OutlineInputBorder(),
+                ),
+                validator: _validateNIC,
+                controller: nicController,
+                autofocus: true,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Submit'),
+                onPressed: () async {
+                  if (_dialogFormKey.currentState!.validate()) {
+                    // Complete the completer with the NIC
+                    completer.complete(nicController.text);
+                    Navigator.of(context).pop();
+                  }
+                },
+              ),
+            ],
+          );
+        },
+      );
+
+      return completer.future;
+    }
+
+
 
     return Scaffold(
       appBar: AppBar(
@@ -203,7 +248,7 @@ class _RegisterState extends State<Register> {
                         width: 300.0,
                         child: TextFormField(
                           decoration: InputDecoration(
-                            labelText: 'First Name',
+                            labelText: 'Full Name',
                             labelStyle: TextStyle(
                               color: Colors.green[700], // Set the desired text color
                             ),
@@ -353,39 +398,6 @@ class _RegisterState extends State<Register> {
                   ],
                 ),
                 SizedBox(height: 20.0,),
-                Visibility(
-                  visible: selectedOption == 'collector',
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-
-                          width: 300.0,
-                          child: TextFormField(
-                            decoration:  InputDecoration(
-                                labelText: 'NIC No',
-                                labelStyle: TextStyle(
-                                  color: Colors.green[700], // Set the desired text color
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                  borderSide:
-                                  BorderSide(color: Colors.green, width: 0.0),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                  borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                                ),
-                                border: OutlineInputBorder()),
-                            validator: _validateNIC,
-                            controller: nicController,
-                          )
-                      )
-                    ],
-                ),
-                  ),
-                if (selectedOption == 'collector')
-                SizedBox(height: 20.0,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -449,10 +461,13 @@ class _RegisterState extends State<Register> {
                           print('An error occurred while saving data to Firestore: $e');
                           CustomSnackBar.showError(context, 'An error occurred while saving data. Please try again.');
                         }
-                        FirebaseAuth.instance.signOut();
                         Navigator.of(context).pop();
 
                       }else if(roleController.text == 'collector'){
+
+                        nicController.text = (await _showNicDialog())!;
+                        print('Entered NIC: ${ nicController.text}');
+
                         //firebase firestore data adding
                         Map<String, String> dataToSave = {
                           "fname": fnameController.text.trim(),
@@ -482,7 +497,6 @@ class _RegisterState extends State<Register> {
                               backgroundColor: Colors.red,),
                           );
                         }
-                        FirebaseAuth.instance.signOut();
                         Navigator.of(context).pop();
                       }
                     }

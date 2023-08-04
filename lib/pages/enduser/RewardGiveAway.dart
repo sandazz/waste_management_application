@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class RewardGiveAway extends StatefulWidget {
   const RewardGiveAway({super.key});
@@ -69,6 +72,53 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
     String uid = currentUser.uid;
     FirebaseFirestore.instance.collection("recycledWasteEndUser").doc(uid).update(
         {"rewardPoints": rewardPoints.toString()});
+  }
+
+  Future<void> hash() async {
+    var data = "Hello, World!"; // data to be hashed
+
+    var bytes = utf8.encode(data); // data being hashed
+
+    var digest = sha512.convert(bytes); // Hashing Process
+
+    print("Hashed Data: $digest");
+  }
+
+  Future<void> sendPostRequest() async {
+    print('send post request');
+    var uri = Uri.https('secure.quickpay.lk', '/api', {
+      'action': 'recharge',
+      'format': 'JSON',
+      'mid': 'NDEwNDAw',
+      'provider': 'PAT',
+      'number': '768511134',
+      'amount': '52',
+      'refno': 'sa0111',
+      'rurl': 'https://api.example.com/users/123',
+      'hash': 'b21c633bac6cc578890a728a46d9884a01eae70eebc30521edd2b6ba53cd5e783b392a30a29611da7fe91c6af23f9c0d41366fa5f7681f19db2d8af7e480934a',
+    });
+    var response = await http.post(uri, body: {
+      'action': 'recharge',
+      'format': 'JSON',
+      'mid': 'NDEwNDAw',
+      'provider': 'PAT',
+      'number': '768511134',
+      'amount': '52',
+      'refno': 'sa0111',
+      'rurl': 'https://api.example.com/users/123',
+      'hash': 'b21c633bac6cc578890a728a46d9884a01eae70eebc30521edd2b6ba53cd5e783b392a30a29611da7fe91c6af23f9c0d41366fa5f7681f19db2d8af7e480934a',
+    });
+
+    print(uri);
+    print(response);
+
+    if (response.statusCode == 200) {
+      print('Success! Response: ${response.body}');
+    } else {
+      print('Failure! Status Code: ${response.statusCode}');
+      print('Failure! Status Code: ${response.reasonPhrase}');
+
+    }
   }
 
   String? _validateRewardAmount(String? value) {
@@ -226,6 +276,7 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
                               ),
                             ),
                           );
+                          await sendPostRequest();
                           rewardAmountController.clear();
                           await getUserDetails();
                         }
