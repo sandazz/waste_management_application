@@ -15,6 +15,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
   final mobileController = TextEditingController();
   final plasticAmountController = TextEditingController();
+  final bottleAmountController = TextEditingController();
   final caneAmountController = TextEditingController();
   final glassAmountController = TextEditingController();
 
@@ -103,7 +104,38 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                         border: OutlineInputBorder(),
                       ),
                       validator: _validateMobile,
+                      keyboardType: TextInputType.number,
                       controller: mobileController,
+                    )
+                )
+              ],
+            ),
+            SizedBox(height: 20.0,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 300.0,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Bottle Amount',
+                        labelStyle: TextStyle(
+                          color: Colors.green[700], // Set the desired text color
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide:
+                          BorderSide(color: Colors.green, width: 0.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: _validateAmount,
+                      keyboardType: TextInputType.number,
+                      controller: bottleAmountController,
                     )
                 )
               ],
@@ -132,79 +164,81 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                         border: OutlineInputBorder(),
                       ),
                       validator: _validateAmount,
+                      keyboardType: TextInputType.number,
                       controller: plasticAmountController,
                     )
                 )
               ],
             ),
-            SizedBox(height: 20.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 300.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Cane Amount',
-                        labelStyle: TextStyle(
-                          color: Colors.green[700], // Set the desired text color
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                          BorderSide(color: Colors.green, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: _validateAmount,
-                      controller: caneAmountController,
-                    )
-                )
-              ],
-            ),
-            SizedBox(height: 20.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 300.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Glass Amount',
-                        labelStyle: TextStyle(
-                          color: Colors.green[700], // Set the desired text color
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                          BorderSide(color: Colors.green, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: _validateAmount,
-                      controller: glassAmountController,
-                    )
-                )
-              ],
-            ),
+            // SizedBox(height: 20.0,),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Container(
+            //         width: 300.0,
+            //         child: TextFormField(
+            //           decoration: InputDecoration(
+            //             labelText: 'Cane Amount',
+            //             labelStyle: TextStyle(
+            //               color: Colors.green[700], // Set the desired text color
+            //             ),
+            //             enabledBorder: OutlineInputBorder(
+            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            //               borderSide:
+            //               BorderSide(color: Colors.green, width: 0.0),
+            //             ),
+            //             focusedBorder: OutlineInputBorder(
+            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            //               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+            //             ),
+            //             border: OutlineInputBorder(),
+            //           ),
+            //           validator: _validateAmount,
+            //           controller: caneAmountController,
+            //         )
+            //     )
+            //   ],
+            // ),
+            // SizedBox(height: 20.0,),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Container(
+            //         width: 300.0,
+            //         child: TextFormField(
+            //           decoration: InputDecoration(
+            //             labelText: 'Glass Amount',
+            //             labelStyle: TextStyle(
+            //               color: Colors.green[700], // Set the desired text color
+            //             ),
+            //             enabledBorder: OutlineInputBorder(
+            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            //               borderSide:
+            //               BorderSide(color: Colors.green, width: 0.0),
+            //             ),
+            //             focusedBorder: OutlineInputBorder(
+            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
+            //               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+            //             ),
+            //             border: OutlineInputBorder(),
+            //           ),
+            //           validator: _validateAmount,
+            //           controller: glassAmountController,
+            //         )
+            //     )
+            //   ],
+            // ),
             SizedBox(height: 20.0,),
             ElevatedButton(
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                     String mobile = mobileController.text.trim();
                     String plasticAmount = plasticAmountController.text.trim();
-                    String caneAmount = caneAmountController.text.trim();
-                    String glassAmount = glassAmountController.text.trim();
+                    String bottleAmount = bottleAmountController.text.trim();
+                    // String caneAmount = caneAmountController.text.trim();
+                    // String glassAmount = glassAmountController.text.trim();
                     String binAmount = "0";
-                    double points = (double.parse(plasticAmount)+double.parse(caneAmount)+double.parse(glassAmount))*0.05;
+                    double points = (double.parse(plasticAmount)+double.parse(bottleAmount))*0.05;
                     points = double.parse(points.toStringAsFixed(2));
                     double spinnablePoints = points;
                     double rewardPoints = 0.0;
@@ -221,18 +255,17 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
                         // Extract user ID
                         String userId = userDoc.id;
-                        binAmount = ((int.parse(plasticAmount) + int.parse(caneAmount) + int.parse(glassAmount))*(1/10000)).floor().toString();
+                        binAmount = ((int.parse(plasticAmount) + int.parse(bottleAmount))*(1/10000)).floor().toString();
                         print("Bin amount :  $binAmount");
 
 
                         // Update "dataToSave" map with
-                        Map<String, String> dataToSave = {
+                        Map<String, dynamic> dataToSave = {
                           "mobile": mobile,
+                          "bottleAmount": bottleAmount,
                           "plasticAmount": plasticAmount,
-                          "caneAmount": caneAmount,
-                          "glassAmount": glassAmount,
-                          "points" : points.toString(),
-                          "spinnablePoints" : spinnablePoints.toString(),
+                          "points" : points,
+                          "spinnablePoints" : spinnablePoints,
                           "binAmount" : binAmount,
                           "rewardPoints" : rewardPoints.toString(),
                         };
@@ -253,27 +286,32 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                             int newPlasticAmount = int.parse(plasticAmount);
                             int updatedPlasticAmount = existingPlasticAmount + newPlasticAmount;
 
-                            //cane amount increase
-                            int existingCaneAmount = int.parse(existingDoc.data()['caneAmount']);
-                            int newCaneAmount = int.parse(caneAmount);
-                            int updatedCaneAmount = existingCaneAmount + newCaneAmount;
+                            //bottle amount increase
+                            int existingBottleAmount = int.parse(existingDoc.data()['bottleAmount']);
+                            int newBottleAmount = int.parse(bottleAmount);
+                            int updatedBottleAmount = existingBottleAmount + newBottleAmount;
 
-                            //glass amount increase
-                            int existingGlassAmount = int.parse(existingDoc.data()['glassAmount']);
-                            int newGlassAmount = int.parse(glassAmount);
-                            int updatedGlassAmount = existingGlassAmount + newGlassAmount;
+                            // //cane amount increase
+                            // int existingCaneAmount = int.parse(existingDoc.data()['caneAmount']);
+                            // int newCaneAmount = int.parse(caneAmount);
+                            // int updatedCaneAmount = existingCaneAmount + newCaneAmount;
+                            //
+                            // //glass amount increase
+                            // int existingGlassAmount = int.parse(existingDoc.data()['glassAmount']);
+                            // int newGlassAmount = int.parse(glassAmount);
+                            // int updatedGlassAmount = existingGlassAmount + newGlassAmount;
 
                             //new bin amount
-                            int updatedBinAmount = ((updatedPlasticAmount + updatedCaneAmount + updatedGlassAmount)*(1/10000)).floor();
-                            print("update Bin amount :  $updatedBinAmount");
+                            // int updatedBinAmount = ((updatedPlasticAmount + updatedBottleAmount)*(1/10000)).floor();
+                            // print("update Bin amount :  $updatedBinAmount");
 
                             //update point
-                            double existingPoints = double.parse(existingDoc.data()['points']);
+                            double existingPoints = (existingDoc.data()['points'] as num).toDouble();
                             double newPoints = points;
                             double updatedPoints = existingPoints + newPoints;
 
                             //update spinnablepoints
-                            double existingSpinnablePoints = double.parse(existingDoc.data()['spinnablePoints']);
+                            double existingSpinnablePoints = existingDoc.data()['spinnablePoints'];
                             double newSpinnablePoints = spinnablePoints;
                             double updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
 
@@ -284,11 +322,9 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                                   .doc(existingDocId)
                                   .update({
                                 'plasticAmount': updatedPlasticAmount.toString(),
-                                'caneAmount': updatedCaneAmount.toString(),
-                                'glassAmount': updatedGlassAmount.toString(),
-                                'binAmount': updatedBinAmount.toString(),
-                                'points': updatedPoints.toString(),
-                                'spinnablePoints': updatedspinnablePoints.toString()
+                                'bottleAmount': updatedBottleAmount.toString(),
+                                'points': updatedPoints,
+                                'spinnablePoints': updatedspinnablePoints
                               });
 
                               // Update successful, handle the result here
@@ -300,13 +336,11 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                             } catch (e) {
                               // Handle any errors that occur during the update
                               print('An error occurred while updating data in Firestore: $e');
-
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('An error occurred while updating data. Please try again.'),
                                   backgroundColor: Colors.red,),
                               );
                             }
-
                           } else {
                             // Add a new record since no existing record found
                             try {
@@ -323,20 +357,17 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                             } catch (e) {
                               // Handle any errors during the set operation
                               print('An error occurred while saving data to Firestore: $e');
-
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text('An error occurred while saving data. Please try again.'),
                                   backgroundColor: Colors.red,),
                               );
                             }
-
                           }
                         });
 
-                        Map<String, String> collectorAmounts = {
+                        Map<String, dynamic> collectorAmounts = {
                           "plasticAmount": plasticAmount,
-                          "caneAmount": caneAmount,
-                          "glassAmount": glassAmount,
+                          "bottleAmount": bottleAmount,
                         };
 
                         DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
@@ -346,25 +377,27 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
                         if (documentSnapshot.exists) {
                           Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
-                          setState(() async {
+                          setState(()  {
 
                             int existingPlasticAmountCollector = int.parse(userData['plasticAmount']);
                             int updatePlasticAmountCollector = existingPlasticAmountCollector +int.parse(plasticAmount);
 
-                            int existingCaneAmountCollector = int.parse(userData['caneAmount']);
-                            int updateCaneAmountCollector = existingCaneAmountCollector +int.parse(caneAmount);
+                            int existingBottleAmountCollector = int.parse(userData['bottleAmount']);
+                            int updateBottleAmountCollector = existingBottleAmountCollector +int.parse(bottleAmount);
 
-                            int existingGlassAmountCollector = int.parse(userData['glassAmount']);
-                            int updateGlassAmountCollector = existingGlassAmountCollector +int.parse(glassAmount);
+                            // int existingCaneAmountCollector = int.parse(userData['caneAmount']);
+                            // int updateCaneAmountCollector = existingCaneAmountCollector +int.parse(caneAmount);
+                            //
+                            // int existingGlassAmountCollector = int.parse(userData['glassAmount']);
+                            // int updateGlassAmountCollector = existingGlassAmountCollector +int.parse(glassAmount);
 
                             try {
-                              await FirebaseFirestore.instance
+                               FirebaseFirestore.instance
                                   .collection('recycledWasteCollector')
                                   .doc(currentUser.uid)
                                   .update({
                                 'plasticAmount': updatePlasticAmountCollector.toString(),
-                                'caneAmount': updateCaneAmountCollector.toString(),
-                                'glassAmount': updateGlassAmountCollector.toString()
+                                'bottleAmount': updateBottleAmountCollector.toString(),
                               });
 
                               // Update operation successful, show a success message
@@ -404,7 +437,6 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                                 backgroundColor: Colors.red,),
                             );
                           }
-
                         }
                       }
                     });
@@ -412,9 +444,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     // Clear text form fields and reset data
                     mobileController.clear();
                     plasticAmountController.clear();
-                    caneAmountController.clear();
-                    glassAmountController.clear();
-
+                    bottleAmountController.clear();
                   }
                 },
               style: ElevatedButton.styleFrom(
