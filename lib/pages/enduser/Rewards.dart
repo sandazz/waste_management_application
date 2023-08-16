@@ -20,8 +20,8 @@ class _RewardsState extends State<Rewards> {
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
   int totalSpinnableCount = 0;
-  double costPerSpinning = 5.0;
-  double spinnablePoints = 0;
+  double costPerSpinning = 10.0;
+  double RedeemablePoints = 0;
   double rewardPoints = 0.0;
 
   Future<void> getPoints() async {
@@ -36,9 +36,9 @@ class _RewardsState extends State<Rewards> {
     if (documentSnapshot.exists) {
       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
       setState(() {
-        spinnablePoints = double.parse(userData['spinnablePoints']);
+        RedeemablePoints = userData['spinnablePoints'];
         rewardPoints = double.parse(userData['rewardPoints']);
-        totalSpinnableCount = (spinnablePoints/ costPerSpinning).toInt();
+        totalSpinnableCount = (RedeemablePoints/ costPerSpinning).toInt();
       });
     } else {
       print("User not found");
@@ -47,11 +47,11 @@ class _RewardsState extends State<Rewards> {
 
   Future<void> updatePoints() async {
     String uid = currentUser.uid;
-    spinnablePoints = spinnablePoints - costPerSpinning;
+    RedeemablePoints = RedeemablePoints - costPerSpinning;
     totalSpinnableCount--;
 
     FirebaseFirestore.instance.collection("recycledWasteEndUser").doc(uid).update(
-        {"spinnablePoints": spinnablePoints.toString(),"rewardPoints": rewardPoints.toString()});
+        {"spinnablePoints": RedeemablePoints,"rewardPoints": rewardPoints.toString()});
   }
 
 
@@ -103,7 +103,7 @@ class _RewardsState extends State<Rewards> {
               ),
             ),
             AspectRatio(
-              aspectRatio: 7/2,
+              aspectRatio: 10/3,
                 child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -128,7 +128,7 @@ class _RewardsState extends State<Rewards> {
                       child: Column(
                         children: [
                           Text(
-                            'Spinnable Points',
+                            'Redeemable Points',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 15.0,
@@ -136,7 +136,7 @@ class _RewardsState extends State<Rewards> {
                           ),
                           SizedBox(height: 15.0),
                           Text(
-                            "$spinnablePoints",
+                            "$RedeemablePoints",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 25.0,
@@ -207,7 +207,7 @@ class _RewardsState extends State<Rewards> {
                       child: Column(
                         children: [
                           Text(
-                            'Total Spinning Count',
+                            'Number of Spinnes Available',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 15.0,

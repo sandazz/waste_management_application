@@ -1,9 +1,11 @@
 import 'dart:async';
-
+import 'dart:io';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:waste_management_app/components/snackbar.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -15,6 +17,86 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final storage = FirebaseStorage.instance;
+
+  File? _nicFront;
+  File? _nicBack;
+
+  final picker = ImagePicker();
+
+  Future getNICFront() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _nicFront = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future getNICBack() async {
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      if (pickedFile != null) {
+        _nicBack = File(pickedFile.path);
+      } else {
+        print('No image selected.');
+      }
+    });
+  }
+
+  Future uploadNICFrontImageToFirebase(BuildContext context) async {
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child("uploads/$fileName");
+    UploadTask uploadTask = ref.putFile(_nicFront!);
+    uploadTask.whenComplete(() async {
+      try {
+        await ref.getDownloadURL().then((value) {
+          saveImageInfoToFirestore(value);
+        });
+      } catch (onError) {
+        print("Error in getting download URL: $onError");
+      }
+    });
+  }
+
+  Future uploadNICBackImageToFirebase(BuildContext context) async {
+    String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child("uploads/$fileName");
+    UploadTask uploadTask = ref.putFile(_nicBack!);
+    uploadTask.whenComplete(() async {
+      try {
+        await ref.getDownloadURL().then((value) {
+          saveImageInfoToFirestore(value);
+        });
+      } catch (onError) {
+        print("Error in getting download URL: $onError");
+      }
+    });
+  }
+
+  Future<void> uploadImages() async {
+    try {
+      await uploadNICFrontImageToFirebase(context);
+      await uploadNICBackImageToFirebase(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Both images uploaded successfully!')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error uploading images: $e')),
+      );
+    }
+  }
+
+  Future<void> saveImageInfoToFirestore(String url) async {
+
+  }
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
@@ -53,7 +135,6 @@ class _RegisterState extends State<Register> {
     }
     return null;
   }
-
 
   String? _validateFname(String? value) {
     // Check if the input is empty
@@ -160,28 +241,54 @@ class _RegisterState extends State<Register> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('NIC number is required to sign up as COLLECTOR'),
-            content: Form(
-              key: _dialogFormKey,
-              child: TextFormField(
-                decoration:  InputDecoration(
-                  labelText: 'NIC No',
-                  labelStyle: TextStyle(
-                    color: Colors.green[700],
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    borderSide: BorderSide(color: Colors.green, width: 0.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                    borderSide: BorderSide(color: Colors.green, width: 2.0),
-                  ),
-                  border: OutlineInputBorder(),
+            title: Text('Additional Informations are required to sign up as COLLECTOR'),
+            content: Container(
+              child: Form(
+                key: _dialogFormKey,
+                child: Column(
+                  children: [
+                    SizedBox(height: 20.0,),
+                    TextFormField(
+                      decoration: InputDecoration(
+                          labelText: 'Location',
+                          labelStyle: TextStyle(
+                            color: Colors.green[700], // Set the desired text color
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.green, width: 0.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                          ),
+                          border: OutlineInputBorder()),
+                      validator: _validateLocation,
+                      controller: locationController,
+                    ),
+                    SizedBox(height: 20.0,),
+                    TextFormField(
+                      decoration:  InputDecoration(
+                        labelText: 'NIC No',
+                        labelStyle: TextStyle(
+                          color: Colors.green[700],
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide: BorderSide(color: Colors.green, width: 0.0),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          borderSide: BorderSide(color: Colors.green, width: 2.0),
+                        ),
+                        border: OutlineInputBorder(),
+                      ),
+                      validator: _validateNIC,
+                      controller: nicController,
+                    ),
+                  ],
                 ),
-                validator: _validateNIC,
-                controller: nicController,
-                autofocus: true,
               ),
             ),
             actions: <Widget>[
@@ -239,6 +346,109 @@ class _RegisterState extends State<Register> {
             key: _formKey,
             child: Column(
               children: [
+                // Row(
+                //   children: [
+                //     Column(
+                //     children: <Widget>[
+                //     _nicFront == null
+                //         ? Text('No image selected.')
+                //           : Container(
+                //               width: 100.0,
+                //               height: 100.0,
+                //               child: Image.file(_nicFront!)),
+                //           ElevatedButton(
+                //             style: ElevatedButton.styleFrom(
+                //               minimumSize: Size(100.0, 40.0),
+                //               primary: Colors.green[700], // Set the desired button color
+                //               shape: RoundedRectangleBorder(
+                //                 borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
+                //               ),
+                //             ),
+                //             child: Text('Pick Image'),
+                //             onPressed: getNICFront,
+                //           ),
+                //           // ElevatedButton(
+                //           //   child: Text('Upload'),
+                //           //   onPressed: () {
+                //           //     uploadImageToFirebase(context);
+                //           //   },
+                //           // )
+                //       ],
+                //     ),
+                //     Column(
+                //       children: <Widget>[
+                //         _nicBack == null
+                //             ? Text('No image selected.')
+                //             : Container(
+                //             width: 100.0,
+                //             height: 100.0,
+                //             child: Image.file(_nicBack!)),
+                //         ElevatedButton(
+                //           style: ElevatedButton.styleFrom(
+                //             minimumSize: Size(100.0, 40.0),
+                //             primary: Colors.green[700], // Set the desired button color
+                //             shape: RoundedRectangleBorder(
+                //               borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
+                //             ),
+                //           ),
+                //           child: Text('Pick Image'),
+                //           onPressed: getNICBack,
+                //         ),
+                //         // ElevatedButton(
+                //         //   child: Text('Upload'),
+                //         //   onPressed: () {
+                //         //     uploadImageToFirebase(context);
+                //         //   },
+                //         // )
+                //       ],
+                //     ),
+                //     ElevatedButton(
+                //       child: Text('Upload'),
+                //       onPressed: uploadImages,
+                //     )
+                //   ],
+                // ),
+                SizedBox(height: 20.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 300.0,
+                      child: DropdownButtonFormField<String>(
+                        decoration:  InputDecoration(
+                            labelText: 'role',
+                            labelStyle: TextStyle(
+                              color: Colors.green[700], // Set the desired text color
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              borderSide:
+                              BorderSide(color: Colors.green, width: 0.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                              borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                            ),
+                            border: OutlineInputBorder()
+                        ),
+                        validator: _validateRole,
+                        onChanged: (value) {
+                          selectedOption = value!;
+                        },
+                        items: [
+                          DropdownMenuItem(
+                            value: 'user',
+                            child: Text('User'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'collector',
+                            child: Text('Collector'),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
                 SizedBox(height: 20.0,),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -277,8 +487,8 @@ class _RegisterState extends State<Register> {
 
                         width: 300.0,
                         child: TextFormField(
-                          decoration: InputDecoration(
-                              labelText: 'Location',
+                          decoration:  InputDecoration(
+                              labelText: 'Mobile',
                               labelStyle: TextStyle(
                                 color: Colors.green[700], // Set the desired text color
                               ),
@@ -292,8 +502,8 @@ class _RegisterState extends State<Register> {
                                 borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
                               ),
                               border: OutlineInputBorder()),
-                          validator: _validateLocation,
-                          controller: locationController,
+                          validator: _validateMobile,
+                          controller: mobileController,
                         )
                     )
                   ],
@@ -324,76 +534,6 @@ class _RegisterState extends State<Register> {
                           validator: _validateEmail,
                           controller: emailController,
                         )
-                    )
-                  ],
-                ),
-                SizedBox(height: 20.0,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-
-                        width: 300.0,
-                        child: TextFormField(
-                          decoration:  InputDecoration(
-                              labelText: 'Mobile',
-                              labelStyle: TextStyle(
-                                color: Colors.green[700], // Set the desired text color
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                borderSide:
-                                BorderSide(color: Colors.green, width: 0.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                                borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                              ),
-                              border: OutlineInputBorder()),
-                          validator: _validateMobile,
-                          controller: mobileController,
-                        )
-                    )
-                  ],
-                ),
-                SizedBox(height: 20.0,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 300.0,
-                      child: DropdownButtonFormField<String>(
-                        decoration:  InputDecoration(
-                            labelText: 'role',
-                            labelStyle: TextStyle(
-                              color: Colors.green[700], // Set the desired text color
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide:
-                              BorderSide(color: Colors.green, width: 0.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                              borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                            ),
-                            border: OutlineInputBorder()
-                        ),
-                        validator: _validateRole,
-                        onChanged: (value) {
-                            selectedOption = value!;
-                        },
-                        items: [
-                          DropdownMenuItem(
-                            value: 'user',
-                            child: Text('User'),
-                          ),
-                          DropdownMenuItem(
-                            value: 'collector',
-                            child: Text('Collector'),
-                          ),
-                        ],
-                      ),
                     )
                   ],
                 ),

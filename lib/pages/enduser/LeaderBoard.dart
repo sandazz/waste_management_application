@@ -16,7 +16,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('recycledWasteEndUser')
-          .orderBy('points', descending: true)
+          .orderBy('spinnablePoints', descending: true)
           .get();
 
       if (querySnapshot.size > 0) {
@@ -30,11 +30,15 @@ class _LeaderBoardState extends State<LeaderBoard> {
               .doc(uid)
               .get();
 
+
+
           if (documentSnapshot.exists) {
             Map<String, dynamic> data1 = documentSnapshot1.data() as Map<String, dynamic>;
             setState(() {
               String firstName = data1['fname'];
-              texts.add(firstName);
+              names.add(firstName);
+              double redeemablePoint = documentSnapshot['spinnablePoints'];
+              redeemablePoints.add(redeemablePoint);
             });
           } else {
             print("User not found");
@@ -48,10 +52,15 @@ class _LeaderBoardState extends State<LeaderBoard> {
       // Handle any errors that occurred during the process
       print('Error retrieving documents: $e');
     }
+    print(redeemablePoints);
+    print(names);
+
   }
 
 
-  List<String> texts = [
+  List<String> names = [
+  ];
+  List<double> redeemablePoints = [
   ];
 
   @override
@@ -82,7 +91,9 @@ class _LeaderBoardState extends State<LeaderBoard> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Column(
-            children: texts.asMap().entries.map((entry) {
+            children: names.asMap().entries.map((entry) {
+              int idx = entry.key;
+              double points = redeemablePoints[idx];
               int index = entry.key + 1; // count of the names
               String text = entry.value; // names in the list
               String indexWithLeadingZero = index.toString().padLeft(2, '0'); // to make numbering 01, 02, 03
@@ -111,25 +122,34 @@ class _LeaderBoardState extends State<LeaderBoard> {
                           ),
                         ],
                       ),
-                      child: Row(
-                        children: [
-                          Text(
-                            '$indexWithLeadingZero',
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              // fontWeight: FontWeight.bold,
+                    child: Row(
+                      children: [
+                        Text(
+                          '$indexWithLeadingZero',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        Spacer(), // Spacer will take all available space pushing the next widgets to the center
+                        Expanded( // Expanded will ensure the text widget takes only the space it needs
+                          child: Center(
+                            child: Text(
+                              text,
+                              style: TextStyle(
+                                fontSize: 20.0,
+                              ),
                             ),
                           ),
-                          SizedBox(width: 30.0,),
-                          Text(
-                            text,
-                            style: TextStyle(
-                              fontSize: 20.0,
-                              // fontWeight: FontWeight.bold,
-                            ),
+                        ),
+                        Spacer(), // Spacer will take all available space pushing the next widgets to the end
+                        Text(
+                          '${points}',
+                          style: TextStyle(
+                            fontSize: 20.0,
                           ),
-                        ],
-                      )
+                        ),
+                      ],
+                    ),
                   ),
               );
             }).toList(),

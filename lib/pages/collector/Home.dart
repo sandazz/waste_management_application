@@ -15,9 +15,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   final User currentUser = FirebaseAuth.instance.currentUser!;
   int plasticAmount = 0;
-  int caneAmount = 0;
-  int glassAmount = 0;
-
+  int bottleAmount = 0;
 
   Future<void> getPoints() async {
 
@@ -46,9 +44,7 @@ class _HomeState extends State<Home> {
       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
       setState(() {
         plasticAmount = int.parse(userData['plasticAmount']);
-        caneAmount = int.parse(userData['caneAmount']);
-        glassAmount = int.parse(userData['glassAmount']);
-
+        bottleAmount = int.parse(userData['bottleAmount']);
       });
     } else {
       print("User not found");
@@ -100,7 +96,7 @@ class _HomeState extends State<Home> {
                         ),
                         SizedBox(height: 5.0),
                         Icon(
-                          LineIcons.wineBottle,
+                          LineIcons.shoppingBag,
                           size: 35.0,
                         ),
                         SizedBox(height: 5.0),
@@ -138,7 +134,7 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: [
                             Text(
-                              'Cane',
+                              'Bottle',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 22.0,
@@ -147,12 +143,12 @@ class _HomeState extends State<Home> {
                             ),
                             SizedBox(height: 5.0),
                             Icon(
-                              Icons.ad_units_outlined,
+                              LineIcons.prescriptionBottle,
                               size: 30.0,
                             ),
                             SizedBox(height: 5.0),
                             Text(
-                              '$caneAmount',
+                              '$bottleAmount',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 20.0,
@@ -162,50 +158,50 @@ class _HomeState extends State<Home> {
                         ),
                       ),
                     ),
-                    Container(
-                      width: 100.0, // Set the width of the container
-                      padding: EdgeInsets.all(16.0), // Set the padding within the container
-                      margin: EdgeInsets.all(8.0), // Set the margin around the container
-                      decoration: BoxDecoration(
-                        color: Colors.green[300], // Set the background color of the container
-                        borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 2.0,
-                            blurRadius: 5.0,
-                            offset: Offset(0, 3), // Adjust the shadow position as needed
-                          ),
-                        ],
-                      ),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              'Glass',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 22.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 5.0),
-                            Icon(
-                              LineIcons.martiniGlass,
-                              size: 30.0,
-                            ),
-                            SizedBox(height: 5.0),
-                            Text(
-                              '$glassAmount',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 20.0,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Container(
+                    //   width: 100.0, // Set the width of the container
+                    //   padding: EdgeInsets.all(16.0), // Set the padding within the container
+                    //   margin: EdgeInsets.all(8.0), // Set the margin around the container
+                    //   decoration: BoxDecoration(
+                    //     color: Colors.green[300], // Set the background color of the container
+                    //     borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: Colors.grey.withOpacity(0.5),
+                    //         spreadRadius: 2.0,
+                    //         blurRadius: 5.0,
+                    //         offset: Offset(0, 3), // Adjust the shadow position as needed
+                    //       ),
+                    //     ],
+                    //   ),
+                    //   child: Center(
+                    //     child: Column(
+                    //       children: [
+                    //         Text(
+                    //           'Glass',
+                    //           textAlign: TextAlign.center,
+                    //           style: TextStyle(
+                    //             fontSize: 22.0,
+                    //             fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //         SizedBox(height: 5.0),
+                    //         Icon(
+                    //           LineIcons.martiniGlass,
+                    //           size: 30.0,
+                    //         ),
+                    //         SizedBox(height: 5.0),
+                    //         Text(
+                    //           '$glassAmount',
+                    //           textAlign: TextAlign.center,
+                    //           style: TextStyle(
+                    //             fontSize: 20.0,
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ],

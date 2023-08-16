@@ -86,39 +86,6 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
 
   Future<void> sendPostRequest() async {
     print('send post request');
-    var uri = Uri.https('secure.quickpay.lk', '/api', {
-      'action': 'recharge',
-      'format': 'JSON',
-      'mid': 'NDEwNDAw',
-      'provider': 'PAT',
-      'number': '768511134',
-      'amount': '52',
-      'refno': 'sa0111',
-      'rurl': 'https://api.example.com/users/123',
-      'hash': 'b21c633bac6cc578890a728a46d9884a01eae70eebc30521edd2b6ba53cd5e783b392a30a29611da7fe91c6af23f9c0d41366fa5f7681f19db2d8af7e480934a',
-    });
-    var response = await http.post(uri, body: {
-      'action': 'recharge',
-      'format': 'JSON',
-      'mid': 'NDEwNDAw',
-      'provider': 'PAT',
-      'number': '768511134',
-      'amount': '52',
-      'refno': 'sa0111',
-      'rurl': 'https://api.example.com/users/123',
-      'hash': 'b21c633bac6cc578890a728a46d9884a01eae70eebc30521edd2b6ba53cd5e783b392a30a29611da7fe91c6af23f9c0d41366fa5f7681f19db2d8af7e480934a',
-    });
-
-    print(uri);
-    print(response);
-
-    if (response.statusCode == 200) {
-      print('Success! Response: ${response.body}');
-    } else {
-      print('Failure! Status Code: ${response.statusCode}');
-      print('Failure! Status Code: ${response.reasonPhrase}');
-
-    }
   }
 
   String? _validateRewardAmount(String? value) {

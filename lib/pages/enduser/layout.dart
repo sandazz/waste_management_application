@@ -38,7 +38,7 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           leading: Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(10.0),
             child: IconButton(
               icon: Icon(
                 Icons.manage_accounts,
@@ -56,7 +56,7 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
 
           actions: [
             Padding(
-              padding: EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(10.0),
               child: IconButton(
                 icon: Icon(Icons.logout_outlined,
                   color: Colors.black,

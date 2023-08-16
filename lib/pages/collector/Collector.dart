@@ -29,10 +29,11 @@ class _LayoutCollectorState extends State<LayoutCollector> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          toolbarHeight: 80.0,
           backgroundColor: Colors.transparent,
           elevation: 0.0,
           leading: Padding(
-            padding: EdgeInsets.all(15.0),
+            padding: EdgeInsets.all(10.0),
             child: IconButton(
               icon: Icon(
                 Icons.manage_accounts,
@@ -50,7 +51,7 @@ class _LayoutCollectorState extends State<LayoutCollector> {
 
           actions: [
             Padding(
-              padding: EdgeInsets.all(15.0),
+              padding: EdgeInsets.all(10.0),
               child: IconButton(
                 icon: Icon(Icons.logout_outlined,
                   color: Colors.black,

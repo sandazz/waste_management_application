@@ -48,6 +48,8 @@ dependencies:
   line_icons: ^2.0.2
   http: ^0.13.3
   crypto: ^3.0.1
+  firebase_storage: ^11.2.5
+  image_picker: ^1.0.2
 
 
 dev_dependencies:
@@ -95,7 +97,17 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/achievements/
-
+    - assets/app_images/
+  fonts:
+    - family: GreatVibes
+      fonts:
+        - asset: assets/fonts/GreatVibes-Regular.ttf
+    - family: DaiBannaSIL-Regular
+      fonts:
+        - asset: assets/fonts/DaiBannaSIL-Regular.ttf
+    - family: DaiBannaSIL-SemiBold
+      fonts:
+        - asset: assets/fonts/DaiBannaSIL-SemiBold.ttf
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

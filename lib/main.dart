@@ -9,6 +9,9 @@ import 'package:waste_management_app/pages/collector/NotVerified.dart';
 import 'package:waste_management_app/pages/enduser/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:waste_management_app/providers/loginProvider.dart';
+import 'package:flutter/services.dart';
+
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
