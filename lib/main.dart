@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:waste_management_app/login/login.dart';
 import 'package:waste_management_app/pages/collector/Collector.dart';
 import 'package:waste_management_app/pages/collector/NotVerified.dart';
@@ -66,14 +67,22 @@ class _AppState extends State<App> {
                 } else if (snapshot.hasData && snapshot.data!.data() != null && snapshot.data!.get("role") == "collector") {
                   print("---------role = collector");
                   if(snapshot.data!.get("verified") == "true"){
-                    return LayoutCollector();
+                    return ShowCaseWidget(
+                        builder: Builder(
+                            builder: (context) => LayoutCollector() // assuming you want to showcase something in LayoutCollector
+                        )
+                    );
                   }else{
                     return NotVerified();
                   }
 
                 } else if (snapshot.hasData && snapshot.data!.data() != null && snapshot.data!.get("role") == "user") {
                   print("--------role = user");
-                  return BottomNavigationExample();
+                  return ShowCaseWidget(
+                      builder: Builder(
+                          builder: (context) => BottomNavigationExample() // assuming you want to showcase something in LayoutCollector
+                      )
+                  );
                 }
                 print("-----------return login()");
                 return login();
