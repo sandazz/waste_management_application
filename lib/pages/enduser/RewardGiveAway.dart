@@ -74,18 +74,134 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
         {"rewardPoints": rewardPoints.toString()});
   }
 
-  Future<void> hash() async {
-    var data = "Hello, World!"; // data to be hashed
-
-    var bytes = utf8.encode(data); // data being hashed
-
-    var digest = sha512.convert(bytes); // Hashing Process
-
-    print("Hashed Data: $digest");
+  String generateHash(String input) {
+    final bytes = utf8.encode(input); // Convert the string to bytes
+    var digest = sha512.convert(bytes); // Hash the bytes using SHA-256
+    return digest.toString(); // Convert the hash bytes to a string and return
   }
 
-  Future<void> sendPostRequest() async {
-    print('send post request');
+  Future<void> sendPostRequest(String rewardAmount) async {
+    String action = 'recharge';
+    String format = 'JSON';
+    String mid = 'OTk2NzAw';
+    String provider = '';
+    String number = mobileController.text;
+
+    // check the provider code
+    String firstThreeDigits = number.substring(0, 3);
+    switch (firstThreeDigits) {
+      case '076':
+        print('Dialog');
+        provider = 'PAT';
+        break;
+      case '074':
+        print('Dialog');
+        provider = 'PAT';
+        break;
+      case '077':
+        print('Dialog');
+        provider = 'PAT';
+        break;
+      case '072':
+        print('Hutch');
+        provider = 'HUT';
+        break;
+      case '078':
+        print('Hutch');
+        provider = 'HUT';
+        break;
+      case '071':
+        print('Mobital');
+        provider = 'PID';
+        break;
+      case '070':
+        print('Mobital');
+        provider = 'PID';
+        break;
+      default:
+        print('Airtel');
+        provider = 'AIR';
+    }
+
+    // Take number without '0'
+    if (number.startsWith("0")) {
+      number = number.substring(1);
+    }
+
+    String amount = rewardAmount;
+    String refno = 'ref001';
+    String rurl = 'https://www.example.com';
+    String data = mid+'|'+number+'|'+provider+'|'+amount+'|'+refno+'|'+rurl+'|'+'e75e61651fb61c7f5844';
+    String hash = generateHash(data);
+
+    var parameters = {
+      'action': action,
+      'format': format,
+      'mid': mid,
+      'provider': provider,
+      'number': number,
+      'amount': amount,
+      'refno': refno,
+      'rurl': rurl,
+      'hash': hash
+    };
+
+    var uri = Uri.http('secure.quickpay.lk', '/api/', parameters);
+
+    // Make the HTTP GET request
+    var response = await http.get(uri);
+
+    // If the call to the server was successful, print the response body
+    if (response.statusCode == 200) {
+
+      // Parse the JSON string into a Dart Map
+      Map<String, dynamic> parsedJson = jsonDecode(response.body);
+
+      // Check the reload success with reasons code
+      if (parsedJson['RechargeStatus']['reasoncode'] == '000'){
+        // Reduce the points
+        rewardPoints = rewardPoints - double.parse(rewardAmountController.text);
+
+        // Update redused point
+        await updatePoints();
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('You are REWARED with ${rewardAmountController.text} POINTS !'),
+            backgroundColor: Colors.green, // Change color of SnackBar
+            behavior: SnackBarBehavior.floating, // Make SnackBar floating
+            shape: RoundedRectangleBorder( // Change shape of SnackBar
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+        );
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error !'),
+            backgroundColor: Colors.red, // Change color of SnackBar
+            behavior: SnackBarBehavior.floating, // Make SnackBar floating
+            shape: RoundedRectangleBorder( // Change shape of SnackBar
+              borderRadius: BorderRadius.circular(24),
+            ),
+          ),
+        );
+      }
+    } else {
+      // If that call was not successful, throw an error.
+      print('Failed to load data from the server');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to load data from the server'),
+          backgroundColor: Colors.red, // Change color of SnackBar
+          behavior: SnackBarBehavior.floating, // Make SnackBar floating
+          shape: RoundedRectangleBorder( // Change shape of SnackBar
+            borderRadius: BorderRadius.circular(24),
+          ),
+        ),
+      );
+    }
   }
 
   String? _validateRewardAmount(String? value) {
@@ -231,19 +347,8 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
-                          rewardPoints = rewardPoints - double.parse(rewardAmountController.text);
-                           await updatePoints();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text('You are REWARED with ${rewardAmountController.text} POINTS !'),
-                              backgroundColor: Colors.green, // Change color of SnackBar
-                              behavior: SnackBarBehavior.floating, // Make SnackBar floating
-                              shape: RoundedRectangleBorder( // Change shape of SnackBar
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                            ),
-                          );
-                          await sendPostRequest();
+
+                          await sendPostRequest(rewardAmountController.text);
                           rewardAmountController.clear();
                           await getUserDetails();
                         }
