@@ -20,7 +20,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('recycledWasteEndUser')
-          .orderBy('spinnablePoints', descending: true)
+          .orderBy('rewardPoints', descending: true)
           .get();
 
       if (querySnapshot.size > 0) {
@@ -41,8 +41,8 @@ class _LeaderBoardState extends State<LeaderBoard> {
             setState(() {
               String firstName = data1['fname'];
               names.add(firstName);
-              double redeemablePoint = documentSnapshot['spinnablePoints'];
-              redeemablePoints.add(redeemablePoint);
+              int rewardPoint = documentSnapshot['rewardPoints'];
+              rewardPoints.add(rewardPoint);
             });
           } else {
             print("User not found");
@@ -56,7 +56,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
       // Handle any errors that occurred during the process
       print('Error retrieving documents: $e');
     }
-    print(redeemablePoints);
+    print(rewardPoints);
     print(names);
 
   }
@@ -64,7 +64,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   List<String> names = [
   ];
-  List<double> redeemablePoints = [
+  List<int> rewardPoints = [
   ];
 
   void showCaseCall(){
@@ -107,7 +107,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
             child: Column(
               children: names.asMap().entries.map((entry) {
                 int idx = entry.key;
-                double points = redeemablePoints[idx];
+                int points = rewardPoints[idx];
                 int index = entry.key + 1; // count of the names
                 String text = entry.value; // names in the list
                 String indexWithLeadingZero = index.toString().padLeft(2, '0'); // to make numbering 01, 02, 03

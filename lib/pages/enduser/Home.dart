@@ -29,7 +29,7 @@ class _HomeState extends State<Home> {
   String binAmount = "0";
   String bottleAmount = "0";
 
-  double redeemablePoints = 0;
+  int rewardPoints = 0;
 
   Future<void> getPoints() async {
 
@@ -45,7 +45,7 @@ class _HomeState extends State<Home> {
        setState(() {
          plasticAmount = userData['plasticAmount'];
          bottleAmount = userData['bottleAmount'];
-         redeemablePoints = userData['spinnablePoints'];
+         rewardPoints = userData['rewardPoints'];
        });
      } else {
        print("User not found");
@@ -114,7 +114,7 @@ class _HomeState extends State<Home> {
                           child: Column(
                             children: [
                               Text(
-                                'Redeemable Points',
+                                'Reward Points',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 30.0,
@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
                               ),
                               SizedBox(height: 5.0),
                               Text(
-                                "$redeemablePoints",
+                                "$rewardPoints",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 25.0,

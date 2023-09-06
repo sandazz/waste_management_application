@@ -26,7 +26,7 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
   final passwordController = TextEditingController();
   final rewardAmountController = TextEditingController();
 
-  double rewardPoints = 0.0;
+  int rewardPoints = 0;
 
   Future<void> getUserDetails() async{
     String uid = currentUser.uid;
@@ -59,7 +59,7 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
     if (gettingRewardPoints.exists) {
       Map<String, dynamic> userData = gettingRewardPoints.data() as Map<String, dynamic>;
       setState(() {
-        rewardPoints = double.parse(userData['rewardPoints']);
+        rewardPoints = userData['rewardPoints'];
         print(rewardPoints);
       });
     } else {
@@ -71,7 +71,7 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
   Future<void> updatePoints() async {
     String uid = currentUser.uid;
     FirebaseFirestore.instance.collection("recycledWasteEndUser").doc(uid).update(
-        {"rewardPoints": rewardPoints.toString()});
+        {"rewardPoints": rewardPoints});
   }
 
   String generateHash(String input) {
@@ -160,7 +160,7 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
       // Check the reload success with reasons code
       if (parsedJson['RechargeStatus']['reasoncode'] == '000'){
         // Reduce the points
-        rewardPoints = rewardPoints - double.parse(rewardAmountController.text);
+        rewardPoints = rewardPoints - int.parse(rewardAmountController.text);
 
         // Update redused point
         await updatePoints();

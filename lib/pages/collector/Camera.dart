@@ -238,10 +238,9 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     // String caneAmount = caneAmountController.text.trim();
                     // String glassAmount = glassAmountController.text.trim();
                     String binAmount = "0";
-                    double points = (double.parse(plasticAmount)+double.parse(bottleAmount))*0.05;
-                    points = double.parse(points.toStringAsFixed(2));
-                    double spinnablePoints = points;
-                    double rewardPoints = 0.0;
+                    int points = (int.parse(plasticAmount)+int.parse(bottleAmount))*5;
+                    int spinnablePoints = points;
+                    int rewardPoints = points;
 
                     // Retrieve user ID from "users" collection
                     FirebaseFirestore.instance
@@ -306,14 +305,19 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                             // print("update Bin amount :  $updatedBinAmount");
 
                             //update point
-                            double existingPoints = (existingDoc.data()['points'] as num).toDouble();
-                            double newPoints = points;
-                            double updatedPoints = existingPoints + newPoints;
+                            int existingPoints = existingDoc.data()['points'];
+                            int newPoints = points;
+                            int updatedPoints = existingPoints + newPoints;
 
                             //update spinnablepoints
-                            double existingSpinnablePoints = existingDoc.data()['spinnablePoints'];
-                            double newSpinnablePoints = spinnablePoints;
-                            double updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
+                            int existingSpinnablePoints = existingDoc.data()['spinnablePoints'];
+                            int newSpinnablePoints = spinnablePoints;
+                            int updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
+
+                            //update rewardPoints
+                            int existingRewardPoints = existingDoc.data()['rewardPoints'];
+                            int newRewardPoints = rewardPoints;
+                            int updatedRewardPoints = existingRewardPoints + newRewardPoints;
 
                             // Update the existing record with the new amount value
                             try {
@@ -324,7 +328,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                                 'plasticAmount': updatedPlasticAmount.toString(),
                                 'bottleAmount': updatedBottleAmount.toString(),
                                 'points': updatedPoints,
-                                'spinnablePoints': updatedspinnablePoints
+                                'spinnablePoints': updatedspinnablePoints,
+                                'rewardPoints': updatedRewardPoints
                               });
 
                               // Update successful, handle the result here
