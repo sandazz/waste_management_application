@@ -233,12 +233,12 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                     String mobile = mobileController.text.trim();
-                    String plasticAmount = plasticAmountController.text.trim();
-                    String bottleAmount = bottleAmountController.text.trim();
+                    int plasticAmount = int.parse(plasticAmountController.text);
+                    int bottleAmount = int.parse(bottleAmountController.text);
                     // String caneAmount = caneAmountController.text.trim();
                     // String glassAmount = glassAmountController.text.trim();
-                    String binAmount = "0";
-                    int points = (int.parse(plasticAmount)+int.parse(bottleAmount))*5;
+                    int binAmount = 0;
+                    int points = (plasticAmount+bottleAmount)*5;
                     int spinnablePoints = points;
                     int rewardPoints = points;
 
@@ -254,7 +254,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
 
                         // Extract user ID
                         String userId = userDoc.id;
-                        binAmount = ((int.parse(plasticAmount) + int.parse(bottleAmount))*(1/10000)).floor().toString();
+                        binAmount = ((plasticAmount + bottleAmount)*(1/10000)).floor();
                         print("Bin amount :  $binAmount");
 
 
@@ -266,7 +266,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                           "points" : points,
                           "spinnablePoints" : spinnablePoints,
                           "binAmount" : binAmount,
-                          "rewardPoints" : rewardPoints.toString(),
+                          "rewardPoints" : rewardPoints,
                         };
 
                         //  Check if a record with the same mobile number exists
@@ -281,13 +281,13 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                             String existingDocId = existingDoc.id;
 
                             //plastic amount increase
-                            int existingPlasticAmount = int.parse(existingDoc.data()['plasticAmount']);
-                            int newPlasticAmount = int.parse(plasticAmount);
+                            int existingPlasticAmount = existingDoc.data()['plasticAmount'];
+                            int newPlasticAmount = plasticAmount;
                             int updatedPlasticAmount = existingPlasticAmount + newPlasticAmount;
 
                             //bottle amount increase
-                            int existingBottleAmount = int.parse(existingDoc.data()['bottleAmount']);
-                            int newBottleAmount = int.parse(bottleAmount);
+                            int existingBottleAmount = existingDoc.data()['bottleAmount'];
+                            int newBottleAmount = bottleAmount;
                             int updatedBottleAmount = existingBottleAmount + newBottleAmount;
 
                             // //cane amount increase
@@ -325,8 +325,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                                   .collection('recycledWasteEndUser')
                                   .doc(existingDocId)
                                   .update({
-                                'plasticAmount': updatedPlasticAmount.toString(),
-                                'bottleAmount': updatedBottleAmount.toString(),
+                                'plasticAmount': updatedPlasticAmount,
+                                'bottleAmount': updatedBottleAmount,
                                 'points': updatedPoints,
                                 'spinnablePoints': updatedspinnablePoints,
                                 'rewardPoints': updatedRewardPoints
@@ -384,11 +384,11 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                           Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
                           setState(()  {
 
-                            int existingPlasticAmountCollector = int.parse(userData['plasticAmount']);
-                            int updatePlasticAmountCollector = existingPlasticAmountCollector +int.parse(plasticAmount);
+                            int existingPlasticAmountCollector = userData['plasticAmount'];
+                            int updatePlasticAmountCollector = existingPlasticAmountCollector + plasticAmount;
 
-                            int existingBottleAmountCollector = int.parse(userData['bottleAmount']);
-                            int updateBottleAmountCollector = existingBottleAmountCollector +int.parse(bottleAmount);
+                            int existingBottleAmountCollector = userData['bottleAmount'];
+                            int updateBottleAmountCollector = existingBottleAmountCollector + bottleAmount;
 
                             // int existingCaneAmountCollector = int.parse(userData['caneAmount']);
                             // int updateCaneAmountCollector = existingCaneAmountCollector +int.parse(caneAmount);
@@ -401,8 +401,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                                   .collection('recycledWasteCollector')
                                   .doc(currentUser.uid)
                                   .update({
-                                'plasticAmount': updatePlasticAmountCollector.toString(),
-                                'bottleAmount': updateBottleAmountCollector.toString(),
+                                'plasticAmount': updatePlasticAmountCollector,
+                                'bottleAmount': updateBottleAmountCollector,
                               });
 
                               // Update operation successful, show a success message

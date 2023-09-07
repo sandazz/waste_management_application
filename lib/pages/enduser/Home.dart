@@ -23,11 +23,11 @@ class _HomeState extends State<Home> {
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
-  String plasticAmount = "0";
-  String caneAmount = "0";
-  String glassAmount = "0";
-  String binAmount = "0";
-  String bottleAmount = "0";
+  int plasticAmount = 0;
+  int caneAmount = 0;
+  int glassAmount = 0;
+  int binAmount = 0;
+  int bottleAmount = 0;
 
   int rewardPoints = 0;
 
@@ -182,7 +182,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     SizedBox(height: 5.0),
                                     Text(
-                                      bottleAmount,
+                                      '$bottleAmount',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 20.0,
@@ -230,7 +230,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     SizedBox(height: 5.0),
                                     Text(
-                                      plasticAmount,
+                                      '$plasticAmount',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontSize: 20.0,

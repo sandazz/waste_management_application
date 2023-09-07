@@ -43,8 +43,8 @@ class _HomeState extends State<Home> {
     if (documentSnapshot.exists) {
       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
       setState(() {
-        plasticAmount = int.parse(userData['plasticAmount']);
-        bottleAmount = int.parse(userData['bottleAmount']);
+        plasticAmount = userData['plasticAmount'];
+        bottleAmount = userData['bottleAmount'];
       });
     } else {
       print("User not found");

@@ -66,8 +66,8 @@ class _AchievementState extends State<Achievement> {
     if (documentSnapshot.exists) {
       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
       setState(() {
-        plasticAmount = int.parse(userData['plasticAmount']);
-        bottleAmount = int.parse(userData['bottleAmount']);
+        plasticAmount = userData['plasticAmount'];
+        bottleAmount = userData['bottleAmount'];
         // usageAmount = 4;
         // MediaAmount = 5;
         // socialAmount = 11;
