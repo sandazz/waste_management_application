@@ -40,6 +40,9 @@ class _LeaderBoardState extends State<LeaderBoard> {
             Map<String, dynamic> data1 = documentSnapshot1.data() as Map<String, dynamic>;
             setState(() {
               String firstName = data1['fname'];
+              // Split the fullName using space and take the first part
+              List<String> splitNames = firstName.split(' ');
+              firstName = splitNames[0];
               names.add(firstName);
               int rewardPoint = documentSnapshot['rewardPoints'];
               rewardPoints.add(rewardPoint);

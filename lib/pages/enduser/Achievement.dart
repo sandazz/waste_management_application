@@ -90,10 +90,10 @@ class _AchievementState extends State<Achievement> {
     }
 
     //bottle badges
-    if(bottleAmount>=100){
+    if(bottleAmount>=1000){
       achievementBottleURL = "assets/achievements/3.png";
       achievementBottleBadge = "Eco-Warrior";
-    }else if(bottleAmount>=10){
+    }else if(bottleAmount>=100){
       achievementBottleURL = "assets/achievements/2.png";
       achievementBottleBadge = "Getting Started";
     } else if(bottleAmount >= 1){
@@ -113,7 +113,7 @@ class _AchievementState extends State<Achievement> {
       achievementCaneBadge = "Baby Step";
     }
 
-    //plastic badges
+    //glass badges
     if(glassAmount>=100){
       achievementGlassURL = "assets/achievements/3.png";
       achievementGlassBadge = "Eco-Warrior";
@@ -728,7 +728,7 @@ class _AchievementState extends State<Achievement> {
                                   height: 40.0,// Set the height of the container
                                   margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
                                   decoration: BoxDecoration(
-                                    color: Colors.white, // Set the background color of the container
+                                    color: bottleAmount >= 1 ? Colors.white38 : Colors.white, // Set the background color of the container
                                     borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
                                     boxShadow: [
                                       BoxShadow(
@@ -754,6 +754,9 @@ class _AchievementState extends State<Achievement> {
                                           child: Text(
                                             'Baby step',
                                             textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              decoration:  bottleAmount > 1 ? TextDecoration.lineThrough : null,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -772,51 +775,7 @@ class _AchievementState extends State<Achievement> {
                                   height: 40.0,// Set the height of the container
                                   margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
                                   decoration: BoxDecoration(
-                                    color: Colors.white, // Set the background color of the container
-                                    borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(0.5),
-                                        spreadRadius: 1.0,
-                                        blurRadius: 2.0,
-                                        offset: Offset(0, 3), // Adjust the shadow position as needed
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 20.0),
-                                        child: Text(
-                                          "${bottleAmount >= 10 ? '10' : bottleAmount}/10",
-                                          textAlign: TextAlign.left,
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Center(
-                                          child: Text(
-                                            'Getting Started',
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.only(right: 20.0),
-                                        child: Image.asset(
-                                          'assets/achievements/2.png',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: 500.0, // Set the width of the container
-                                  height: 40.0,// Set the height of the container
-                                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white, // Set the background color of the container
+                                    color: bottleAmount >= 100 ? Colors.white38 : Colors.white, // Set the background color of the container
                                     borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
                                     boxShadow: [
                                       BoxShadow(
@@ -840,8 +799,58 @@ class _AchievementState extends State<Achievement> {
                                       Expanded(
                                         child: Center(
                                           child: Text(
+                                            'Getting Started',
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              decoration:  bottleAmount > 100 ? TextDecoration.lineThrough : null,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.only(right: 20.0),
+                                        child: Image.asset(
+                                          'assets/achievements/2.png',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  width: 500.0, // Set the width of the container
+                                  height: 40.0,// Set the height of the container
+                                  margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
+                                  decoration: BoxDecoration(
+                                    color: bottleAmount >= 1000 ? Colors.white38 : Colors.white, // Set the background color of the container
+                                    borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.5),
+                                        spreadRadius: 1.0,
+                                        blurRadius: 2.0,
+                                        offset: Offset(0, 3), // Adjust the shadow position as needed
+                                      ),
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align the children at the start and end of the row
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 20.0),
+                                        child: Text(
+                                          "${bottleAmount >= 1000 ? '1000' : bottleAmount}/1000",
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Center(
+                                          child: Text(
                                             'Eco-Warrior',
                                             textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              decoration:  bottleAmount > 1000 ? TextDecoration.lineThrough : null,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -895,7 +904,7 @@ class _AchievementState extends State<Achievement> {
                                     height: 40.0,// Set the height of the container
                                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
                                     decoration: BoxDecoration(
-                                      color: Colors.white, // Set the background color of the container
+                                      color: plasticAmount >= 1 ? Colors.white38 : Colors.white, // Set the background color of the container
                                       borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
                                       boxShadow: [
                                         BoxShadow(
@@ -921,6 +930,9 @@ class _AchievementState extends State<Achievement> {
                                             child: Text(
                                               'Baby step',
                                               textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                decoration:  plasticAmount > 1 ? TextDecoration.lineThrough : null,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -939,7 +951,7 @@ class _AchievementState extends State<Achievement> {
                                     height: 40.0,// Set the height of the container
                                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
                                     decoration: BoxDecoration(
-                                      color: Colors.white, // Set the background color of the container
+                                      color: plasticAmount >= 10 ? Colors.white38 : Colors.white, // Set the background color of the container
                                       borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
                                       boxShadow: [
                                         BoxShadow(
@@ -965,6 +977,9 @@ class _AchievementState extends State<Achievement> {
                                           child: Text(
                                             'Getting Started',
                                             textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              decoration:  plasticAmount > 10 ? TextDecoration.lineThrough : null,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -983,7 +998,7 @@ class _AchievementState extends State<Achievement> {
                                     height: 40.0,// Set the height of the container
                                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 3.0),
                                     decoration: BoxDecoration(
-                                      color: Colors.white, // Set the background color of the container
+                                      color: plasticAmount >= 100 ? Colors.white38 : Colors.white, // Set the background color of the container
                                       borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
                                       boxShadow: [
                                         BoxShadow(
@@ -1009,6 +1024,9 @@ class _AchievementState extends State<Achievement> {
                                             child: Text(
                                               'Eco-Warrior',
                                               textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                decoration:  plasticAmount > 100 ? TextDecoration.lineThrough : null,
+                                              ),
                                             ),
                                           ),
                                         ),

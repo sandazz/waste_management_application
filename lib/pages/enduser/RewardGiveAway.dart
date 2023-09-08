@@ -151,6 +151,9 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
     // Make the HTTP GET request
     var response = await http.get(uri);
 
+    // print the respons that give from the API request
+    print(response.body);
+
     // If the call to the server was successful, print the response body
     if (response.statusCode == 200) {
 

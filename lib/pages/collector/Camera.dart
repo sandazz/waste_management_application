@@ -238,7 +238,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     // String caneAmount = caneAmountController.text.trim();
                     // String glassAmount = glassAmountController.text.trim();
                     int binAmount = 0;
-                    int points = (plasticAmount+bottleAmount)*5;
+                    int points = (plasticAmount*30)+(bottleAmount*5);
                     int spinnablePoints = points;
                     int rewardPoints = points;
 
