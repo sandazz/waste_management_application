@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 class Achievement extends StatefulWidget {
@@ -174,10 +175,25 @@ class _AchievementState extends State<Achievement> {
     }
   }
 
-  void showCaseCall(){
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ShowCaseWidget.of(context).startShowCase([_bottleShowCaseKey, _plasticShowCaseKey, _bottleAchievementShowCaseKey, _plasticAchievementShowCaseKey]);
-    });
+  Future<void> showCaseCall() async {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   ShowCaseWidget.of(context).startShowCase([_bottleShowCaseKey, _plasticShowCaseKey, _bottleAchievementShowCaseKey, _plasticAchievementShowCaseKey]);
+    // });
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Check if 'showedShowcase' is already stored in shared preferences.
+    bool showedShowcaseAchievement = prefs.getBool('showedShowcaseAchievement') ?? false;
+
+    if (!showedShowcaseAchievement) {
+      // If not stored, this is the first time, so show the showcase.
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([_bottleShowCaseKey, _plasticShowCaseKey, _bottleAchievementShowCaseKey, _plasticAchievementShowCaseKey])
+      );
+
+      // Now, set 'showedShowcase' to true, indicating the showcase has been shown.
+      await prefs.setBool('showedShowcaseAchievement', true);
+    }
   }
 
   @override

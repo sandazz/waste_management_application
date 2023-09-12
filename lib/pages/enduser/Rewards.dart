@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fortune_wheel/flutter_fortune_wheel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:waste_management_app/pages/enduser/RewardGiveAway.dart';
 
@@ -79,10 +80,25 @@ class _RewardsState extends State<Rewards> {
   StreamController<int> selected = StreamController<int>();
 
   // Showcase call
-  void showCaseCall(){
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ShowCaseWidget.of(context).startShowCase([_redeemablePointsKey, _costPerSpinningKey, _spinCountKey, _spinningKey, _rewardPointKey]);
-    });
+  Future<void> showCaseCall() async {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   ShowCaseWidget.of(context).startShowCase([_redeemablePointsKey, _costPerSpinningKey, _spinCountKey, _spinningKey, _rewardPointKey]);
+    // });
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Check if 'showedShowcase' is already stored in shared preferences.
+    bool showedShowcaseReward = prefs.getBool('showedShowcaseReward') ?? false;
+
+    if (!showedShowcaseReward) {
+      // If not stored, this is the first time, so show the showcase.
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([_redeemablePointsKey, _costPerSpinningKey, _spinCountKey, _spinningKey, _rewardPointKey])
+      );
+
+      // Now, set 'showedShowcase' to true, indicating the showcase has been shown.
+      await prefs.setBool('showedShowcaseReward', true);
+    }
   }
 
   void initState(){

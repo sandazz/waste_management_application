@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 
@@ -70,12 +71,29 @@ class _LeaderBoardState extends State<LeaderBoard> {
   List<int> rewardPoints = [
   ];
 
-  void showCaseCall(){
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 500), () {
-        ShowCaseWidget.of(context).startShowCase([_one]);
+  Future<void> showCaseCall() async {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Future.delayed(Duration(milliseconds: 500), () {
+    //     ShowCaseWidget.of(context).startShowCase([_one]);
+    //   });
+    // });
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Check if 'showedShowcase' is already stored in shared preferences.
+    bool showedShowcaseLeaderBoard = prefs.getBool('showedShowcaseLeaderBoard') ?? false;
+
+    if (!showedShowcaseLeaderBoard) {
+      // If not stored, this is the first time, so show the showcase.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(Duration(milliseconds: 500), () {
+          ShowCaseWidget.of(context).startShowCase([_one]);
+        });
       });
-    });
+
+      // Now, set 'showedShowcase' to true, indicating the showcase has been shown.
+      await prefs.setBool('showedShowcaseLeaderBoard', true);
+    }
   }
 
   @override

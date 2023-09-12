@@ -53,29 +53,29 @@ class _HomeState extends State<Home> {
   }
 
   // Descriptions
-  void showCaseCall(){
-    // WidgetsBinding.instance.addPostFrameCallback((_) =>
-    //     ShowCaseWidget.of(context).startShowCase([_one, _two, _three]),
-    // );
-  }
-
-  // To show the deecriptions one time only
-  void _retrieveShowcaseStatus() async {
+  void showCaseCall()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool hasSeenShowcase = prefs.getBool('hasSeenShowcase') ?? false;
 
-    if (!hasSeenShowcase) {
-      print(hasSeenShowcase);
-      showCaseCall();
-      prefs.setBool("hasSeenShowcase", false);
+    // Check if 'showedShowcase' is already stored in shared preferences.
+    bool showedShowcaseHome = prefs.getBool('showedShowcaseHome') ?? false;
+
+    if (!showedShowcaseHome) {
+      // If not stored, this is the first time, so show the showcase.
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([_one, _two, _three]),
+      );
+
+      // Now, set 'showedShowcase' to true, indicating the showcase has been shown.
+      await prefs.setBool('showedShowcaseHome', true);
     }
   }
+
 
   @override
   void initState() {
     super.initState();
     getPoints();
-    _retrieveShowcaseStatus();
+    showCaseCall();
   }
 
 
