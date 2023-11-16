@@ -1,5 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.waste_management_app">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.idea_factory.waste_management_app">
+    <uses-permission
+        android:name="com.google.android.gms.permission.AD_ID"
+        tools:node="remove"/>
    <application
         android:label="waste_management_app"
         android:name="${applicationName}"
