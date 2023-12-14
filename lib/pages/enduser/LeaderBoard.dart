@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 
@@ -20,7 +21,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('recycledWasteEndUser')
-          .orderBy('spinnablePoints', descending: true)
+          .orderBy('rewardPoints', descending: true)
           .get();
 
       if (querySnapshot.size > 0) {
@@ -40,9 +41,12 @@ class _LeaderBoardState extends State<LeaderBoard> {
             Map<String, dynamic> data1 = documentSnapshot1.data() as Map<String, dynamic>;
             setState(() {
               String firstName = data1['fname'];
+              // Split the fullName using space and take the first part
+              List<String> splitNames = firstName.split(' ');
+              firstName = splitNames[0];
               names.add(firstName);
-              double redeemablePoint = documentSnapshot['spinnablePoints'];
-              redeemablePoints.add(redeemablePoint);
+              int rewardPoint = documentSnapshot['rewardPoints'];
+              rewardPoints.add(rewardPoint);
             });
           } else {
             print("User not found");
@@ -56,7 +60,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
       // Handle any errors that occurred during the process
       print('Error retrieving documents: $e');
     }
-    print(redeemablePoints);
+    print(rewardPoints);
     print(names);
 
   }
@@ -64,15 +68,32 @@ class _LeaderBoardState extends State<LeaderBoard> {
 
   List<String> names = [
   ];
-  List<double> redeemablePoints = [
+  List<int> rewardPoints = [
   ];
 
-  void showCaseCall(){
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 500), () {
-        ShowCaseWidget.of(context).startShowCase([_one]);
+  Future<void> showCaseCall() async {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   Future.delayed(Duration(milliseconds: 500), () {
+    //     ShowCaseWidget.of(context).startShowCase([_one]);
+    //   });
+    // });
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Check if 'showedShowcase' is already stored in shared preferences.
+    bool showedShowcaseLeaderBoard = prefs.getBool('showedShowcaseLeaderBoard') ?? false;
+
+    if (!showedShowcaseLeaderBoard) {
+      // If not stored, this is the first time, so show the showcase.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(Duration(milliseconds: 500), () {
+          ShowCaseWidget.of(context).startShowCase([_one]);
+        });
       });
-    });
+
+      // Now, set 'showedShowcase' to true, indicating the showcase has been shown.
+      await prefs.setBool('showedShowcaseLeaderBoard', true);
+    }
   }
 
   @override
@@ -107,7 +128,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
             child: Column(
               children: names.asMap().entries.map((entry) {
                 int idx = entry.key;
-                double points = redeemablePoints[idx];
+                int points = rewardPoints[idx];
                 int index = entry.key + 1; // count of the names
                 String text = entry.value; // names in the list
                 String indexWithLeadingZero = index.toString().padLeft(2, '0'); // to make numbering 01, 02, 03

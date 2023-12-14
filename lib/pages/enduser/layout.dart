@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:waste_management_app/pages/enduser/Account.dart';
 import 'package:waste_management_app/pages/enduser/Achievement.dart';
@@ -38,10 +39,24 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
     });
   }
 
-  void showCaseCall(){
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        ShowCaseWidget.of(context).startShowCase([_one, _two, _three, _four]),
-    );
+  void showCaseCall() async{
+    // WidgetsBinding.instance.addPostFrameCallback((_) =>
+    //     ShowCaseWidget.of(context).startShowCase([_one, _two, _three, _four]),
+    // );
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // Check if 'showedShowcase' is already stored in shared preferences.
+    bool showedShowcaseLayout = prefs.getBool('showedShowcaseLayout') ?? false;
+
+    if (!showedShowcaseLayout) {
+      // If not stored, this is the first time, so show the showcase.
+      WidgetsBinding.instance.addPostFrameCallback((_) =>
+          ShowCaseWidget.of(context).startShowCase([_one, _two, _three, _four]),
+      );
+
+      // Now, set 'showedShowcase' to true, indicating the showcase has been shown.
+      await prefs.setBool('showedShowcaseLayout', true);
+    }
   }
 
   @override
