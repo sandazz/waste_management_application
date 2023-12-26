@@ -5,7 +5,7 @@
         android:name="com.google.android.gms.permission.AD_ID"
         tools:node="remove"/>
    <application
-        android:label="waste_management_app"
+        android:label="Price Ur Plastic"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

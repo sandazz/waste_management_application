@@ -5,12 +5,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:waste_management_app/login/login.dart';
+import 'package:waste_management_app/login/loginNew.dart';
 import 'package:waste_management_app/pages/collector/Collector.dart';
 import 'package:waste_management_app/pages/collector/NotVerified.dart';
 import 'package:waste_management_app/pages/enduser/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:waste_management_app/providers/loginProvider.dart';
 import 'package:flutter/services.dart';
+import 'package:waste_management_app/splashScreen.dart';
 
 
 
@@ -22,7 +24,7 @@ void main() async{
       ChangeNotifierProvider(create: (_) => LoginData())
     ],
     child: MaterialApp(
-      home: App(),
+      home: SplashScreen(),
     ),
   )
   );
@@ -54,16 +56,16 @@ class _AppState extends State<App> {
               builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   print("------------ConnectionState.waiting");
-                  return login();
+                  return login2();
                 }
                 if (snapshot.hasError) {
                   print("----------snapshot.hasError");
-                  return login();
+                  return login2();
                 }
 
                 if (snapshot.hasData && snapshot.data!.data() == null) {
                   print("-----snapshot.data!.data() == null");
-                  return login();
+                  return login2();
                 } else if (snapshot.hasData && snapshot.data!.data() != null && snapshot.data!.get("role") == "collector") {
                   print("---------role = collector");
                   if(snapshot.data!.get("verified") == "true"){
@@ -85,13 +87,13 @@ class _AppState extends State<App> {
                   );
                 }
                 print("-----------return login()");
-                return login();
+                return login2();
               });
 
         } else {
           // return LayoutCollector();
           print("-----------No user");
-          return const login(); // when user is signed out
+          return const login2(); // when user is signed out
         }
       },
     );
