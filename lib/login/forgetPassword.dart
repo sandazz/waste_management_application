@@ -1,7 +1,7 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:waste_management_app/components/snackbar.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -11,73 +11,39 @@ class ForgetPassword extends StatefulWidget {
 }
 
 class _ForgetPasswordState extends State<ForgetPassword>  {
+
+  String forgetPasswordImageURL = "assets/app_images/forget_password_image.png";
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  String currentUser = '';
-
-  final mobileController = TextEditingController();
   final emailController = TextEditingController();
-
-  String? _validateMobile(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Mobile is required';
-    }
-  }
 
   String? _validateEmail(String? value) {
     if (value == null || value.isEmpty) {
       return 'Email is required';
     }
+
+    final emailRegExp = RegExp(r'^[\w-]+(\.[\w-]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,})$');
+    if (!emailRegExp.hasMatch(value)) {
+      return 'Enter a valid email address';
+    }
+
+    return null;
   }
 
-  Future<void> resetPassword() async {
-    await FirebaseFirestore.instance
-        .collection('users')
-        .doc(currentUser)
-        .update({'password': 'Qwerty@123'});
-  }
-
-  Future<void> handleSubmit(TextEditingController emailController, TextEditingController mobileController) async {
+  Future<void> sendPasswordResetEmail() async {
     if (_formKey.currentState!.validate()) {
-      // Query Firestore for documents in the 'users' collection where 'email' equals the email provided by the user
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: emailController.text.trim())
-          .where('mobile', isEqualTo: mobileController.text.trim()) // Please note that storing passwords in plaintext is a bad practice
-          .get();
-
-      if (querySnapshot.docs.isEmpty) {
-        // If the query results in no documents, then there is no user with the given email and password
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('No user found with given credentials.')),
-        );
-      } else {
-        // If the query results in one or more documents, then there is a user with the given email and password
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('User found with given credentials.')),
-        );
-
-        currentUser = querySnapshot.docs.first.id; // assuming there is only one matching document
-        print("Current user ID is: $currentUser");
+      try {
+        print(emailController.text.trim());
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
+        CustomSnackBar.showSuccess(context, 'Password reset email sent. Check your inbox.');
+      } catch (e) {
+        print('Error sending password reset email: $e');
+        CustomSnackBar.showError(context, 'Error sending password reset email.');
       }
-
-
-      // Clear store values
-      emailController.clear();
-      mobileController.clear();
     }
   }
 
-  Future<void> addContactDetails() async{
-    emailController.text = 'sandazzzg1999@gmail.com';
-    mobileController.text = '0768511134';
-  }
 
-  @override
-  void initState(){
-    super.initState();
-    addContactDetails();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +79,15 @@ class _ForgetPasswordState extends State<ForgetPassword>  {
           key: _formKey,
           child: Column(
             children: [
-              SizedBox(height: 20.0,),
+              SizedBox(height: 50.0,),
+              Container(
+                width: 300.0,
+                child: Image.asset(
+                  forgetPasswordImageURL, // Replace "image.jpg" with the actual filename and extension of your image
+                  fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                ),
+              ),
+              SizedBox(height: 10.0,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -138,44 +112,13 @@ class _ForgetPasswordState extends State<ForgetPassword>  {
                         ),
                         validator: _validateEmail,
                         controller: emailController,
-                        enabled: false,
-                      )
-                  )
-                ],
-              ),
-              SizedBox(height: 20.0,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                      width: 300.0,
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Mobile',
-                          labelStyle: TextStyle(
-                            color: Colors.green[700], // Set the desired text color
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                            borderSide:
-                            BorderSide(color: Colors.green, width: 0.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                            borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                          ),
-                          border: OutlineInputBorder(),
-                        ),
-                        validator: _validateMobile,
-                        controller: mobileController,
-                        enabled: false,
                       )
                   )
                 ],
               ),
               SizedBox(height: 20.0,),
               ElevatedButton(
-                onPressed: null,
+                onPressed: () => sendPasswordResetEmail(),
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(100.0, 40.0),
                   primary: Colors.green[700], // Set the desired button color
@@ -183,7 +126,7 @@ class _ForgetPasswordState extends State<ForgetPassword>  {
                     borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
                   ),
                 ),
-                child: Text('Contact Admin'),
+                child: Text('Send Password Reset Email'),
               ),
             ],
           ),
