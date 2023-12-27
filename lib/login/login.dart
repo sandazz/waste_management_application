@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:waste_management_app/components/snackbar.dart';
 import 'package:waste_management_app/login/forgetPassword.dart';
 import 'package:waste_management_app/login/register.dart';
-import 'package:waste_management_app/main.dart';
-import 'package:waste_management_app/providers/loginProvider.dart';
-import 'package:flutter/services.dart';
-
-
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -19,7 +13,10 @@ class login extends StatefulWidget {
   State<login> createState() => _loginState();
 }
 
-class _loginState extends State<login> with WidgetsBindingObserver {
+class _loginState extends State<login> with WidgetsBindingObserver{
+  String loginLogoImageURL = "assets/app_images/splashScreen_image.png";
+  String loginLogoNameURL = "assets/app_images/splashScreen_name.png";
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -69,125 +66,77 @@ class _loginState extends State<login> with WidgetsBindingObserver {
     return null;
   }
 
+  _login() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+        );
+        print("Successfully completed");
+
+        // Sign-in successful, handle the result here
+        CustomSnackBar.showSuccess(context, 'Login Success...');
+      } on FirebaseAuthException catch (error) {
+        // Handle any errors that occur during sign-in
+        if (error.code == 'user-not-found') {
+          CustomSnackBar.showError(context, 'User Not Found!');
+        } else if (error.code == 'wrong-password') {
+          CustomSnackBar.showError(context, 'Wrong Password!');
+        }
+      }
+    }
+  }
+
+
 
 
   @override
   Widget build(BuildContext context) {
-
-    final LoginDetails = Provider.of<LoginData>(context, listen: false);
-
     return Scaffold(
-      backgroundColor: Colors.green[800],
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8.0,50.0,8.0,8.0),
-              child: Column(
-                children: [
-                  Text(
-                    "Welcome to",
-                    style: TextStyle(
-                      fontSize: 60,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontFamily: 'DaiBannaSIL-Regular',
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 3.0,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                      ],// Use the font family you specified in the pubspec.yaml
-                    ),
-                  ),
-                  Text(
-                    "Sustainable Waste Management ",
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 3.0,
-                          color: Color.fromARGB(255, 0, 0, 0),
-                        ),
-                      ],// Use the font family you specified in the pubspec.yaml
-                    ),
-                  ),
-                  // Container(child: Image.asset('assets/app_images/app_logo_login.png',
-                  //   width: 200,
-                  //   height: 200,
-                  // )),
-                ],
-              ),
-            ),
-
-            Center(
-              child: Container(
-                  margin: EdgeInsets.only(top: containerPosition, bottom: 20),
-                  width: MediaQuery.of(context).size.width - 50, // Set the width of the container
-                  // Set the height of the container
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Set the background color of the container
-                    borderRadius: BorderRadius.circular(15.0), // Set the border radius of the container
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12.withOpacity(0.3),
-                        spreadRadius: 3.0,
-                        blurRadius: 7.0,
-                        offset: Offset(0, 0), // Adjust the shadow position as needed
+      body: Column(
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 60.0,
+                      child: Image.asset(
+                        loginLogoImageURL, // Replace "image.jpg" with the actual filename and extension of your image
+                        fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
                       ),
-                    ],
-                  ),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: MediaQuery.of(context).size.width - 70,
-                          // height: 50.0,
-                          margin: EdgeInsets.only(top: 20, bottom: 20),
-                          child: TextFormField(
-                            controller: emailController,
-                            decoration: const InputDecoration(
-                              contentPadding: const EdgeInsets.all(20.0),
-                              labelText: 'Email',
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(color: Colors.grey, width: 0.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
-                                borderSide:
-                                BorderSide(color: Colors.red, width: 2.0),
-                              ),
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: _validateEmail,
-                            onChanged: (value) {
-                              // Handle the input value change
-                            },
-                          ),
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width - 70,
-                          // height: 50.0,
-                          child: TextFormField(
-                            controller: passwordController,
-                            decoration: const InputDecoration(
-                                labelText: 'Password',
+                    ),
+                    SizedBox(height: 10.0,),
+                    Container(
+                      width: 300.0,
+                      child: Image.asset(
+                        loginLogoNameURL, // Replace "image.jpg" with the actual filename and extension of your image
+                        fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                      ),
+                    ),
+                    SizedBox(height: 50.0,),
+                    Form(
+                      key: _formKey,
+                      child: Container(
+                        width: 300.0,
+                        child: Column(
+                          children: [
+                            TextFormField(
+                              controller: emailController,
+                              decoration:  InputDecoration(
+                                labelText: 'Email',
+                                labelStyle: TextStyle(
+                                  color: Colors.green[700], // Set the desired text color
+                                ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                  borderSide:
-                                  BorderSide(color: Colors.grey, width: 0.0),
+                                  borderSide: BorderSide(color: Colors.grey, width: 0.0),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
@@ -199,121 +148,128 @@ class _loginState extends State<login> with WidgetsBindingObserver {
                                   borderSide:
                                   BorderSide(color: Colors.red, width: 2.0),
                                 ),
-                                border: OutlineInputBorder()),
-                            obscureText: true,
-                            validator: _validatePassword,
-                            onChanged: (value) {
-                              // Handle the input value change
-                            },
-                          ),
-                        ),
-                        SizedBox(height: 20.0,),
-                        Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () async  {
-                                if (_formKey.currentState!.validate()) {
-                                  try {
-
-                                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                                      email: emailController.text.trim(),
-                                      password: passwordController.text.trim(),
-                                    );
-                                    print("Successfully completed");
-
-                                    // Sign-in successful, handle the result here
-                                    CustomSnackBar.showSuccess(context, 'Login Success...');
-                                  } on FirebaseAuthException catch (error) {
-                                    // Handle any errors that occur during sign-in
-                                    if (error.code == 'user-not-found') {
-                                      CustomSnackBar.showError(context, 'User Not Found!');
-                                    } else if (error.code == 'wrong-password') {
-                                      CustomSnackBar.showError(context, 'Wrong Password!');
-                                    }
-                                  }
-                                }
+                                border: OutlineInputBorder(),
+                              ),
+                              validator: _validateEmail,
+                              onChanged: (value) {
+                                // Handle the input value change
                               },
-                              style: ElevatedButton.styleFrom(
-                                minimumSize: Size(100.0, 40.0),
-                                primary: Colors.green[700], // Set the desired button color
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
+                            ),
+                            SizedBox(height: 10.0,),
+                            TextFormField(
+                              controller: passwordController,
+                              decoration: InputDecoration(
+                                  labelText: 'Password',
+                                  labelStyle: TextStyle(
+                                    color: Colors.green[700], // Set the desired text color
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide:
+                                    BorderSide(color: Colors.grey, width: 0.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0)),
+                                    borderSide:
+                                    BorderSide(color: Colors.red, width: 2.0),
+                                  ),
+                                  border: OutlineInputBorder()),
+                              obscureText: true,
+                              validator: _validatePassword,
+                              onChanged: (value) {
+                                // Handle the input value change
+                              },
+                            ),
+                            SizedBox(height: 10.0,),
+                            Container(
+                              child: Align(
+                                alignment: Alignment.centerRight,
+                                child: RichText(
+                                  text: TextSpan(
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 11.0,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: 'Forgot Password',
+                                        style: TextStyle(color: Colors.green, decoration: TextDecoration.underline,),
+                                        recognizer: TapGestureRecognizer()
+                                          ..onTap = () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => ForgetPassword()),
+                                            );
+                                          },
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              child: Text('Sign In'),
                             ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(20.0, 8.0, 8.0, 8.0),
-                                    child: Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: RichText(
-                                        text: TextSpan(
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 11.0,
-                                          ),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: 'Sign Up',
-                                              style: TextStyle(color: Colors.blue),
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(builder: (context) => Register()),
-                                                  );
-                                                },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
+                            SizedBox(height: 50.0,),
+                            Container(
+                              width: 300.0,
+                              child: ElevatedButton(
+                                onPressed: ()  {
+                                  _login();
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(100.0, 50.0),
+                                  primary: Colors.green[700], // Set the desired button color
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
                                   ),
                                 ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(8.0, 8.0, 20.0, 8.0),
-                                    child: Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: RichText(
-                                        text: TextSpan(
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 11.0,
-                                          ),
-                                          children: <TextSpan>[
-                                            TextSpan(
-                                              text: 'Forgot Password',
-                                              style: TextStyle(color: Colors.blue),
-                                              recognizer: TapGestureRecognizer()
-                                                ..onTap = () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(builder: (context) => ForgetPassword()),
-                                                  );
-                                                },
-                                            ),
-                                          ],
+                                child: Text(
+                                    'Sign In',
+                                        style: TextStyle(
+                                          fontSize: 18.0
                                         ),
-                                      ),
-                                    ),
-                                  ),
                                 ),
-                              ],
+                              ),
                             ),
-                            SizedBox(height: 10.0)
-                          ]
+                            SizedBox(height: 10.0,),
+                            RichText(
+                              text: TextSpan(
+                                style: TextStyle(
+                                  color: Colors.green,
+                                  fontSize: 11.0,
+                                ),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                    text: 'Register',
+                                    style: TextStyle(color: Colors.green, decoration: TextDecoration.underline,),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => Register()),
+                                        );
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                  )
+                  ],
+                ),
               ),
-            )
-          ],
-        ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
+            child: Text("!dea Factory | 2023"),
+          ),
+        ],
       ),
     );
   }

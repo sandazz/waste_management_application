@@ -5,7 +5,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:waste_management_app/login/login.dart';
-import 'package:waste_management_app/login/loginNew.dart';
 import 'package:waste_management_app/pages/collector/Collector.dart';
 import 'package:waste_management_app/pages/collector/NotVerified.dart';
 import 'package:waste_management_app/pages/enduser/layout.dart';
@@ -56,16 +55,16 @@ class _AppState extends State<App> {
               builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   print("------------ConnectionState.waiting");
-                  return login2();
+                  return login();
                 }
                 if (snapshot.hasError) {
                   print("----------snapshot.hasError");
-                  return login2();
+                  return login();
                 }
 
                 if (snapshot.hasData && snapshot.data!.data() == null) {
                   print("-----snapshot.data!.data() == null");
-                  return login2();
+                  return login();
                 } else if (snapshot.hasData && snapshot.data!.data() != null && snapshot.data!.get("role") == "collector") {
                   print("---------role = collector");
                   if(snapshot.data!.get("verified") == "true"){
@@ -87,13 +86,13 @@ class _AppState extends State<App> {
                   );
                 }
                 print("-----------return login()");
-                return login2();
+                return login();
               });
 
         } else {
           // return LayoutCollector();
           print("-----------No user");
-          return const login2(); // when user is signed out
+          return const login(); // when user is signed out
         }
       },
     );
