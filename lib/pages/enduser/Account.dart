@@ -213,53 +213,6 @@ class _AccountState extends State<Account> {
                 ),
               ),
               SizedBox(height: 20),
-              Stack(
-                alignment: Alignment.centerRight,
-                children: [
-                  Container(
-                    width: 300.0,
-                    child: TextFormField(
-                      obscureText: !_passwordVisible,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: TextStyle(
-                          color: Colors.green[700],
-                          fontSize: 16.0,
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.green, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.green, width: 2.0),
-                        ),
-                        border: OutlineInputBorder(),
-                      ),
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18.0,
-                      ),
-                      textAlign: TextAlign.center,
-                      controller: passwordController,
-                      enabled: false,
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      // Based on passwordVisible state choose the icon
-                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                      color: Colors.green,
-                    ),
-                    onPressed: () {
-                      // Update the state i.e. toogle the state of passwordVisible variable
-                      setState(() {
-                        _passwordVisible = !_passwordVisible;
-                      });
-                    },
-                  ),
-                ],
-              ),
             ],
           ),
         ),

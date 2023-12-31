@@ -504,6 +504,7 @@ class _RegisterState extends State<Register> {
                               border: OutlineInputBorder()),
                           validator: _validateMobile,
                           controller: mobileController,
+                          keyboardType: TextInputType.number,
                         )
                     )
                   ],

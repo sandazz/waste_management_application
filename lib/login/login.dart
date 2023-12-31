@@ -22,6 +22,8 @@ class _loginState extends State<login> with WidgetsBindingObserver{
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
+  bool _passwordVisible = false;
+
   double containerPosition = 0.0;
   double translateY = 0.0;
 
@@ -156,34 +158,55 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                               },
                             ),
                             SizedBox(height: 10.0,),
-                            TextFormField(
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                  labelText: 'Password',
-                                  labelStyle: TextStyle(
-                                    color: Colors.green[700], // Set the desired text color
+                            Stack(
+                              alignment: Alignment.centerRight,
+                                children:[
+                                  Container(
+                                    child: TextFormField(
+                                      controller: passwordController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Password',
+                                          labelStyle: TextStyle(
+                                            color: Colors.green[700], // Set the desired text color
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                            borderSide:
+                                            BorderSide(color: Colors.grey, width: 0.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                            borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(10.0)),
+                                            borderSide:
+                                            BorderSide(color: Colors.red, width: 2.0),
+                                          ),
+                                          border: OutlineInputBorder()),
+                                      obscureText: !_passwordVisible,
+                                      validator: _validatePassword,
+                                      onChanged: (value) {
+                                        // Handle the input value change
+                                      },
+                                    ),
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                    borderSide:
-                                    BorderSide(color: Colors.grey, width: 0.0),
+                                  IconButton(
+                                    icon: Icon(
+                                      // Based on passwordVisible state choose the icon
+                                      _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                                      color: Colors.green,
+                                    ),
+                                    onPressed: () {
+                                      // Update the state i.e. toogle the state of passwordVisible variable
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
+                                    },
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                    borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0)),
-                                    borderSide:
-                                    BorderSide(color: Colors.red, width: 2.0),
-                                  ),
-                                  border: OutlineInputBorder()),
-                              obscureText: true,
-                              validator: _validatePassword,
-                              onChanged: (value) {
-                                // Handle the input value change
-                              },
+                              ]
+
                             ),
                             SizedBox(height: 10.0,),
                             Container(

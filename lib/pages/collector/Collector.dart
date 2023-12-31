@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:waste_management_app/pages/collector/Account.dart';
 import 'package:waste_management_app/pages/collector/Camera.dart';
 import 'package:waste_management_app/pages/collector/Home.dart';
@@ -57,9 +58,43 @@ class _LayoutCollectorState extends State<LayoutCollector> {
                   color: Colors.black,
                   size: 30.0,
                 ),
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                },
+                onPressed: ()=> showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0), // Set your desired border radius
+                    ),
+                    content:  Text('Are you sure you want to log out?'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, 'Cancel'),
+                        child:  Text('Cancel', style: TextStyle(color: Colors.green),),
+                      ),
+                      TextButton(
+                        style: ButtonStyle(
+                          textStyle: MaterialStateProperty.all<TextStyle>(
+                            TextStyle(fontSize: 16.0), // Set your desired font size
+                          ),
+                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white), // Text color
+                          backgroundColor: MaterialStateProperty.all<Color>(Colors.red), // Button background color
+                          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+                            EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Set your desired padding
+                          ),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0), // Set your desired border radius
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context, 'Log Out');
+                          FirebaseAuth.instance.signOut();
+                        },
+                        child:  Text('Log Out'),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

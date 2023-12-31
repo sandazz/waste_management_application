@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
+import 'package:waste_management_app/components/snackbar.dart';
+import 'package:waste_management_app/pages/collector/Collector.dart';
+import 'package:waste_management_app/pages/collector/Home.dart';
 
 class Camera extends StatefulWidget {
   const Camera({super.key});
@@ -18,6 +22,8 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   final bottleAmountController = TextEditingController();
   final caneAmountController = TextEditingController();
   final glassAmountController = TextEditingController();
+
+  int rewardPoints = 0;
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -54,7 +60,236 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     }
     return null;
   }
+  
+  Future<void> getRewarPoints() async{
+    String uid = currentUser.uid;
+    
+    DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection("recycledWasteCollector").doc(uid).get();
 
+    if (documentSnapshot.exists){
+      Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
+      setState(() {
+        rewardPoints = userData['rewardPoints'];
+      });
+    } else {
+      print(" User not found");
+    }
+  }
+
+  Future<void> pointsAdd() async{
+    if (_formKey.currentState!.validate()) {
+      String mobile = mobileController.text.trim();
+      int plasticAmount = (plasticAmountController.text.isNotEmpty && int.tryParse(plasticAmountController.text) != null)
+          ? int.parse(plasticAmountController.text)
+          : 0;
+      int bottleAmount = (bottleAmountController.text.isNotEmpty && int.tryParse(bottleAmountController.text) != null)
+          ? int.parse(bottleAmountController.text)
+          : 0;
+      int binAmount = 0;
+      int points = (plasticAmount*30)+(bottleAmount*5);
+      int spinnablePoints = points;
+
+      if (rewardPoints >= plasticAmount + bottleAmount){
+        // Retrieve user ID from "users" collection
+        FirebaseFirestore.instance
+            .collection('users')
+            .where('mobile', isEqualTo: mobile)
+            .get()
+            .then((querySnapshot) async {
+          if (querySnapshot.docs.isNotEmpty) {
+            // Retrieve user document
+            var userDoc = querySnapshot.docs.first;
+
+            // Extract user ID
+            String userId = userDoc.id;
+            binAmount = ((plasticAmount + bottleAmount)*(1/10000)).floor();
+            print("Bin amount :  $binAmount");
+
+
+            // Update "dataToSave" map with
+            Map<String, dynamic> dataToSave = {
+              "mobile": mobile,
+              "bottleAmount": bottleAmount,
+              "plasticAmount": plasticAmount,
+              "points" : points,
+              "spinnablePoints" : spinnablePoints,
+              "binAmount" : binAmount,
+            };
+
+            //  Check if a record with the same mobile number exists
+            FirebaseFirestore.instance
+                .collection('recycledWasteEndUser')
+                .where('mobile', isEqualTo: mobile)
+                .get()
+                .then((querySnapshot) async {
+              if (querySnapshot.docs.isNotEmpty) {
+                // Retrieve the existing record document
+                var existingDoc = querySnapshot.docs.first;
+                String existingDocId = existingDoc.id;
+
+                //plastic amount increase
+                int existingPlasticAmount = existingDoc.data()['plasticAmount'];
+                int newPlasticAmount = plasticAmount;
+                int updatedPlasticAmount = existingPlasticAmount + newPlasticAmount;
+
+                //bottle amount increase
+                int existingBottleAmount = existingDoc.data()['bottleAmount'];
+                int newBottleAmount = bottleAmount;
+                int updatedBottleAmount = existingBottleAmount + newBottleAmount;
+
+                //update point
+                int existingPoints = existingDoc.data()['points'];
+                int newPoints = points;
+                int updatedPoints = existingPoints + newPoints;
+
+                //update spinnablepoints
+                int existingSpinnablePoints = existingDoc.data()['spinnablePoints'];
+                int newSpinnablePoints = spinnablePoints;
+                int updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
+
+                // Update the existing record with the new amount value
+                try {
+                  await FirebaseFirestore.instance
+                      .collection('recycledWasteEndUser')
+                      .doc(existingDocId)
+                      .update({
+                    'plasticAmount': updatedPlasticAmount,
+                    'bottleAmount': updatedBottleAmount,
+                    'points': updatedPoints,
+                    'spinnablePoints': updatedspinnablePoints,
+                  });
+
+                  // Update successful, handle the result here
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('User Data updated successfully...'),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                } catch (e) {
+                  // Handle any errors that occur during the update
+                  print('An error occurred while updating data in Firestore: $e');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('An error occurred while updating data. Please try again.'),
+                      backgroundColor: Colors.red,),
+                  );
+                }
+              } else {
+                // Add a new record since no existing record found
+                try {
+                  await FirebaseFirestore.instance
+                      .collection('recycledWasteEndUser')
+                      .doc(userId)
+                      .set(dataToSave);
+
+                  // Set operation successful, show success message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('User Data saved successfully...'),
+                      backgroundColor: Colors.green,),
+                  );
+                } catch (e) {
+                  // Handle any errors during the set operation
+                  print('An error occurred while saving data to Firestore: $e');
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('An error occurred while saving data. Please try again.'),
+                      backgroundColor: Colors.red,),
+                  );
+                }
+              }
+            });
+
+            Map<String, dynamic> collectorAmounts = {
+              "plasticAmount": plasticAmount,
+              "bottleAmount": bottleAmount,
+              "rewardPoints": rewardPoints,
+            };
+
+            DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
+                .collection("recycledWasteCollector")
+                .doc(currentUser.uid)
+                .get();
+
+            if (documentSnapshot.exists) {
+              Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
+              setState(()  {
+
+
+                int existingPlasticAmountCollector = userData['plasticAmount'];
+                int updatePlasticAmountCollector = existingPlasticAmountCollector + plasticAmount;
+
+                int existingBottleAmountCollector = userData['bottleAmount'];
+                int updateBottleAmountCollector = existingBottleAmountCollector + bottleAmount;
+
+                int existingRewardPointsCollector = userData['rewardPoints'];
+                int updateRewardPointsCollector = existingRewardPointsCollector - (plasticAmount+bottleAmount);
+
+                try {
+                  FirebaseFirestore.instance
+                      .collection('recycledWasteCollector')
+                      .doc(currentUser.uid)
+                      .update({
+                    'plasticAmount': updatePlasticAmountCollector,
+                    'bottleAmount': updateBottleAmountCollector,
+                    'rewardPoints':updateRewardPointsCollector,
+                  });
+
+                  // Update operation successful, show a success message
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Collector Data updated successfully...'),
+                      backgroundColor: Colors.green,),
+                  );
+                } catch (e) {
+                  // Handle any errors during the update operation
+                  print('An error occurred while updating data in Firestore: $e');
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('An error occurred while updating data. Please try again.'),
+                      backgroundColor: Colors.red,),
+                  );
+                }
+              });
+            }else {
+              try {
+                await FirebaseFirestore.instance
+                    .collection('recycledWasteCollector')
+                    .doc(currentUser.uid)
+                    .set(collectorAmounts);
+
+                // Set operation successful, show success message
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Collector Data saved successfully...'),
+                    backgroundColor: Colors.green,),
+                  );
+                } catch (e) {
+                  // Handle any errors during the set operation
+                  print('An error occurred while saving data to Firestore: $e');
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('An error occurred while saving data. Please try again.'),
+                      backgroundColor: Colors.red,),
+                  );
+                }
+            }
+          }
+        });
+      }else{
+        CustomSnackBar.showError(context, 'Reward Point Amount insufficient!\nRecharge Your Points');
+      }
+
+
+      // Clear text form fields and reset data
+      mobileController.clear();
+      plasticAmountController.clear();
+      bottleAmountController.clear();
+      await Future.delayed(Duration(seconds: 2));
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRewarPoints();
+  }
 
   @override
   void dispose() {
@@ -77,6 +312,50 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                     fontSize: 40.0,
                     fontWeight: FontWeight.bold,
                     letterSpacing: 1.0
+                ),
+              ),
+            ),
+            SizedBox(height: 10.0,),
+            Container(
+              width: 100.0, // Set the width of the container
+              padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
+              margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+              decoration: BoxDecoration(
+                color: Colors.white, // Set the background color of the container
+                borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2.0,
+                    blurRadius: 5.0,
+                    offset: Offset(0, 1), // Adjust the shadow position as needed
+                  ),
+                ],
+              ),
+              child: Center(
+                child: Column(
+                  children: [
+                    Text(
+                      'Reward Points',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    SizedBox(height: 5.0),
+                    Icon(
+                      LineIcons.star,
+                      size: 35.0,
+                    ),
+                    SizedBox(height: 5.0),
+                    Text(
+                      "${rewardPoints}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 15.0,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -231,226 +510,9 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
             SizedBox(height: 20.0,),
             ElevatedButton(
               onPressed: () async {
-                if (_formKey.currentState!.validate()) {
-                    String mobile = mobileController.text.trim();
-                    int plasticAmount = int.parse(plasticAmountController.text);
-                    int bottleAmount = int.parse(bottleAmountController.text);
-                    // String caneAmount = caneAmountController.text.trim();
-                    // String glassAmount = glassAmountController.text.trim();
-                    int binAmount = 0;
-                    int points = (plasticAmount*30)+(bottleAmount*5);
-                    int spinnablePoints = points;
-                    int rewardPoints = points;
+                await pointsAdd();
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LayoutCollector()));
 
-                    // Retrieve user ID from "users" collection
-                    FirebaseFirestore.instance
-                        .collection('users')
-                        .where('mobile', isEqualTo: mobile)
-                        .get()
-                        .then((querySnapshot) async {
-                      if (querySnapshot.docs.isNotEmpty) {
-                        // Retrieve user document
-                        var userDoc = querySnapshot.docs.first;
-
-                        // Extract user ID
-                        String userId = userDoc.id;
-                        binAmount = ((plasticAmount + bottleAmount)*(1/10000)).floor();
-                        print("Bin amount :  $binAmount");
-
-
-                        // Update "dataToSave" map with
-                        Map<String, dynamic> dataToSave = {
-                          "mobile": mobile,
-                          "bottleAmount": bottleAmount,
-                          "plasticAmount": plasticAmount,
-                          "points" : points,
-                          "spinnablePoints" : spinnablePoints,
-                          "binAmount" : binAmount,
-                          "rewardPoints" : rewardPoints,
-                        };
-
-                        //  Check if a record with the same mobile number exists
-                        FirebaseFirestore.instance
-                            .collection('recycledWasteEndUser')
-                            .where('mobile', isEqualTo: mobile)
-                            .get()
-                            .then((querySnapshot) async {
-                          if (querySnapshot.docs.isNotEmpty) {
-                            // Retrieve the existing record document
-                            var existingDoc = querySnapshot.docs.first;
-                            String existingDocId = existingDoc.id;
-
-                            //plastic amount increase
-                            int existingPlasticAmount = existingDoc.data()['plasticAmount'];
-                            int newPlasticAmount = plasticAmount;
-                            int updatedPlasticAmount = existingPlasticAmount + newPlasticAmount;
-
-                            //bottle amount increase
-                            int existingBottleAmount = existingDoc.data()['bottleAmount'];
-                            int newBottleAmount = bottleAmount;
-                            int updatedBottleAmount = existingBottleAmount + newBottleAmount;
-
-                            // //cane amount increase
-                            // int existingCaneAmount = int.parse(existingDoc.data()['caneAmount']);
-                            // int newCaneAmount = int.parse(caneAmount);
-                            // int updatedCaneAmount = existingCaneAmount + newCaneAmount;
-                            //
-                            // //glass amount increase
-                            // int existingGlassAmount = int.parse(existingDoc.data()['glassAmount']);
-                            // int newGlassAmount = int.parse(glassAmount);
-                            // int updatedGlassAmount = existingGlassAmount + newGlassAmount;
-
-                            //new bin amount
-                            // int updatedBinAmount = ((updatedPlasticAmount + updatedBottleAmount)*(1/10000)).floor();
-                            // print("update Bin amount :  $updatedBinAmount");
-
-                            //update point
-                            int existingPoints = existingDoc.data()['points'];
-                            int newPoints = points;
-                            int updatedPoints = existingPoints + newPoints;
-
-                            //update spinnablepoints
-                            int existingSpinnablePoints = existingDoc.data()['spinnablePoints'];
-                            int newSpinnablePoints = spinnablePoints;
-                            int updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
-
-                            //update rewardPoints
-                            int existingRewardPoints = existingDoc.data()['rewardPoints'];
-                            int newRewardPoints = rewardPoints;
-                            int updatedRewardPoints = existingRewardPoints + newRewardPoints;
-
-                            // Update the existing record with the new amount value
-                            try {
-                              await FirebaseFirestore.instance
-                                  .collection('recycledWasteEndUser')
-                                  .doc(existingDocId)
-                                  .update({
-                                'plasticAmount': updatedPlasticAmount,
-                                'bottleAmount': updatedBottleAmount,
-                                'points': updatedPoints,
-                                'spinnablePoints': updatedspinnablePoints,
-                                'rewardPoints': updatedRewardPoints
-                              });
-
-                              // Update successful, handle the result here
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('User Data updated successfully...'),
-                                    backgroundColor: Colors.green,
-                                ),
-                              );
-                            } catch (e) {
-                              // Handle any errors that occur during the update
-                              print('An error occurred while updating data in Firestore: $e');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('An error occurred while updating data. Please try again.'),
-                                  backgroundColor: Colors.red,),
-                              );
-                            }
-                          } else {
-                            // Add a new record since no existing record found
-                            try {
-                              await FirebaseFirestore.instance
-                                  .collection('recycledWasteEndUser')
-                                  .doc(userId)
-                                  .set(dataToSave);
-
-                              // Set operation successful, show success message
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('User Data saved successfully...'),
-                                  backgroundColor: Colors.green,),
-                              );
-                            } catch (e) {
-                              // Handle any errors during the set operation
-                              print('An error occurred while saving data to Firestore: $e');
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('An error occurred while saving data. Please try again.'),
-                                  backgroundColor: Colors.red,),
-                              );
-                            }
-                          }
-                        });
-
-                        Map<String, dynamic> collectorAmounts = {
-                          "plasticAmount": plasticAmount,
-                          "bottleAmount": bottleAmount,
-                        };
-
-                        DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-                            .collection("recycledWasteCollector")
-                            .doc(currentUser.uid)
-                            .get();
-
-                        if (documentSnapshot.exists) {
-                          Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
-                          setState(()  {
-
-                            int existingPlasticAmountCollector = userData['plasticAmount'];
-                            int updatePlasticAmountCollector = existingPlasticAmountCollector + plasticAmount;
-
-                            int existingBottleAmountCollector = userData['bottleAmount'];
-                            int updateBottleAmountCollector = existingBottleAmountCollector + bottleAmount;
-
-                            // int existingCaneAmountCollector = int.parse(userData['caneAmount']);
-                            // int updateCaneAmountCollector = existingCaneAmountCollector +int.parse(caneAmount);
-                            //
-                            // int existingGlassAmountCollector = int.parse(userData['glassAmount']);
-                            // int updateGlassAmountCollector = existingGlassAmountCollector +int.parse(glassAmount);
-
-                            try {
-                               FirebaseFirestore.instance
-                                  .collection('recycledWasteCollector')
-                                  .doc(currentUser.uid)
-                                  .update({
-                                'plasticAmount': updatePlasticAmountCollector,
-                                'bottleAmount': updateBottleAmountCollector,
-                              });
-
-                              // Update operation successful, show a success message
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('Collector Data updated successfully...'),
-                                  backgroundColor: Colors.green,),
-                              );
-                            } catch (e) {
-                              // Handle any errors during the update operation
-                              print('An error occurred while updating data in Firestore: $e');
-
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('An error occurred while updating data. Please try again.'),
-                                  backgroundColor: Colors.red,),
-                              );
-                            }
-
-                          });
-                        } else {
-                          try {
-                            await FirebaseFirestore.instance
-                                .collection('recycledWasteCollector')
-                                .doc(currentUser.uid)
-                                .set(collectorAmounts);
-
-                            // Set operation successful, show success message
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Collector Data saved successfully...'),
-                                backgroundColor: Colors.green,),
-                            );
-                          } catch (e) {
-                            // Handle any errors during the set operation
-                            print('An error occurred while saving data to Firestore: $e');
-
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('An error occurred while saving data. Please try again.'),
-                                backgroundColor: Colors.red,),
-                            );
-                          }
-                        }
-                      }
-                    });
-
-                    // Clear text form fields and reset data
-                    mobileController.clear();
-                    plasticAmountController.clear();
-                    bottleAmountController.clear();
-                  }
                 },
               style: ElevatedButton.styleFrom(
                 minimumSize: Size(100.0, 40.0),
