@@ -1,9 +1,9 @@
 
-# WasteBuster
+# Waste_Management_Application
 
 ## Overview
 
-WasteBuster is a Flutter mobile application aimed at waste management and reducing plastic pollution in the environment. The app facilitates a two-fold process involving donors and collectors. Donors can recycle plastic waste by either giving it to collectors or depositing it into smart bins provided through this project. Collectors, on the other hand, are responsible for collecting waste from both donors and smart bins. Both donors and collectors are rewarded based on the amount of recycled and collected waste. Additionally, the app incorporates gamification elements to encourage user engagement and participation in waste reduction efforts.
+Waste_Management_Application is a Flutter mobile application aimed at waste management and reducing plastic pollution in the environment. The app facilitates a two-fold process involving donors and collectors. Donors can recycle plastic waste by either giving it to collectors or depositing it into smart bins provided through this project. Collectors, on the other hand, are responsible for collecting waste from both donors and smart bins. Both donors and collectors are rewarded based on the amount of recycled and collected waste. Additionally, the app incorporates gamification elements to encourage user engagement and participation in waste reduction efforts.
 
 ## Features
 
@@ -27,13 +27,13 @@ WasteBuster is a Flutter mobile application aimed at waste management and reduci
 1. Clone the repository:
 
     ```
-    git clone https://github.com/your_username/wastebuster.git
+    git clone https://github.com/sandazz/waste_management_application.git
     ```
 
 2. Navigate to the project directory:
 
     ```
-    cd wastebuster
+    cd Waste_Management_Application
     ```
 
 3. Get dependencies:
