@@ -14,6 +14,21 @@ Waste_Management_Application is a Flutter mobile application aimed at waste mana
 - **Smart Bins:** Integration of smart bins constructed as part of the project to facilitate waste collection.
 - **User Profiles:** Users can view their profiles, track their recycling or collecting progress, and manage rewards.
 
+## Screenshots
+
+Here are some screenshots of the application:
+
+### Splash Screen
+
+<img src="screenShots/splashScreen.jpg" alt="Splash Screen" width="200">
+
+### Login / SignUp / ForgetPassword
+
+<img src="screenShots/login.jpg" alt="Login" width="200"> <img src="screenShots/signup.jpg" alt="SignUp" width="200">  <img src="screenShots/forgetpassword.jpg" alt="ForgetPassword" width="200">
+
+### User Dashboard
+<img src="screenShots/dashboardUser.jpg" alt="dashboardUser" width="200">  <img src="screenShots/leaderboardUser.jpg" alt="leaderboardUser" width="200">  <img src="screenShots/achivementUser.jpg" alt="achivementUser" width="200">  <img src="screenShots/getrewardUser.jpg" alt="getrewardUser" width="200"> <img src="screenShots/accountdetailUser.jpg" alt="accountdetailUser" width="200">
+
 ## Getting Started
 
 ### Prerequisites
