@@ -120,13 +120,17 @@ class _ForgetPasswordState extends State<ForgetPassword>  {
               ElevatedButton(
                 onPressed: () => sendPasswordResetEmail(),
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(100.0, 40.0),
-                  primary: Colors.green[700], // Set the desired button color
+                  minimumSize: Size(100.0, 40.0), backgroundColor: Colors.green[700], // Set the desired button color
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
                   ),
                 ),
-                child: Text('Send Password Reset Email'),
+                child: Text(
+                    'Send Password Reset Email',
+                  style: TextStyle(
+                    color: Colors.white,
+                  )
+                ),
               ),
             ],
           ),

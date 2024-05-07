@@ -68,7 +68,6 @@ class _HomeState extends State<Home> {
               children: [
                 Container(
                   width: 120.0, // Set the width of the container
-                  height: 120.0, // Set the height of the container
                   padding: EdgeInsets.all(16.0), // Set the padding within the container
                   margin: EdgeInsets.all(8.0), // Set the margin around the container
                   decoration: BoxDecoration(

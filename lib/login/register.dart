@@ -643,13 +643,17 @@ class _RegisterState extends State<Register> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    minimumSize: Size(100.0, 40.0),
-                    primary: Colors.green[700], // Set the desired button color
+                    minimumSize: Size(100.0, 40.0), backgroundColor: Colors.green[700], // Set the desired button color
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
                     ),
                   ),
-                  child: Text('Sign up'),
+                  child: Text(
+                    'Sign up',
+                    style: TextStyle(
+                      color: Colors.white
+                  ),
+                  ),
                 ),
               ],
             ),

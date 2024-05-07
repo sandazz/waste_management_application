@@ -83,8 +83,7 @@ class _CameraState extends State<Camera> {
                         ElevatedButton.icon(
                             onPressed: () => scanBarcodeNormal(),
                             style: ElevatedButton.styleFrom(
-                              elevation: 8.0,
-                              primary: Colors.green,// Set the background color for the button
+                              elevation: 8.0, backgroundColor: Colors.green,// Set the background color for the button
                               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30), // Set the border radius here
@@ -96,8 +95,7 @@ class _CameraState extends State<Camera> {
                         ElevatedButton.icon(
                             onPressed: () => scanQR(),
                             style: ElevatedButton.styleFrom(
-                              elevation: 8.0,
-                              primary: Colors.green,
+                              elevation: 8.0, backgroundColor: Colors.green,
                               padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0), // Set the background color for the button
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30), // Set the border radius here

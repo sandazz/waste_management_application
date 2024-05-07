@@ -243,8 +243,7 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                                   _login();
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  minimumSize: Size(100.0, 50.0),
-                                  primary: Colors.green[700], // Set the desired button color
+                                  minimumSize: Size(100.0, 50.0), backgroundColor: Colors.green[700], // Set the desired button color
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
                                   ),
@@ -252,7 +251,8 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                                 child: Text(
                                     'Sign In',
                                         style: TextStyle(
-                                          fontSize: 18.0
+                                          fontSize: 18.0,
+                                          color: Colors.white
                                         ),
                                 ),
                               ),
