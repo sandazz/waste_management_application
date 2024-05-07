@@ -357,13 +357,13 @@ class _RewardGiveAwayState extends State<RewardGiveAway> {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        minimumSize: Size(100.0, 40.0),
-                        primary: Colors.green[700], // Set the desired button color
+                        minimumSize: Size(100.0, 40.0), backgroundColor: Colors.green[700], // Set the desired button color
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
                       ),
-                      child: Text('GIVE AWAY'),
+                      child: Text('GIVE AWAY',
+                      style: TextStyle(color: Colors.white),),
                     ),
                   ],
                 ),

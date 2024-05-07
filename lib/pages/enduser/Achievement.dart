@@ -221,487 +221,112 @@ class _AchievementState extends State<Achievement> {
                   ),
                 ),
               ),
-              AspectRatio(
-                aspectRatio: 8/3,
-                child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Showcase(
-                        key: _bottleShowCaseKey,
-                        description: 'Bottle achievements User achieved',
-                        child: Container(
-                          width: 85.0, // Set the width of the container
-                          padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                          decoration: BoxDecoration(
-                            color: Colors.white, // Set the background color of the container
-                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2.0,
-                                blurRadius: 5.0,
-                                offset: Offset(0, 3), // Adjust the shadow position as needed
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Showcase(
+                      key: _bottleShowCaseKey,
+                      description: 'Bottle achievements User achieved',
+                      child: Container(
+                        width: 85.0, // Set the width of the container
+                        padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Set the background color of the container
+                          borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2.0,
+                              blurRadius: 5.0,
+                              offset: Offset(0, 3), // Adjust the shadow position as needed
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Bottle',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              SizedBox(height: 2.0),
+                              Container(
+                                child: Image.asset(
+                                  achievementBottleURL, // Replace "image.jpg" with the actual filename and extension of your image
+                                  fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                                ),
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                achievementBottleBadge,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                ),
                               ),
                             ],
                           ),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Bottle',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                                SizedBox(height: 2.0),
-                                Container(
-                                  child: Image.asset(
-                                    achievementBottleURL, // Replace "image.jpg" with the actual filename and extension of your image
-                                    fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                                  ),
-                                ),
-                                SizedBox(height: 2.0),
-                                Text(
-                                  achievementBottleBadge,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                         ),
                       ),
-                      Showcase(
-                        key: _plasticShowCaseKey,
-                        description: 'Plastic achievement User achieved',
-                        child: Container(
-                          width: 85.0, // Set the width of the container
-                          padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                          decoration: BoxDecoration(
-                            color: Colors.white, // Set the background color of the container
-                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.5),
-                                spreadRadius: 2.0,
-                                blurRadius: 5.0,
-                                offset: Offset(0, 3), // Adjust the shadow position as needed
+                    ),
+                    Showcase(
+                      key: _plasticShowCaseKey,
+                      description: 'Plastic achievement User achieved',
+                      child: Container(
+                        width: 85.0, // Set the width of the container
+                        padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
+                        margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                        decoration: BoxDecoration(
+                          color: Colors.white, // Set the background color of the container
+                          borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.5),
+                              spreadRadius: 2.0,
+                              blurRadius: 5.0,
+                              offset: Offset(0, 3), // Adjust the shadow position as needed
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                'Plastic',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              SizedBox(height: 2.0),
+                              Container(
+                                child: Image.asset(
+                                  achievementPlasticURL, // Replace "image.jpg" with the actual filename and extension of your image
+                                  fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                                ),
+                              ),
+                              SizedBox(height: 2.0),
+                              Text(
+                                achievementPlasticBadge,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                ),
                               ),
                             ],
                           ),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                Text(
-                                  'Plastic',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18.0,
-                                  ),
-                                ),
-                                SizedBox(height: 2.0),
-                                Container(
-                                  child: Image.asset(
-                                    achievementPlasticURL, // Replace "image.jpg" with the actual filename and extension of your image
-                                    fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                                  ),
-                                ),
-                                SizedBox(height: 2.0),
-                                Text(
-                                  achievementPlasticBadge,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 15.0,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
                         ),
                       ),
+                    ),
 
-                    ],
-                  ),
+                  ],
                 ),
-                // child: SingleChildScrollView(
-                //   scrollDirection: Axis.horizontal,
-                //   child: Container(
-                //     margin: EdgeInsets.symmetric(vertical: 10.0),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.center,
-                //       children: [
-                //         Container(
-                //           width: 85.0, // Set the width of the container
-                //           padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                //           margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                //           decoration: BoxDecoration(
-                //             color: Colors.white, // Set the background color of the container
-                //             borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey.withOpacity(0.5),
-                //                 spreadRadius: 2.0,
-                //                 blurRadius: 5.0,
-                //                 offset: Offset(0, 3), // Adjust the shadow position as needed
-                //               ),
-                //             ],
-                //           ),
-                //           child: Center(
-                //             child: Column(
-                //               children: [
-                //                 Text(
-                //                   'Bottle',
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 18.0,
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Container(
-                //                   child: Image.asset(
-                //                     achievementPlasticURL, // Replace "image.jpg" with the actual filename and extension of your image
-                //                     fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Text(
-                //                   achievementPlasticBadge,
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 15.0,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           width: 85.0, // Set the width of the container
-                //           padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                //           margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                //           decoration: BoxDecoration(
-                //             color: Colors.white, // Set the background color of the container
-                //             borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey.withOpacity(0.5),
-                //                 spreadRadius: 2.0,
-                //                 blurRadius: 5.0,
-                //                 offset: Offset(0, 3), // Adjust the shadow position as needed
-                //               ),
-                //             ],
-                //           ),
-                //           child: Center(
-                //             child: Column(
-                //               children: [
-                //                 Text(
-                //                   'Bottle',
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 18.0,
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Container(
-                //                   child: Image.asset(
-                //                     achievementPlasticURL, // Replace "image.jpg" with the actual filename and extension of your image
-                //                     fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Text(
-                //                   achievementPlasticBadge,
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 15.0,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           width: 85.0, // Set the width of the container
-                //           padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                //           margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                //           decoration: BoxDecoration(
-                //             color: Colors.white, // Set the background color of the container
-                //             borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey.withOpacity(0.5),
-                //                 spreadRadius: 2.0,
-                //                 blurRadius: 5.0,
-                //                 offset: Offset(0, 3), // Adjust the shadow position as needed
-                //               ),
-                //             ],
-                //           ),
-                //           child: Center(
-                //             child: Column(
-                //               children: [
-                //                 Text(
-                //                   'Cane',
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 18.0,
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Container(
-                //                   child: Image.asset(
-                //                     achievementCaneURL, // Replace "image.jpg" with the actual filename and extension of your image
-                //                     fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Text(
-                //                   achievementCaneBadge,
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 15.0,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           width: 85.0, // Set the width of the container
-                //           padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                //           margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                //           decoration: BoxDecoration(
-                //             color: Colors.white, // Set the background color of the container
-                //             borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey.withOpacity(0.5),
-                //                 spreadRadius: 2.0,
-                //                 blurRadius: 5.0,
-                //                 offset: Offset(0, 3), // Adjust the shadow position as needed
-                //               ),
-                //             ],
-                //           ),
-                //           child: Center(
-                //             child: Column(
-                //               children: [
-                //                 Text(
-                //                   'Glass',
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 18.0,
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Container(
-                //                   child: Image.asset(
-                //                     achievementGlassURL, // Replace "image.jpg" with the actual filename and extension of your image
-                //                     fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Text(
-                //                   achievementGlassBadge,
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 15.0,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           width: 85.0, // Set the width of the container
-                //           padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                //           margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                //           decoration: BoxDecoration(
-                //             color: Colors.white, // Set the background color of the container
-                //             borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey.withOpacity(0.5),
-                //                 spreadRadius: 2.0,
-                //                 blurRadius: 5.0,
-                //                 offset: Offset(0, 3), // Adjust the shadow position as needed
-                //               ),
-                //             ],
-                //           ),
-                //           child: Center(
-                //             child: Column(
-                //               children: [
-                //                 Text(
-                //                   'Bin',
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 18.0,
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Container(
-                //                   child: Image.asset(
-                //                     achievementBinURL, // Replace "image.jpg" with the actual filename and extension of your image
-                //                     fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Text(
-                //                   achievementBinBadge,
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 15.0,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           width: 85.0, // Set the width of the container
-                //           padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                //           margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                //           decoration: BoxDecoration(
-                //             color: Colors.white, // Set the background color of the container
-                //             borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey.withOpacity(0.5),
-                //                 spreadRadius: 2.0,
-                //                 blurRadius: 5.0,
-                //                 offset: Offset(0, 3), // Adjust the shadow position as needed
-                //               ),
-                //             ],
-                //           ),
-                //           child: Center(
-                //             child: Column(
-                //               children: [
-                //                 Text(
-                //                   'Usage',
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 18.0,
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Container(
-                //                   child: Image.asset(
-                //                     achievementUsageURL, // Replace "image.jpg" with the actual filename and extension of your image
-                //                     fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Text(
-                //                   achievementUsageBadge,
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 15.0,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           width: 85.0, // Set the width of the container
-                //           padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                //           margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                //           decoration: BoxDecoration(
-                //             color: Colors.white, // Set the background color of the container
-                //             borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey.withOpacity(0.5),
-                //                 spreadRadius: 2.0,
-                //                 blurRadius: 5.0,
-                //                 offset: Offset(0, 3), // Adjust the shadow position as needed
-                //               ),
-                //             ],
-                //           ),
-                //           child: Center(
-                //             child: Column(
-                //               children: [
-                //                 Text(
-                //                   'Media',
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 18.0,
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Container(
-                //                   child: Image.asset(
-                //                     achievementMediaURL, // Replace "image.jpg" with the actual filename and extension of your image
-                //                     fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Text(
-                //                   achievementMediaBadge,
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 15.0,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //         Container(
-                //           width: 85.0, // Set the width of the container
-                //           padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-                //           margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-                //           decoration: BoxDecoration(
-                //             color: Colors.white, // Set the background color of the container
-                //             borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey.withOpacity(0.5),
-                //                 spreadRadius: 2.0,
-                //                 blurRadius: 5.0,
-                //                 offset: Offset(0, 3), // Adjust the shadow position as needed
-                //               ),
-                //             ],
-                //           ),
-                //           child: Center(
-                //             child: Column(
-                //               children: [
-                //                 Text(
-                //                   'Social',
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 18.0,
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Container(
-                //                   child: Image.asset(
-                //                     achievementSocialURL, // Replace "image.jpg" with the actual filename and extension of your image
-                //                     fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
-                //                   ),
-                //                 ),
-                //                 SizedBox(height: 2.0),
-                //                 Text(
-                //                   achievementSocialBadge,
-                //                   textAlign: TextAlign.center,
-                //                   style: TextStyle(
-                //                     fontSize: 15.0,
-                //                   ),
-                //                 ),
-                //               ],
-                //             ),
-                //           ),
-                //         ),
-                //
-                //       ],
-                //     ),
-                //   ),
-                // ),
               ),
               Expanded(
                 child: ListView(

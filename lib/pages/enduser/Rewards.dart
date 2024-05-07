@@ -45,9 +45,7 @@ class _RewardsState extends State<Rewards> {
     if (documentSnapshot.exists) {
       Map<String, dynamic> userData = documentSnapshot.data() as Map<String, dynamic>;
       setState(() {
-        RedeemablePoints = userData['spinnablePoints'];
         rewardPoints = userData['rewardPoints'];
-        totalSpinnableCount = (RedeemablePoints/ costPerSpinning).toInt();
       });
     } else {
       print("User not found");
@@ -476,6 +474,7 @@ class _RewardsState extends State<Rewards> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20, // Adjust the font size as needed
+                  color: Colors.white,
                 ),
               ),
             ),

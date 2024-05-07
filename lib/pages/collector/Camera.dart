@@ -24,6 +24,7 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
   final glassAmountController = TextEditingController();
 
   int rewardPoints = 0;
+  int rewardPointsEndUser = 0;
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
@@ -85,9 +86,10 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
       int bottleAmount = (bottleAmountController.text.isNotEmpty && int.tryParse(bottleAmountController.text) != null)
           ? int.parse(bottleAmountController.text)
           : 0;
-      int binAmount = 0;
-      int points = (plasticAmount*30)+(bottleAmount*5);
-      int spinnablePoints = points;
+      // int binAmount = 0;
+      // int points = (plasticAmount*30)+(bottleAmount*5);
+      // int spinnablePoints = points;
+      rewardPointsEndUser = (plasticAmount*30)+(bottleAmount*5);
 
       if (rewardPoints >= plasticAmount + bottleAmount){
         // Retrieve user ID from "users" collection
@@ -97,13 +99,11 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
             .get()
             .then((querySnapshot) async {
           if (querySnapshot.docs.isNotEmpty) {
-            // Retrieve user document
-            var userDoc = querySnapshot.docs.first;
 
-            // Extract user ID
-            String userId = userDoc.id;
-            binAmount = ((plasticAmount + bottleAmount)*(1/10000)).floor();
-            print("Bin amount :  $binAmount");
+            var userDoc = querySnapshot.docs.first; // Retrieve user document
+            String userId = userDoc.id;             // Extract user ID
+            // binAmount = ((plasticAmount + bottleAmount)*(1/10000)).floor();
+            // print("Bin amount :  $binAmount");
 
 
             // Update "dataToSave" map with
@@ -111,9 +111,11 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
               "mobile": mobile,
               "bottleAmount": bottleAmount,
               "plasticAmount": plasticAmount,
-              "points" : points,
-              "spinnablePoints" : spinnablePoints,
-              "binAmount" : binAmount,
+              "rewardPoints" : rewardPointsEndUser,
+
+              // "points" : points,
+              // "spinnablePoints" : spinnablePoints,
+              // "binAmount" : binAmount,
             };
 
             //  Check if a record with the same mobile number exists
@@ -137,15 +139,21 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                 int newBottleAmount = bottleAmount;
                 int updatedBottleAmount = existingBottleAmount + newBottleAmount;
 
-                //update point
-                int existingPoints = existingDoc.data()['points'];
-                int newPoints = points;
-                int updatedPoints = existingPoints + newPoints;
+                //update reward points end user
+                int existingRewardPointsEndUser = existingDoc.data()['rewardPoints'];
+                int newPointsEndUser = rewardPointsEndUser;
+                int updatedRewardPointsEndUser = existingRewardPointsEndUser + newPointsEndUser;
 
-                //update spinnablepoints
-                int existingSpinnablePoints = existingDoc.data()['spinnablePoints'];
-                int newSpinnablePoints = spinnablePoints;
-                int updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
+
+                // //update point
+                // int existingPoints = existingDoc.data()['points'];
+                // int newPoints = points;
+                // int updatedPoints = existingPoints + newPoints;
+                //
+                // //update spinnablepoints
+                // int existingSpinnablePoints = existingDoc.data()['spinnablePoints'];
+                // int newSpinnablePoints = spinnablePoints;
+                // int updatedspinnablePoints = existingSpinnablePoints + newSpinnablePoints;
 
                 // Update the existing record with the new amount value
                 try {
@@ -155,8 +163,9 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
                       .update({
                     'plasticAmount': updatedPlasticAmount,
                     'bottleAmount': updatedBottleAmount,
-                    'points': updatedPoints,
-                    'spinnablePoints': updatedspinnablePoints,
+                    'rewardPoints': updatedRewardPointsEndUser,
+                    // 'points': updatedPoints,
+                    // 'spinnablePoints': updatedspinnablePoints,
                   });
 
                   // Update successful, handle the result here
@@ -302,228 +311,229 @@ class _CameraState extends State<Camera> with WidgetsBindingObserver {
     return Scaffold(
       body: Form(
         key: _formKey,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              child: Text(
-                'Recycle',
-                style: TextStyle(
-                    fontSize: 40.0,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.0
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                child: Text(
+                  'Recycle',
+                  style: TextStyle(
+                      fontSize: 40.0,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.0
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 10.0,),
-            Container(
-              width: 100.0, // Set the width of the container
-              padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
-              margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
-              decoration: BoxDecoration(
-                color: Colors.white, // Set the background color of the container
-                borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2.0,
-                    blurRadius: 5.0,
-                    offset: Offset(0, 1), // Adjust the shadow position as needed
-                  ),
-                ],
-              ),
-              child: Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'Reward Points',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 18.0,
-                      ),
-                    ),
-                    SizedBox(height: 5.0),
-                    Icon(
-                      LineIcons.star,
-                      size: 35.0,
-                    ),
-                    SizedBox(height: 5.0),
-                    Text(
-                      "${rewardPoints}",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 15.0,
-                      ),
+              SizedBox(height: 10.0,),
+              Container(
+                width: 100.0, // Set the width of the container
+                padding: EdgeInsets.fromLTRB(16.0,10.0,16.0,10.0),
+                margin: EdgeInsets.symmetric(horizontal: 5.0),// Set the padding within the container
+                decoration: BoxDecoration(
+                  color: Colors.white, // Set the background color of the container
+                  borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2.0,
+                      blurRadius: 5.0,
+                      offset: Offset(0, 1), // Adjust the shadow position as needed
                     ),
                   ],
                 ),
-              ),
-            ),
-            SizedBox(height: 20.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 300.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Mobile',
-                        labelStyle: TextStyle(
-                          color: Colors.green[700], // Set the desired text color
+                child: Center(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Reward Points',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 18.0,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                          BorderSide(color: Colors.green, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                        ),
-                        border: OutlineInputBorder(),
                       ),
-                      validator: _validateMobile,
-                      keyboardType: TextInputType.number,
-                      controller: mobileController,
-                    )
-                )
-              ],
-            ),
-            SizedBox(height: 20.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 300.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Bottle Amount',
-                        labelStyle: TextStyle(
-                          color: Colors.green[700], // Set the desired text color
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                          BorderSide(color: Colors.green, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                        ),
-                        border: OutlineInputBorder(),
+                      SizedBox(height: 5.0),
+                      Icon(
+                        LineIcons.star,
+                        size: 35.0,
                       ),
-                      validator: _validateAmount,
-                      keyboardType: TextInputType.number,
-                      controller: bottleAmountController,
-                    )
-                )
-              ],
-            ),
-            SizedBox(height: 20.0,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 300.0,
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        labelText: 'Plastic Amount',
-                        labelStyle: TextStyle(
-                          color: Colors.green[700], // Set the desired text color
+                      SizedBox(height: 5.0),
+                      Text(
+                        "${rewardPoints}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15.0,
                         ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide:
-                          BorderSide(color: Colors.green, width: 0.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                          borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-                        ),
-                        border: OutlineInputBorder(),
                       ),
-                      validator: _validateAmount,
-                      keyboardType: TextInputType.number,
-                      controller: plasticAmountController,
-                    )
-                )
-              ],
-            ),
-            // SizedBox(height: 20.0,),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Container(
-            //         width: 300.0,
-            //         child: TextFormField(
-            //           decoration: InputDecoration(
-            //             labelText: 'Cane Amount',
-            //             labelStyle: TextStyle(
-            //               color: Colors.green[700], // Set the desired text color
-            //             ),
-            //             enabledBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            //               borderSide:
-            //               BorderSide(color: Colors.green, width: 0.0),
-            //             ),
-            //             focusedBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            //               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-            //             ),
-            //             border: OutlineInputBorder(),
-            //           ),
-            //           validator: _validateAmount,
-            //           controller: caneAmountController,
-            //         )
-            //     )
-            //   ],
-            // ),
-            // SizedBox(height: 20.0,),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     Container(
-            //         width: 300.0,
-            //         child: TextFormField(
-            //           decoration: InputDecoration(
-            //             labelText: 'Glass Amount',
-            //             labelStyle: TextStyle(
-            //               color: Colors.green[700], // Set the desired text color
-            //             ),
-            //             enabledBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            //               borderSide:
-            //               BorderSide(color: Colors.green, width: 0.0),
-            //             ),
-            //             focusedBorder: OutlineInputBorder(
-            //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            //               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
-            //             ),
-            //             border: OutlineInputBorder(),
-            //           ),
-            //           validator: _validateAmount,
-            //           controller: glassAmountController,
-            //         )
-            //     )
-            //   ],
-            // ),
-            SizedBox(height: 20.0,),
-            ElevatedButton(
-              onPressed: () async {
-                await pointsAdd();
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LayoutCollector()));
-
-                },
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(100.0, 40.0),
-                primary: Colors.green[700], // Set the desired button color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
+                    ],
+                  ),
                 ),
               ),
-              child: Text('Add'),
-            ),
-          ],
+              SizedBox(height: 20.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: 300.0,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Mobile',
+                          labelStyle: TextStyle(
+                            color: Colors.green[700], // Set the desired text color
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.green, width: 0.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: _validateMobile,
+                        keyboardType: TextInputType.number,
+                        controller: mobileController,
+                      )
+                  )
+                ],
+              ),
+              SizedBox(height: 20.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: 300.0,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Bottle Amount',
+                          labelStyle: TextStyle(
+                            color: Colors.green[700], // Set the desired text color
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.green, width: 0.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: _validateAmount,
+                        keyboardType: TextInputType.number,
+                        controller: bottleAmountController,
+                      )
+                  )
+                ],
+              ),
+              SizedBox(height: 20.0,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                      width: 300.0,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Plastic Amount',
+                          labelStyle: TextStyle(
+                            color: Colors.green[700], // Set the desired text color
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide:
+                            BorderSide(color: Colors.green, width: 0.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                          ),
+                          border: OutlineInputBorder(),
+                        ),
+                        validator: _validateAmount,
+                        keyboardType: TextInputType.number,
+                        controller: plasticAmountController,
+                      )
+                  )
+                ],
+              ),
+              // SizedBox(height: 20.0,),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //         width: 300.0,
+              //         child: TextFormField(
+              //           decoration: InputDecoration(
+              //             labelText: 'Cane Amount',
+              //             labelStyle: TextStyle(
+              //               color: Colors.green[700], // Set the desired text color
+              //             ),
+              //             enabledBorder: OutlineInputBorder(
+              //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              //               borderSide:
+              //               BorderSide(color: Colors.green, width: 0.0),
+              //             ),
+              //             focusedBorder: OutlineInputBorder(
+              //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              //               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+              //             ),
+              //             border: OutlineInputBorder(),
+              //           ),
+              //           validator: _validateAmount,
+              //           controller: caneAmountController,
+              //         )
+              //     )
+              //   ],
+              // ),
+              // SizedBox(height: 20.0,),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     Container(
+              //         width: 300.0,
+              //         child: TextFormField(
+              //           decoration: InputDecoration(
+              //             labelText: 'Glass Amount',
+              //             labelStyle: TextStyle(
+              //               color: Colors.green[700], // Set the desired text color
+              //             ),
+              //             enabledBorder: OutlineInputBorder(
+              //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              //               borderSide:
+              //               BorderSide(color: Colors.green, width: 0.0),
+              //             ),
+              //             focusedBorder: OutlineInputBorder(
+              //               borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              //               borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+              //             ),
+              //             border: OutlineInputBorder(),
+              //           ),
+              //           validator: _validateAmount,
+              //           controller: glassAmountController,
+              //         )
+              //     )
+              //   ],
+              // ),
+              SizedBox(height: 20.0,),
+              ElevatedButton(
+                onPressed: () async {
+                  await pointsAdd();
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LayoutCollector()));
+          
+                  },
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(100.0, 40.0), backgroundColor: Colors.green[700], // Set the desired button color
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0), // Set the desired border radius
+                  ),
+                ),
+                child: Text('Add', style: TextStyle(color: Colors.white),),
+              ),
+            ],
+          ),
         ),
       ),
     );
