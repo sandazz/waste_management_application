@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'dart:async';
@@ -24,6 +25,24 @@ class _CameraState extends State<Camera> {
     super.initState();
   }
 
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<DocumentSnapshot<Map<String, dynamic>>?> getSmartBinDataById(String id) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> doc = await _firestore.collection('smartBins').doc(id).get();
+      if (doc.exists) {
+        print('Document data: ${doc.data()}');
+        return doc;
+      } else {
+        print('No such document!');
+        return null;
+      }
+    } catch (e) {
+      print('Error getting document: $e');
+      rethrow;
+    }
+  }
+
   Future<void> scanQR() async {
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
@@ -42,37 +61,14 @@ class _CameraState extends State<Camera> {
 
     setState(() {
       _scanBarcode = barcodeScanRes;
-    });
-  }
-
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> scanBarcodeNormal() async {
-    String barcodeScanRes;
-    // Platform messages may fail, so we use a try/catch PlatformException.
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _scanBarcode = barcodeScanRes;
+      getSmartBinDataById(_scanBarcode);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
+    return  Scaffold(
             body: Builder(builder: (BuildContext context) {
-              var styleColors;
               return Container(
                   alignment: Alignment.center,
                   child: Flex(
@@ -80,18 +76,6 @@ class _CameraState extends State<Camera> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        ElevatedButton.icon(
-                            onPressed: () => scanBarcodeNormal(),
-                            style: ElevatedButton.styleFrom(
-                              elevation: 8.0, backgroundColor: Colors.green,// Set the background color for the button
-                              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30), // Set the border radius here
-                              ),
-                            ),
-                            icon: Icon(Icons.barcode_reader),
-                            label: Text('Barcode Scan')),
-                        SizedBox(height: 10.0,),
                         ElevatedButton.icon(
                             onPressed: () => scanQR(),
                             style: ElevatedButton.styleFrom(
@@ -107,6 +91,6 @@ class _CameraState extends State<Camera> {
                         Text('Scan result : $_scanBarcode\n',
                             style: TextStyle(fontSize: 20))
                       ]));
-            })));
+            }));
   }
 }
