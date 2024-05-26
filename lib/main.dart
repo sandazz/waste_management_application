@@ -82,7 +82,7 @@ class _AppState extends State<App> {
                   print("--------role = user");
                   return ShowCaseWidget(
                       builder: Builder(
-                          builder: (context) => RecycleForm() // assuming you want to showcase something in LayoutCollector
+                          builder: (context) => BottomNavigationExample() // assuming you want to showcase something in LayoutCollector
                       )
                   );
                 }
