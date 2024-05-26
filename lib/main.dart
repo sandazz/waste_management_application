@@ -7,6 +7,7 @@ import 'package:showcaseview/showcaseview.dart';
 import 'package:waste_management_app/login/login.dart';
 import 'package:waste_management_app/pages/collector/Collector.dart';
 import 'package:waste_management_app/pages/collector/NotVerified.dart';
+import 'package:waste_management_app/pages/enduser/RecycleForm.dart';
 import 'package:waste_management_app/pages/enduser/layout.dart';
 import 'package:provider/provider.dart';
 import 'package:waste_management_app/providers/loginProvider.dart';

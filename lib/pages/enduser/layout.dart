@@ -28,7 +28,7 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
     // Define your navigation items here
     Home(),
     LeaderBoard(),
-    // Camera(),
+    Camera(),
     Achievement(),
     Rewards(),
   ];
@@ -159,13 +159,13 @@ class _BottomNavigationExampleState extends State<BottomNavigationExample> {
               icon: Icon(Icons.leaderboard_outlined),
               label: 'LeaderBoard',
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.camera_alt_outlined, size: 35.0,),
-            //   label: '',
-            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.camera_alt_outlined, size: 35.0,),
+              label: 'Camera',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shield_outlined),
-              label: 'Acheveiment',
+              label: 'Achievement',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.diamond_outlined),
