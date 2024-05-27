@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:waste_management_app/login/Auth_page.dart';
 import 'package:waste_management_app/main.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -29,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
         alignment: Alignment.center,
         duration: Duration(milliseconds: 800),
         isIos: true,
-        child: App(),
+        child: AuthPage(),
       ),
     );
   }

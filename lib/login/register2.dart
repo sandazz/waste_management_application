@@ -2,30 +2,32 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:waste_management_app/components/squre_tile.dart';
 import 'package:waste_management_app/components/snackbar.dart';
 import 'package:waste_management_app/login/forgetPassword.dart';
+import 'package:waste_management_app/login/login.dart';
 import 'package:waste_management_app/login/register.dart';
 import 'package:waste_management_app/login/register2.dart';
-import 'package:waste_management_app/services/auth_service.dart';
 
-class login extends StatefulWidget {
-  const login({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<login> createState() => _loginState();
+  State<SignUp> createState() => _SignUpState();
 }
 
-class _loginState extends State<login> with WidgetsBindingObserver{
+class _SignUpState extends State<SignUp> with WidgetsBindingObserver{
   String loginLogoImageURL = "assets/app_images/splashScreen_image.png";
   String loginLogoNameURL = "assets/app_images/splashScreen_name.png";
 
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   bool _passwordVisible = false;
+  bool _confirmPasswordVisible = false;
 
   @override
   void initState() {
@@ -60,25 +62,25 @@ class _loginState extends State<login> with WidgetsBindingObserver{
   }
 
   // login using email and password
-  _login() async {
+  _signUp() async {
     if (_formKey.currentState!.validate()) {
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-        );
-        print("Successfully completed");
+      if (confirmPasswordController.text == passwordController.text) {
+        try {
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+          );
+          print("Successfully completed");
 
-        // Sign-in successful, handle the result here
-        CustomSnackBar.showSuccess(context, 'Login Success...');
-      } on FirebaseAuthException catch (error) {
-        // Handle any errors that occur during sign-in
-        if (error.code == 'user-not-found') {
-          CustomSnackBar.showError(context, 'User Not Found!');
-        } else if (error.code == 'wrong-password') {
-          CustomSnackBar.showError(context, 'Wrong Password!');
+          // Sign-in successful, handle the result here
+          CustomSnackBar.showSuccess(context, 'Sign Up Success...');
+        } on FirebaseAuthException catch (error) {
+            CustomSnackBar.showError(context, error.code);
         }
+      }else {
+        CustomSnackBar.showError(context, 'Password does not match...');
       }
+
     }
   }
 
@@ -147,7 +149,7 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                             ),
                             SizedBox(height: 10.0,),
                             Stack(
-                              alignment: Alignment.centerRight,
+                                alignment: Alignment.centerRight,
                                 children:[
                                   Container(
                                     child: TextFormField(
@@ -193,42 +195,66 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                                       });
                                     },
                                   ),
-                              ]
+                                ]
 
                             ),
                             SizedBox(height: 10.0,),
-                            Container(
-                              child: Align(
+                            Stack(
                                 alignment: Alignment.centerRight,
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 11.0,
+                                children:[
+                                  Container(
+                                    child: TextFormField(
+                                      controller: confirmPasswordController,
+                                      decoration: InputDecoration(
+                                          labelText: 'Confirm Password',
+                                          labelStyle: TextStyle(
+                                            color: Colors.green[700], // Set the desired text color
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                            borderSide:
+                                            BorderSide(color: Colors.grey, width: 0.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                            borderSide: BorderSide(color: Colors.green, width: 2.0), // Set the desired border color and width
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderRadius:
+                                            BorderRadius.all(Radius.circular(10.0)),
+                                            borderSide:
+                                            BorderSide(color: Colors.red, width: 2.0),
+                                          ),
+                                          border: OutlineInputBorder()),
+                                      obscureText: !_confirmPasswordVisible,
+                                      validator: _validatePassword,
+                                      onChanged: (value) {
+                                        // Handle the input value change
+                                      },
                                     ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: 'Forgot Password',
-                                        style: TextStyle(color: Colors.green, decoration: TextDecoration.underline,),
-                                        recognizer: TapGestureRecognizer()
-                                          ..onTap = () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => ForgetPassword()),
-                                            );
-                                          },
-                                      ),
-                                    ],
                                   ),
-                                ),
-                              ),
+                                  IconButton(
+                                    icon: Icon(
+                                      // Based on passwordVisible state choose the icon
+                                      _confirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                                      color: Colors.green,
+                                    ),
+                                    onPressed: () {
+                                      // Update the state i.e. toogle the state of passwordVisible variable
+                                      setState(() {
+                                        _confirmPasswordVisible = !_confirmPasswordVisible;
+                                      });
+                                    },
+                                  ),
+                                ]
+
                             ),
                             SizedBox(height: 50.0,),
                             Container(
                               width: 300.0,
                               child: ElevatedButton(
                                 onPressed: ()  {
-                                  _login();
+                                  _signUp();
                                 },
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: Size(100.0, 50.0), backgroundColor: Colors.green[700], // Set the desired button color
@@ -237,11 +263,11 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                                   ),
                                 ),
                                 child: Text(
-                                    'Sign In',
-                                        style: TextStyle(
-                                          fontSize: 18.0,
-                                          color: Colors.white
-                                        ),
+                                  'Sign Up',
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      color: Colors.white
+                                  ),
                                 ),
                               ),
                             ),
@@ -254,29 +280,15 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                                 ),
                                 children: <TextSpan>[
                                   TextSpan(
-                                    text: 'Register',
+                                    text: 'Login',
                                     style: TextStyle(color: Colors.green, decoration: TextDecoration.underline,),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap = () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => SignUp()),
-                                        );
+                                        Navigator.pop(context);
                                       },
                                   ),
                                 ],
                               ),
-                            ),
-                            SizedBox(height: 10.0,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // google button
-                                SquareTile(
-                                  imagePath: 'assets/app_images/google_logo.png',
-                                  onTap: () => AuthService().signInWithGoogle(),
-                                ),
-                              ],
                             ),
                           ],
                         ),
@@ -286,10 +298,6 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                 ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 10.0),
-            child: Text("!dea Factory | 2023"),
           ),
         ],
       ),

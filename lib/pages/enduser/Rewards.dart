@@ -26,13 +26,6 @@ class _RewardsState extends State<Rewards> {
   int RedeemablePoints = 0;
   int rewardPoints = 0;
 
-  // show case keys
-  final GlobalKey _redeemablePointsKey = GlobalKey();
-  final GlobalKey _costPerSpinningKey = GlobalKey();
-  final GlobalKey _spinCountKey = GlobalKey();
-  final GlobalKey _spinningKey = GlobalKey();
-  final GlobalKey _rewardPointKey = GlobalKey();
-
   Future<void> getPoints() async {
 
     String uid = currentUser.uid;
@@ -77,32 +70,9 @@ class _RewardsState extends State<Rewards> {
 
   StreamController<int> selected = StreamController<int>();
 
-  // Showcase call
-  Future<void> showCaseCall() async {
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   ShowCaseWidget.of(context).startShowCase([_redeemablePointsKey, _costPerSpinningKey, _spinCountKey, _spinningKey, _rewardPointKey]);
-    // });
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // Check if 'showedShowcase' is already stored in shared preferences.
-    bool showedShowcaseReward = prefs.getBool('showedShowcaseReward') ?? false;
-
-    if (!showedShowcaseReward) {
-      // If not stored, this is the first time, so show the showcase.
-      WidgetsBinding.instance.addPostFrameCallback((_) =>
-          ShowCaseWidget.of(context).startShowCase([_redeemablePointsKey, _costPerSpinningKey, _spinCountKey, _spinningKey, _rewardPointKey])
-      );
-
-      // Now, set 'showedShowcase' to true, indicating the showcase has been shown.
-      await prefs.setBool('showedShowcaseReward', true);
-    }
-  }
-
   void initState(){
     super.initState();
     getPoints();
-    showCaseCall();
   }
 
   @override

@@ -53,6 +53,7 @@ dependencies:
   showcaseview: ^2.0.3
   shared_preferences: ^2.2.0
   page_transition: ^2.1.0
+  google_sign_in: ^6.2.1
 
 
 dev_dependencies:

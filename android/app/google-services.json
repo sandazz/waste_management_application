@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "776900641735",
+    "firebase_url": "https://waste-management-app-80d68-default-rtdb.firebaseio.com",
     "project_id": "waste-management-app-80d68",
     "storage_bucket": "waste-management-app-80d68.appspot.com"
   },
@@ -9,12 +10,20 @@
       "client_info": {
         "mobilesdk_app_id": "1:776900641735:android:677b5f162e29b7af0f8fe2",
         "android_client_info": {
-          "package_name": "com.idea_factory.waste_management_app"
+          "package_name": "com.example.waste_management_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "776900641735-kop52jbu5ovkrr03lgtp3b8h5pqmgdpb.apps.googleusercontent.com",
+          "client_id": "776900641735-3k0vhdt3qjposuf0qr5fhf4bcfnlovg6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.waste_management_app",
+            "certificate_hash": "93ab04ba412056d09064206409d0909f5a4b507b"
+          }
+        },
+        {
+          "client_id": "776900641735-hnaqo5e3qud0f8g2p0cd4kulei4lbvf4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +36,36 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "776900641735-kop52jbu5ovkrr03lgtp3b8h5pqmgdpb.apps.googleusercontent.com",
+              "client_id": "776900641735-hnaqo5e3qud0f8g2p0cd4kulei4lbvf4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776900641735:android:e5e4bf1c60422e6f0f8fe2",
+        "android_client_info": {
+          "package_name": "com.idea_factory.waste_management_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "776900641735-hnaqo5e3qud0f8g2p0cd4kulei4lbvf4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCGANe7_6vBLXhARP6fEgj_WoJWzStRPnU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "776900641735-hnaqo5e3qud0f8g2p0cd4kulei4lbvf4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

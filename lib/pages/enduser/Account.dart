@@ -13,7 +13,6 @@ class Account extends StatefulWidget {
 class _AccountState extends State<Account> {
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
-  bool _passwordVisible = false;
 
   final fnameController = TextEditingController();
   final locationController = TextEditingController();

@@ -15,12 +15,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  //showcase
-  final GlobalKey _one = GlobalKey();
-  final GlobalKey _two = GlobalKey();
-  final GlobalKey _three = GlobalKey();
-
-
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
   int plasticAmount = 0;
@@ -52,30 +46,10 @@ class _HomeState extends State<Home> {
      }
   }
 
-  // Descriptions
-  void showCaseCall()async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // Check if 'showedShowcase' is already stored in shared preferences.
-    bool showedShowcaseHome = prefs.getBool('showedShowcaseHome') ?? false;
-
-    if (!showedShowcaseHome) {
-      // If not stored, this is the first time, so show the showcase.
-      WidgetsBinding.instance.addPostFrameCallback((_) =>
-          ShowCaseWidget.of(context).startShowCase([_one, _two, _three]),
-      );
-
-      // Now, set 'showedShowcase' to true, indicating the showcase has been shown.
-      await prefs.setBool('showedShowcaseHome', true);
-    }
-  }
-
-
   @override
   void initState() {
     super.initState();
     getPoints();
-    showCaseCall();
   }
 
 
@@ -91,51 +65,47 @@ class _HomeState extends State<Home> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Showcase(
-                      key: _one,
-                      description: 'Points collected when you recycle',
-                      child: Container(
-                        width: 170.0, // Set the width of the container
-                        padding: EdgeInsets.fromLTRB(16.0,30.0,16.0,30.0), // Set the padding within the container
-                        margin: EdgeInsets.all(8.0), // Set the margin around the container
-                        decoration: BoxDecoration(
-                          color: Colors.green, // Set the background color of the container
-                          borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 2.0,
-                              blurRadius: 5.0,
-                              offset: Offset(0, 3), // Adjust the shadow position as needed
+                    Container(
+                      width: 170.0, // Set the width of the container
+                      padding: EdgeInsets.fromLTRB(16.0,30.0,16.0,30.0), // Set the padding within the container
+                      margin: EdgeInsets.all(8.0), // Set the margin around the container
+                      decoration: BoxDecoration(
+                        color: Colors.green, // Set the background color of the container
+                        borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2.0,
+                            blurRadius: 5.0,
+                            offset: Offset(0, 3), // Adjust the shadow position as needed
+                          ),
+                        ],
+                      ),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              'Reward Points',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 30.0,
+                                  fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 5.0),
+                            Icon(
+                                Icons.recycling,
+                              size: 50.0,
+                            ),
+                            SizedBox(height: 5.0),
+                            Text(
+                              "$rewardPoints",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 25.0,
+                              ),
                             ),
                           ],
-                        ),
-                        child: Center(
-                          child: Column(
-                            children: [
-                              Text(
-                                'Reward Points',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 30.0,
-                                    fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(height: 5.0),
-                              Icon(
-                                  Icons.recycling,
-                                size: 50.0,
-                              ),
-                              SizedBox(height: 5.0),
-                              Text(
-                                "$rewardPoints",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 25.0,
-                                ),
-                              ),
-                            ],
-                          ),
                         ),
                       ),
                     ),
@@ -143,99 +113,91 @@ class _HomeState extends State<Home> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Showcase(
-                          key: _two,
-                          description: 'Bottle amount recycled',
-                          child: Container(
-                            width: 110.0, // Set the width of the container
-                            padding: EdgeInsets.all(16.0), // Set the padding within the container
-                            margin: EdgeInsets.all(8.0), // Set the margin around the container
-                            decoration: BoxDecoration(
-                              color: Colors.green[300], // Set the background color of the container
-                              borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2.0,
-                                  blurRadius: 5.0,
-                                  offset: Offset(0, 3), // Adjust the shadow position as needed
+                        Container(
+                          width: 110.0, // Set the width of the container
+                          padding: EdgeInsets.all(16.0), // Set the padding within the container
+                          margin: EdgeInsets.all(8.0), // Set the margin around the container
+                          decoration: BoxDecoration(
+                            color: Colors.green[300], // Set the background color of the container
+                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2.0,
+                                blurRadius: 5.0,
+                                offset: Offset(0, 3), // Adjust the shadow position as needed
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Bottle',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                                Icon(
+                                  LineIcons.prescriptionBottle,
+                                  size: 30.0,
+                                ),
+                                SizedBox(height: 5.0),
+                                Text(
+                                  '$bottleAmount',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  ),
                                 ),
                               ],
-                            ),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Bottle',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Icon(
-                                    LineIcons.prescriptionBottle,
-                                    size: 30.0,
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Text(
-                                    '$bottleAmount',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
                           ),
                         ),
-                        Showcase(
-                          key: _three,
-                          description: 'Plastic amount recycled',
-                          child: Container(
-                            width: 110.0, // Set the width of the container
-                            padding: EdgeInsets.all(16.0), // Set the padding within the container
-                            margin: EdgeInsets.all(8.0), // Set the margin around the container
-                            decoration: BoxDecoration(
-                              color: Colors.green[300], // Set the background color of the container
-                              borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 2.0,
-                                  blurRadius: 5.0,
-                                  offset: Offset(0, 3), // Adjust the shadow position as needed
+                        Container(
+                          width: 110.0, // Set the width of the container
+                          padding: EdgeInsets.all(16.0), // Set the padding within the container
+                          margin: EdgeInsets.all(8.0), // Set the margin around the container
+                          decoration: BoxDecoration(
+                            color: Colors.green[300], // Set the background color of the container
+                            borderRadius: BorderRadius.circular(20.0), // Set the border radius of the container
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2.0,
+                                blurRadius: 5.0,
+                                offset: Offset(0, 3), // Adjust the shadow position as needed
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Plastic',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 22.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5.0),
+                                Icon(
+                                  LineIcons.shoppingBag,
+                                  size: 32.0,
+                                ),
+                                SizedBox(height: 5.0),
+                                Text(
+                                  '$plasticAmount',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                  ),
                                 ),
                               ],
-                            ),
-                            child: Center(
-                              child: Column(
-                                children: [
-                                  Text(
-                                    'Plastic',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Icon(
-                                    LineIcons.shoppingBag,
-                                    size: 32.0,
-                                  ),
-                                  SizedBox(height: 5.0),
-                                  Text(
-                                    '$plasticAmount',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
                             ),
                           ),
                         ),
