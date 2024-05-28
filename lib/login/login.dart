@@ -268,16 +268,16 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                               ),
                             ),
                             SizedBox(height: 10.0,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // google button
-                                SquareTile(
-                                  imagePath: 'assets/app_images/google_logo.png',
-                                  onTap: () => AuthService().signInWithGoogle(),
-                                ),
-                              ],
-                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     // google button
+                            //     SquareTile(
+                            //       imagePath: 'assets/app_images/google_logo.png',
+                            //       onTap: () => AuthService().signInWithGoogle(),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),

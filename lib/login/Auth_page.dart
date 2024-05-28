@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:waste_management_app/login/login.dart';
+import 'package:waste_management_app/login/signUp_pages/collector_or_user_page.dart';
 import 'package:waste_management_app/pages/collector/Collector.dart';
 import 'package:waste_management_app/pages/collector/NotVerified.dart';
 import 'package:waste_management_app/pages/enduser/layout.dart';
@@ -50,6 +51,11 @@ class AuthPage extends StatelessWidget {
                             builder: (context) => BottomNavigationExample() // assuming you want to showcase something in LayoutCollector
                         )
                     );
+                  }
+
+                  if (snapshot.hasData && snapshot.data!.data() == null) {
+                    print("-----------return CollectorOrUser()");
+                    return CollectorOrUser();
                   }
                   print("-----------return login()");
                   return login();
