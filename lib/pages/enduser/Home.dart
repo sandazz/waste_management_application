@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
          rewardPoints = userData['rewardPoints'];
        });
      } else {
-       print("User not found");
+       print("No any Details found in the Donor recycle tables");
      }
   }
 

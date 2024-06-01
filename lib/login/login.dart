@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:waste_management_app/components/squre_tile.dart';
 import 'package:waste_management_app/components/snackbar.dart';
 import 'package:waste_management_app/login/forgetPassword.dart';
 import 'package:waste_management_app/login/register.dart';
-import 'package:waste_management_app/login/register2.dart';
-import 'package:waste_management_app/services/auth_service.dart';
 
 class login extends StatefulWidget {
   const login({super.key});
@@ -268,16 +265,16 @@ class _loginState extends State<login> with WidgetsBindingObserver{
                               ),
                             ),
                             SizedBox(height: 10.0,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // google button
-                                SquareTile(
-                                  imagePath: 'assets/app_images/google_logo.png',
-                                  onTap: () => AuthService().signInWithGoogle(),
-                                ),
-                              ],
-                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     // google button
+                            //     SquareTile(
+                            //       imagePath: 'assets/app_images/google_logo.png',
+                            //       onTap: () => AuthService().signInWithGoogle(),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ),

@@ -56,7 +56,7 @@ class CollectorOrUser extends StatelessWidget {
                 children: [
                   // google button
                   UserRoleSquareTile(
-                    role: 'User',
+                    role: 'Donor',
                     imagePath: 'assets/app_images/donor_icon.png',
                     onTap: () => UserFormSignUp(),
                   ),
