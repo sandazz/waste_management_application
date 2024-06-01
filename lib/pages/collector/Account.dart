@@ -83,10 +83,6 @@ class _AccountState extends State<Account> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // CircleAvatar(
-              //   backgroundImage: AssetImage(""),
-              //   radius: 50,
-              // ),
               SizedBox(height: 50),
               Container(
                 width: 300.0,
