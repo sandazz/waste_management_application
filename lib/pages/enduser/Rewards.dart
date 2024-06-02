@@ -21,6 +21,9 @@ class _RewardsState extends State<Rewards> {
 
   final User currentUser = FirebaseAuth.instance.currentUser!;
 
+  // image URL
+  String rewardingImageURL = "assets/app_images/rewarding.png";
+
   int totalSpinnableCount = 0;
   int costPerSpinning = 10;
   int RedeemablePoints = 0;
@@ -417,6 +420,14 @@ class _RewardsState extends State<Rewards> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            width: 400.0,
+            child: Image.asset(
+              rewardingImageURL, // Replace "image.jpg" with the actual filename and extension of your image
+              fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+            ),
+          ),
+          SizedBox(height: 20.0,),
           Center(
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(

@@ -17,6 +17,9 @@ class Camera extends StatefulWidget {
 class _CameraState extends State<Camera> {
   String _scanBarcode = 'Unknown';
 
+  // image URL
+  String QRScanImageURL = "assets/app_images/QR_scaning.png";
+
   @override
   void initState() {
     super.initState();
@@ -66,28 +69,44 @@ class _CameraState extends State<Camera> {
   Widget build(BuildContext context) {
     return  Scaffold(
             body: Builder(builder: (BuildContext context) {
-              return Container(
-                  alignment: Alignment.center,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton.icon(
-                            onPressed: () => scanQR(),
-                            style: ElevatedButton.styleFrom(
-                              elevation: 8.0, backgroundColor: Colors.green,
-                              padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0), // Set the background color for the button
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30), // Set the border radius here
-                              ),
-                            ),
-                            icon: Icon(Icons.qr_code_2_outlined),
-                            label: Text('QR Scan')),
-                        SizedBox(height: 10.0,),
-                        Text('Scan result : $_scanBarcode\n',
-                            style: TextStyle(fontSize: 20))
-                      ]));
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 400.0,
+                    child: Image.asset(
+                      QRScanImageURL, // Replace "image.jpg" with the actual filename and extension of your image
+                      fit: BoxFit.cover, // Choose the desired fit option (e.g., BoxFit.cover, BoxFit.fill)
+                    ),
+                  ),
+                  SizedBox(height: 20.0,),
+                  Container(
+                      alignment: Alignment.center,
+                      child: Flex(
+                          direction: Axis.vertical,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            ElevatedButton(
+                                onPressed: () => scanQR(),
+                                style: ElevatedButton.styleFrom(
+                                  minimumSize: Size(100.0, 50.0),
+                                  elevation: 8.0, backgroundColor: Colors.green,
+                                  padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0), // Set the background color for the button
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20), // Set the border radius here
+                                  ),
+                                ),
+                                child: const Text('Scan',
+                                      style: TextStyle(color: Colors.white, fontSize: 20),
+                                      textAlign: TextAlign.center,)
+                                ),
+                            const SizedBox(height: 10.0,),
+                            Text('Scan result : $_scanBarcode\n',
+                                style: TextStyle(fontSize: 20))
+                          ])),
+                ],
+              );
             }));
   }
 }
